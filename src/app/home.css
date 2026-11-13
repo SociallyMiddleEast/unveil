@@ -1,0 +1,16 @@
+.home { min-height: 100vh; color: var(--ivory); background: radial-gradient(90% 60% at 50% 0%, var(--velvet) 0%, var(--wine) 70%) no-repeat, var(--wine); }
+.home-hero { max-width: 760px; margin: 0 auto; text-align: center; padding-block: 96px 56px; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); display: grid; justify-items: center; gap: 10px; }
+.home-mark { width: 92px; color: var(--ivory); }
+.home-hero h1 { margin: 10px 0 0; font-weight: 400; font-size: clamp(72px, 15vw, 140px); line-height: .9; }
+.home-desc { font-size: 13px; font-weight: 500; letter-spacing: .42em; text-transform: uppercase; color: var(--champagne); padding-left: .42em; }
+.home-tag { font-family: var(--display); font-style: italic; font-size: clamp(20px, 3vw, 26px); margin: 22px 0 0; }
+.home-lede { max-width: 52ch; opacity: .85; margin: 6px 0 0; }
+.home-points { max-width: 1000px; margin: 0 auto; padding-block: 24px 56px; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px));
+  display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; }
+@media (max-width: 760px) { .home-points { grid-template-columns: minmax(0, 1fr); } }
+.home-points div { border-top: 1px solid var(--line); padding-top: 18px; }
+.home-points h2 { font-family: var(--display); font-style: italic; font-weight: 400; font-size: 26px; margin: 0 0 6px; color: var(--gold-text); }
+.home-points p { margin: 0; opacity: .85; }
+.home-foot { text-align: center; padding-block: 40px 64px; border-top: 1px solid var(--line); padding-left: 16px; padding-right: 16px; }
+.home-foot b { color: var(--champagne); font-weight: 500; }
+.home-foot small { display: block; margin-top: 8px; font-size: 11px; letter-spacing: .2em; text-transform: uppercase; opacity: .55; }

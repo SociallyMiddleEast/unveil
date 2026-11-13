@@ -1,0 +1,39 @@
+/* Unveil brand tokens — see docs/unveil-brand-book.html */
+:root {
+  --wine: #2a0d14;
+  --velvet: #5a1624;
+  --champagne: #d8b67a;
+  --gold-text: #f1dcb4;
+  --ivory: #f3e9e1;
+  --blush: #c99a94;
+  --ink: #1a080c;
+  --ink-soft: #6b4a50;
+  --line: rgba(216, 182, 122, 0.28);
+  --line-ink: rgba(90, 22, 36, 0.16);
+  --good: #3f7d5c;
+  --warn: #a8702a;
+  --display: var(--font-display), "Didot", Georgia, serif;
+  --script: var(--font-script), "Snell Roundhand", cursive;
+  --ui: var(--font-ui), "Futura", system-ui, sans-serif;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; }
+body { font-family: var(--ui); font-size: 16px; line-height: 1.6; -webkit-font-smoothing: antialiased; background: var(--ivory); color: var(--ink); }
+img { max-width: 100%; }
+[hidden] { display: none !important; }
+a { color: inherit; }
+button { font: inherit; }
+:focus-visible { outline: 2px solid var(--champagne); outline-offset: 3px; }
+
+.mark .arch { fill: none; stroke: currentColor; stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }
+.mark .drape { fill: none; stroke: var(--champagne); stroke-width: 2.4; stroke-linecap: round; }
+.mark .base { stroke: currentColor; stroke-width: 2.4; stroke-linecap: round; }
+
+/* ---------- Shared buttons ---------- */
+.btn { font-family: var(--ui); font-size: 12px; font-weight: 500; letter-spacing: .16em; text-transform: uppercase; text-decoration: none;
+  border-radius: 999px; padding: 11px 20px; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  border: 1px solid currentColor; background: transparent; color: inherit; white-space: nowrap; }
+.btn-gold { background: var(--champagne); border-color: var(--champagne); color: var(--wine); }
+.btn-wine { background: var(--wine); border-color: var(--wine); color: var(--ivory); }
+.btn-sm { padding: 7px 13px; font-size: 11px; letter-spacing: .12em; }
+.btn:disabled { opacity: .5; cursor: default; }

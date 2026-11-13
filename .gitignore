@@ -1,0 +1,10 @@
+node_modules/
+.next/
+.npm-cache/
+out/
+data/*.db
+data/*.db-*
+.env*.local
+*.tsbuildinfo
+next-env.d.ts
+.DS_Store
