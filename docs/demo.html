@@ -386,6 +386,12 @@ const CONFIG = {
     seal.hidden = false;
     document.getElementById('again').textContent = 'Break the seal again';
   }
+  if (new URLSearchParams(location.search).get('reveal') === 'none') {
+    // Arriving from another reveal (e.g. The Gold Dust): go straight to the invitation.
+    lifted = true;
+    veil.hidden = true;
+    root.classList.remove('locked');
+  }
   seal.addEventListener('click', () => {
     if (broken) return;
     broken = true;
