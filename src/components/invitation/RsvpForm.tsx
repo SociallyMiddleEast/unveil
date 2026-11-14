@@ -11,10 +11,20 @@ type Props = {
   guest: { name: string; seats: number } | null;
   existing: { attending: boolean; count: number; note: string } | null;
   onAccepted: () => void;
+  demo?: boolean;
 };
 
-export function RsvpForm({ slug, code, couple, guest, existing, onAccepted }: Props) {
-  const [state, action, pending] = useActionState<RsvpState, FormData>(submitRsvp, { status: "idle" });
+/* On the public demo, replies are shown as saved but never stored. */
+async function demoSubmit(_prev: RsvpState, form: FormData): Promise<RsvpState> {
+  const name = String(form.get("name") || "").trim() || "Guest";
+  const att = String(form.get("attending") || "");
+  if (att !== "yes" && att !== "no") return { status: "error", message: "Please choose whether you can come." };
+  const count = Math.max(1, Number(form.get("count") || 1));
+  return { status: "saved", attending: att === "yes", count: att === "yes" ? count : 0, name };
+}
+
+export function RsvpForm({ slug, code, couple, guest, existing, onAccepted, demo = false }: Props) {
+  const [state, action, pending] = useActionState<RsvpState, FormData>(demo ? demoSubmit : submitRsvp, { status: "idle" });
   const [editing, setEditing] = useState(!existing);
   const [attending, setAttending] = useState<"" | "yes" | "no">(existing ? (existing.attending ? "yes" : "no") : "");
   const max = guest?.seats ?? 10;
@@ -34,11 +44,12 @@ export function RsvpForm({ slug, code, couple, guest, existing, onAccepted }: Pr
       <div className="inv-done" role="status">
         <Mark className="inv-done-mark" />
         <h3>{saved.attending ? "We can’t wait to see you" : "You’ll be missed"}</h3>
-        <p>
+        <p hidden={demo}>
           {saved.attending
             ? `Your reply is saved: ${saved.count} ${saved.count === 1 ? "person" : "people"} attending. ${couple} have it on their guest list.`
             : `Your reply is saved. ${couple} will be sorry not to see you.`}
         </p>
+        {demo && <p className="inv-demo-note">This is a demo, so your reply wasn’t sent anywhere. On a real invitation, it goes straight to the couple’s guest list.</p>}
         <button type="button" className="inv-linkish" onClick={() => setEditing(true)}>Change my reply</button>
       </div>
     );
@@ -53,7 +64,7 @@ export function RsvpForm({ slug, code, couple, guest, existing, onAccepted }: Pr
       ) : (
         <div className="inv-field">
           <label htmlFor="rsvp-name">Your name</label>
-          <input id="rsvp-name" name="name" type="text" autoComplete="name" placeholder="Full name" required />
+          <input id="rsvp-name" name="name" type="text" autoComplete="name" placeholder="Full name" required={!demo} />
         </div>
       )}
       <div className="inv-field">

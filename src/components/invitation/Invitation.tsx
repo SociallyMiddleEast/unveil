@@ -34,6 +34,7 @@ export type InvitationProps = {
   reveal: Reveal;
   guest: { name: string; seats: number } | null;
   existing: { attending: boolean; count: number; note: string } | null;
+  demo?: boolean;
 };
 
 function useCountdown(target: string) {
@@ -156,13 +157,14 @@ export function Invitation(p: InvitationProps) {
         <section className="inv-blk" id="rsvp" aria-labelledby="h-rsvp">
           <div className="inv-kicker">{p.deadline ? `Kindly reply by ${p.deadline}` : "Kindly reply"}</div>
           <h2 id="h-rsvp">Will you join us?</h2>
-          <RsvpForm slug={p.slug} code={p.code} guest={p.guest} existing={p.existing} couple={couple} onAccepted={goldDust} />
+          <RsvpForm slug={p.slug} code={p.code} guest={p.guest} existing={p.existing} couple={couple} onAccepted={goldDust} demo={p.demo} />
         </section>
 
         <footer className="inv-made">
           <Mark className="inv-made-mark" />
           <div className="w">Unveil<span>.</span></div>
           <small>Invitations · Made in Lebanon</small>
+          {p.demo && <a className="btn btn-gold" href="/#packages" style={{ marginTop: 14 }}>See packages</a>}
         </footer>
       </main>
 

@@ -68,6 +68,7 @@ html.inv-locked, html.inv-locked body { overflow: hidden; height: 100%; }
 .inv-done { border: 1px solid var(--champagne); border-radius: 4px; padding: 26px 20px; display: grid; gap: 10px; justify-items: center; text-align: center; }
 .inv-done-mark { width: 44px; color: var(--ivory); }
 .inv-done h3 { font-family: var(--display); font-style: italic; font-weight: 400; font-size: 26px; margin: 0; }
+.inv-demo-note { font-size: 13px; opacity: .7; max-width: 34ch; margin: 0; }
 .inv-linkish { background: none; border: 0; color: var(--champagne); font-size: 13px; text-decoration: underline; cursor: pointer; padding: 4px; }
 
 .inv-made { padding-block: 40px 56px; text-align: center; display: grid; justify-items: center; gap: 8px; border-top: 1px solid var(--line); }
