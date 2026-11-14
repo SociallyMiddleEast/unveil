@@ -251,46 +251,13 @@ footer a { color: #f1dfb6; }
 .seal { width: 160px; height: 160px; filter: drop-shadow(0 12px 16px rgba(0,0,0,.5)) drop-shadow(0 2px 2px rgba(0,0,0,.35)); }
 .seal svg { width: 100%; height: 100%; overflow: visible; display: block; }
 @media (max-width: 520px) { .seal { width: 124px; height: 124px; } }
+
+.seal-img { width: 170px; height: auto; display: block; filter: drop-shadow(0 14px 18px rgba(0,0,0,.55)) drop-shadow(0 3px 3px rgba(0,0,0,.35)); }
+@media (max-width: 520px) { .seal-img { width: 138px; } }
 </style>
 </head>
 <body>
 
-<svg width="0" height="0" style="position:absolute" aria-hidden="true">
-  <defs>
-    <!-- thick rounded rim: dark at the outer edge, bright where it rolls up to the well, shaded into the well -->
-    <radialGradient id="sealRim" cx="50%" cy="50%" r="50%">
-      <stop offset=".60" stop-color="#4e0710"/>
-      <stop offset=".665" stop-color="#7e0f1c"/>
-      <stop offset=".73" stop-color="#c8333f"/>
-      <stop offset=".80" stop-color="#b0222f"/>
-      <stop offset=".90" stop-color="#8e1521"/>
-      <stop offset="1" stop-color="#5c0912"/>
-    </radialGradient>
-    <radialGradient id="sealWell" cx="58%" cy="62%" r="70%">
-      <stop offset="0" stop-color="#9c1a28"/><stop offset=".7" stop-color="#7a1019"/><stop offset="1" stop-color="#5a0a12"/>
-    </radialGradient>
-    <linearGradient id="sealGold" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#f3dc9c"/><stop offset=".45" stop-color="#c99b4c"/><stop offset=".7" stop-color="#f0d38a"/><stop offset="1" stop-color="#a87a35"/>
-    </linearGradient>
-    <filter id="waxMelt" x="-20%" y="-20%" width="140%" height="140%">
-      <feTurbulence type="fractalNoise" baseFrequency=".018" numOctaves="2" seed="4"/>
-      <feDisplacementMap in="SourceGraphic" scale="12" xChannelSelector="R" yChannelSelector="G"/>
-    </filter>
-    <filter id="waxGloss" x="-20%" y="-20%" width="140%" height="140%">
-      <feGaussianBlur in="SourceAlpha" stdDeviation="6" result="blur"/>
-      <feSpecularLighting in="blur" surfaceScale="7" specularConstant="1" specularExponent="30" lighting-color="#ffeef0" result="spec"><fePointLight x="40" y="10" z="150"/></feSpecularLighting>
-      <feComposite in="spec" in2="SourceAlpha" operator="in" result="specIn"/>
-      <feComposite in="SourceGraphic" in2="specIn" operator="arithmetic" k1="0" k2="1" k3=".7" k4="0"/>
-    </filter>
-    <filter id="wellShade" x="-10%" y="-10%" width="120%" height="120%">
-      <feTurbulence type="fractalNoise" baseFrequency=".9" numOctaves="1" seed="2" result="n"/>
-      <feColorMatrix in="n" type="matrix" values="0 0 0 0 .2  0 0 0 0 0  0 0 0 0 .03  0 0 0 .18 0" result="mottle"/>
-      <feComposite in="mottle" in2="SourceAlpha" operator="in" result="m2"/>
-      <feMerge><feMergeNode in="SourceGraphic"/><feMergeNode in="m2"/></feMerge>
-    </filter>
-    <filter id="soft"><feGaussianBlur stdDeviation="2.2"/></filter>
-  </defs>
-</svg>
 
 <nav aria-label="Main">
   <div class="wrap nav-in">
@@ -309,19 +276,7 @@ footer a { color: #f1dfb6; }
 
 <header class="hero" id="top">
   <div class="wrap"><div class="in hero-frame floral">
-    <div class="seal" role="img" aria-label="Unveil wax seal">
-      <svg viewBox="0 0 240 240" aria-hidden="true">
-        <g filter="url(#waxGloss)"><g filter="url(#waxMelt)"><circle cx="120" cy="120" r="104" fill="url(#sealRim)"/></g></g>
-        <circle cx="120" cy="120" r="66" fill="url(#sealWell)" filter="url(#wellShade)"/>
-        <circle cx="117" cy="117" r="66" fill="none" stroke="rgba(30,0,4,.55)" stroke-width="7" filter="url(#soft)"/>
-        <circle cx="120" cy="120" r="57" fill="none" stroke="url(#sealGold)" stroke-width="1.3" opacity=".75"/>
-        <text x="121.5" y="152.5" text-anchor="middle" font-family="Pinyon Script, cursive" font-size="104" fill="none" stroke="rgba(30,0,4,.55)" stroke-width="3.2">U</text>
-        <text x="120" y="151" text-anchor="middle" font-family="Pinyon Script, cursive" font-size="104" fill="rgba(90,10,18,.35)" stroke="url(#sealGold)" stroke-width="2.4" paint-order="stroke">U</text>
-        <ellipse cx="78" cy="44" rx="26" ry="7" transform="rotate(-24 78 44)" fill="#fff4f5" opacity=".55" filter="url(#soft)"/>
-        <ellipse cx="188" cy="92" rx="5" ry="15" transform="rotate(14 188 92)" fill="#fff4f5" opacity=".4" filter="url(#soft)"/>
-        <circle cx="62" cy="62" r="2.2" fill="#fff" opacity=".8"/><circle cx="160" cy="196" r="1.6" fill="#fff" opacity=".55"/>
-      </svg>
-    </div>
+    <img class="seal-img" src="assets/seal-u.png" width="600" height="608" alt="Unveil wax seal" decoding="async">
     <div class="fleuron"><hr class="foil-line"><i class="foil">❦</i><hr class="foil-line"></div>
     <h1 class="foil">Every invitation deserves an entrance</h1>
     <p class="sub">Animated wedding invitations, made in Lebanon. Your guests open it like a royal letter, then find everything about your day.</p>
@@ -529,19 +484,7 @@ footer a { color: #f1dfb6; }
 
 <section class="final" aria-labelledby="h-final">
   <div class="wrap in">
-    <div class="seal" role="img" aria-label="Unveil wax seal">
-      <svg viewBox="0 0 240 240" aria-hidden="true">
-        <g filter="url(#waxGloss)"><g filter="url(#waxMelt)"><circle cx="120" cy="120" r="104" fill="url(#sealRim)"/></g></g>
-        <circle cx="120" cy="120" r="66" fill="url(#sealWell)" filter="url(#wellShade)"/>
-        <circle cx="117" cy="117" r="66" fill="none" stroke="rgba(30,0,4,.55)" stroke-width="7" filter="url(#soft)"/>
-        <circle cx="120" cy="120" r="57" fill="none" stroke="url(#sealGold)" stroke-width="1.3" opacity=".75"/>
-        <text x="121.5" y="152.5" text-anchor="middle" font-family="Pinyon Script, cursive" font-size="104" fill="none" stroke="rgba(30,0,4,.55)" stroke-width="3.2">U</text>
-        <text x="120" y="151" text-anchor="middle" font-family="Pinyon Script, cursive" font-size="104" fill="rgba(90,10,18,.35)" stroke="url(#sealGold)" stroke-width="2.4" paint-order="stroke">U</text>
-        <ellipse cx="78" cy="44" rx="26" ry="7" transform="rotate(-24 78 44)" fill="#fff4f5" opacity=".55" filter="url(#soft)"/>
-        <ellipse cx="188" cy="92" rx="5" ry="15" transform="rotate(14 188 92)" fill="#fff4f5" opacity=".4" filter="url(#soft)"/>
-        <circle cx="62" cy="62" r="2.2" fill="#fff" opacity=".8"/><circle cx="160" cy="196" r="1.6" fill="#fff" opacity=".55"/>
-      </svg>
-    </div>
+    <img class="seal-img" src="assets/seal-u.png" width="600" height="608" alt="Unveil wax seal" decoding="async">
     <h2 id="h-final" class="foil">Reserve your date</h2>
     <p>Tell us your wedding date and guest count, and we’ll take it from there.</p>
     <div class="cta">
