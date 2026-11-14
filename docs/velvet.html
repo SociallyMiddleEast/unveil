@@ -197,7 +197,9 @@ h2 { font-family: var(--serif); font-weight: 400; font-size: 34px; letter-spacin
 .looks p { margin: 8px 0 0; font-style: italic; font-size: 19px; line-height: 1.45; }
 
 /* ---------- Notes (swipe) ---------- */
-.notes { display: grid; grid-auto-flow: column; grid-auto-columns: 80%; gap: 14px; overflow-x: auto; scroll-snap-type: x mandatory; padding: 4px 10% 8px; margin: 0 -24px; scrollbar-width: none; }
+.notes { display: flex; gap: 14px; overflow-x: auto; scroll-snap-type: x mandatory; padding: 4px 0 8px; margin: 0 -24px; scrollbar-width: none; }
+.notes::before, .notes::after { content: ""; flex: 0 0 calc(10% - 14px); }
+.notes > .note { flex: 0 0 80%; }
 .notes::-webkit-scrollbar { display: none; }
 .note { scroll-snap-align: center; position: relative; padding: 40px 26px 30px; background: #fbf4e6; color: var(--ink); box-shadow: 0 16px 34px rgba(60,20,20,.18); text-align: center; min-height: 220px; display: flex; flex-direction: column; justify-content: center; }
 .note::before { content: ""; position: absolute; inset: 9px; border: 1px solid rgba(168,129,60,.45); }
