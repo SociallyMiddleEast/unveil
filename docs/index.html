@@ -104,9 +104,13 @@ section { padding-block: 88px; scroll-margin-top: 64px; }
 .art.veil .mark .drape { stroke: #a8823f; }
 .art.seal { background: linear-gradient(180deg, #efe4da, #e2d3c6); }
 .art.seal::before { content: ""; position: absolute; left: 0; right: 0; top: 0; height: 55%; background: linear-gradient(180deg, #e3d4c7, #d7c5b6); clip-path: polygon(0 0, 100% 0, 50% 100%); }
-.art.seal span { position: relative; width: 84px; height: 84px; display: grid; place-items: center; margin-top: 30px; font-family: var(--display); font-size: 24px; color: var(--gold-text);
+.art.seal .wax { position: relative; width: 84px; height: 84px; display: grid; place-items: center; margin-top: 30px; font-family: var(--display); font-size: 24px; color: var(--gold-text);
   border-radius: 46% 54% 50% 50% / 52% 48% 52% 48%; background: radial-gradient(circle at 35% 30%, #8a2a3c, var(--velvet) 55%, #3a0e18); box-shadow: 0 4px 10px rgba(0,0,0,.3); }
-.soon { font-size: 11px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--ink-soft); }
+a.art { text-decoration: none; cursor: pointer; transition: transform .25s ease, box-shadow .25s ease; }
+a.art:hover { transform: translateY(-3px); box-shadow: 0 14px 30px -18px rgba(42,13,20,.6); }
+.art .try { position: absolute; bottom: 12px; left: 50%; transform: translateX(-50%); font-size: 11px; font-weight: 600; letter-spacing: .16em; text-transform: uppercase;
+  background: var(--wine); color: var(--ivory); border-radius: 999px; padding: 6px 12px; white-space: nowrap; }
+.reveal .btn { justify-self: start; margin-top: 6px; color: var(--ivory); text-decoration: none; }
 
 .inc { display: grid; grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); gap: 40px; border-top: 1px solid var(--line-ink); padding-top: 64px; }
 @media (max-width: 800px) { .inc { grid-template-columns: minmax(0, 1fr); gap: 8px; } }
@@ -193,7 +197,7 @@ footer a { color: var(--champagne); }
       <h1>Every invitation deserves an <em>entrance.</em></h1>
       <p class="lede">Your guests lift a veil and your wedding unfolds on their phone: the date, the venue, the schedule, and a reply in one tap. Made for Lebanese weddings, sent on WhatsApp, opened anywhere in the world.</p>
       <div class="cta">
-        <a class="btn btn-gold" href="demo.html">Open a live invitation</a>
+        <a class="btn btn-gold" href="#reveals">Try the demos</a>
         <a class="btn" href="#packages">From $39.99</a>
       </div>
     </div>
@@ -223,16 +227,16 @@ footer a { color: var(--champagne); }
     <p class="intro">Every Unveil invitation starts with a small ritual. Choose the one that feels like your wedding.</p>
     <div class="reveals">
       <article class="reveal">
-        <div class="art veil" aria-hidden="true"><svg class="mark" viewBox="0 0 120 112"><use href="#m"/></svg></div>
+        <a class="art veil" href="demo.html" aria-label="Open The Veil demo"><svg class="mark" viewBox="0 0 120 112" aria-hidden="true"><use href="#m"/></svg><span class="try">Tap to try</span></a>
         <h3>The Veil</h3>
         <p>A sheer bridal veil covers the screen. Guests swipe it up, and your names come into focus as gold dust falls.</p>
-        <a href="demo.html">Try The Veil</a>
+        <a class="btn btn-wine" href="demo.html">Try The Veil demo</a>
       </article>
       <article class="reveal">
-        <div class="art seal" aria-hidden="true"><span>L·K</span></div>
+        <a class="art seal" href="demo.html?reveal=seal" aria-label="Open The Seal demo"><span class="wax">L·K</span><span class="try">Tap to try</span></a>
         <h3>The Seal</h3>
         <p>A wax seal with your initials. Guests tap to break it, the envelope opens, and the invitation appears.</p>
-        <span class="soon">Demo coming soon</span>
+        <a class="btn btn-wine" href="demo.html?reveal=seal">Try The Seal demo</a>
       </article>
     </div>
   </div>
@@ -282,25 +286,25 @@ footer a { color: var(--champagne); }
         <h3>Intimate</h3><div class="guests">Up to 50 guests</div>
         <div class="price"><sup>$</sup>39.99</div>
         <p>Engagements, small weddings and family dinners</p>
-        <a class="btn btn-wine" href="https://instagram.com/unveil.invitations" target="_blank" rel="noopener noreferrer">Order on Instagram</a>
+        <a class="btn btn-wine" href="https://instagram.com/unveil.invitations" target="_blank" rel="noopener noreferrer">Order now</a>
       </article>
       <article class="pk">
         <h3>Classic</h3><div class="guests">Up to 100 guests</div>
         <div class="price"><sup>$</sup>69.99</div>
         <p>A close circle of family and friends</p>
-        <a class="btn btn-wine" href="https://instagram.com/unveil.invitations" target="_blank" rel="noopener noreferrer">Order on Instagram</a>
+        <a class="btn btn-wine" href="https://instagram.com/unveil.invitations" target="_blank" rel="noopener noreferrer">Order now</a>
       </article>
       <article class="pk">
         <h3>Grand</h3><div class="guests">Up to 150 guests</div>
         <div class="price"><sup>$</sup>74.99</div>
         <p>The full family, both sides</p>
-        <a class="btn btn-wine" href="https://instagram.com/unveil.invitations" target="_blank" rel="noopener noreferrer">Order on Instagram</a>
+        <a class="btn btn-wine" href="https://instagram.com/unveil.invitations" target="_blank" rel="noopener noreferrer">Order now</a>
       </article>
       <article class="pk top">
         <h3>Unlimited</h3><div class="guests">Unlimited guests</div>
         <div class="price"><sup>$</sup>99</div>
         <p>For the big Lebanese wedding: invite everyone</p>
-        <a class="btn btn-gold" href="https://instagram.com/unveil.invitations" target="_blank" rel="noopener noreferrer">Order on Instagram</a>
+        <a class="btn btn-gold" href="https://instagram.com/unveil.invitations" target="_blank" rel="noopener noreferrer">Order now</a>
       </article>
     </div>
     <p class="small">All packages include every feature listed above.</p>
@@ -330,8 +334,8 @@ footer a { color: var(--champagne); }
     <h2 id="h-final">Reserve your date</h2>
     <p>Tell us your wedding date and guest count, and we’ll take it from there.</p>
     <div class="cta">
-      <a class="btn btn-gold" href="https://instagram.com/unveil.invitations" target="_blank" rel="noopener noreferrer">Order on Instagram</a>
-      <a class="btn" href="demo.html">Open a live invitation</a>
+      <a class="btn btn-gold" href="https://instagram.com/unveil.invitations" target="_blank" rel="noopener noreferrer">Order now</a>
+      <a class="btn" href="#reveals">Try the demos</a>
     </div>
   </div>
 </section>

@@ -137,9 +137,34 @@ footer.made small { font-size: 11px; letter-spacing: .2em; text-transform: upper
 .veil:focus-visible { outline: 3px solid var(--velvet); outline-offset: -8px; }
 canvas#dust { position: fixed; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 40; }
 
+[hidden] { display: none !important; }
+body { margin: 0; }
+
+/* ---------- The seal ---------- */
+.seal { position: fixed; inset: 0; z-index: 50; border: 0; padding: 0; margin: 0; cursor: pointer; color: var(--wine); background: transparent; font: inherit; overflow: hidden; width: 100%; }
+.seal .env { position: absolute; inset: 0; background: linear-gradient(180deg, #efe4da, #e2d3c6); transition: transform 1.1s cubic-bezier(.6,0,.3,1) .75s; }
+.seal .flap { position: absolute; left: 0; right: 0; top: 0; height: 52%; background: linear-gradient(180deg, #e3d4c7, #d7c5b6); clip-path: polygon(0 0, 100% 0, 50% 100%);
+  transform-origin: top; transition: transform .7s ease .35s; filter: drop-shadow(0 4px 6px rgba(42,13,20,.15)); }
+.seal .swho { position: absolute; left: 0; right: 0; top: 18%; text-align: center; font-family: var(--display); font-style: italic; font-size: 22px; transition: opacity .4s; padding: 0 24px; }
+.seal .wax { position: absolute; top: 52%; left: 50%; width: 96px; height: 96px; margin: -48px 0 0 -48px; }
+.seal .wax i { position: absolute; inset: 0; display: grid; place-items: center; font-style: normal; font-family: var(--display); font-size: 26px; color: #f1dcb4;
+  border-radius: 46% 54% 50% 50% / 52% 48% 52% 48%; background: radial-gradient(circle at 35% 30%, #8a2a3c, var(--velvet) 55%, #3a0e18); box-shadow: 0 4px 10px rgba(0,0,0,.3);
+  transition: transform .6s ease, opacity .6s ease; }
+.seal .wax .s1 { clip-path: polygon(0 0, 55% 0, 42% 48%, 58% 100%, 0 100%); }
+.seal .wax .s2 { clip-path: polygon(55% 0, 100% 0, 100% 100%, 58% 100%, 42% 48%); }
+.seal .scta { position: absolute; left: 0; right: 0; bottom: calc(44px + env(safe-area-inset-bottom, 0px)); font-size: 11.5px; letter-spacing: .28em; text-transform: uppercase; font-weight: 500; animation: breathe 2.4s ease-in-out infinite; }
+@keyframes breathe { 50% { opacity: .45; } }
+.seal.broken { pointer-events: none; }
+.seal.broken .wax .s1 { transform: translate(-30px, 16px) rotate(-24deg); opacity: 0; }
+.seal.broken .wax .s2 { transform: translate(30px, 20px) rotate(22deg); opacity: 0; }
+.seal.broken .flap { transform: rotateX(180deg); }
+.seal.broken .env { transform: translateY(105%); }
+.seal.broken .swho, .seal.broken .scta { opacity: 0; animation: none; }
+
 @media (prefers-reduced-motion: reduce) {
   .veil.lifting { transition: opacity .3s ease; transform: none !important; }
-  .scroll-cue::after, .veil .cta svg { animation: none; }
+  .scroll-cue::after, .veil .cta svg, .seal .scta { animation: none; }
+  .seal .env, .seal .flap, .seal .wax i { transition-duration: .2s; transition-delay: 0s; }
 }
 </style>
 </head>
@@ -274,6 +299,14 @@ canvas#dust { position: fixed; inset: 0; width: 100%; height: 100%; pointer-even
   <div class="cta"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 14l6-6 6 6"/></svg>Swipe up to lift the veil</div>
 </div>
 
+<button class="seal" id="seal" type="button" aria-label="Break the wax seal to open your invitation" hidden>
+  <span class="env"></span>
+  <span class="flap"></span>
+  <span class="swho" id="sealWho">From Lara &amp; Karim</span>
+  <span class="wax"><i class="s1">L·K</i><i class="s2">L·K</i></span>
+  <span class="scta">Tap the seal to open</span>
+</button>
+
 <script>
 /* ===== Edit these details for each couple ===== */
 const CONFIG = {
@@ -295,6 +328,7 @@ const CONFIG = {
   if (guest) {
     document.getElementById('dear').textContent = 'Dear ' + guest + ',';
     document.getElementById('veilWho').textContent = guest + ', ' + CONFIG.couple + ' have something for you';
+    document.getElementById('sealWho').textContent = 'For ' + guest;
     document.getElementById('g-name').value = guest;
   }
 
@@ -343,13 +377,38 @@ const CONFIG = {
   veil.addEventListener('pointercancel', end);
   veil.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ' || e.key === 'ArrowUp') { e.preventDefault(); lift(); } });
 
+  /* ---- The seal (demo.html?reveal=seal) ---- */
+  const seal = document.getElementById('seal');
+  const useSeal = new URLSearchParams(location.search).get('reveal') === 'seal';
+  let broken = false;
+  if (useSeal) {
+    veil.hidden = true;
+    seal.hidden = false;
+    document.getElementById('again').textContent = 'Break the seal again';
+  }
+  seal.addEventListener('click', () => {
+    if (broken) return;
+    broken = true;
+    seal.classList.add('broken');
+    root.classList.remove('locked');
+    setTimeout(dust, 900);
+    setTimeout(() => { seal.hidden = true; }, 1900);
+  });
+
   document.getElementById('again').addEventListener('click', () => {
     scrollTo({ top: 0 });
+    root.classList.add('locked');
+    if (useSeal) {
+      broken = false;
+      seal.classList.remove('broken');
+      seal.hidden = false;
+      seal.focus();
+      return;
+    }
     lifted = false;
     veil.hidden = false;
     veil.classList.remove('lifting', 'settle');
     veil.style.transform = ''; veil.style.backdropFilter = veil.style.webkitBackdropFilter = '';
-    root.classList.add('locked');
     veil.focus();
   });
 
