@@ -183,108 +183,11 @@ footer { padding-block: 34px; font-size: 13px; color: var(--ink-soft); }
 footer a { color: var(--rouge); }
 
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } .p-veil { animation: none; opacity: 0; } .d-art { transition: none; } }
-
-/* ---------- Royal ornament ---------- */
-.damask { position: fixed; inset: 0; width: 100%; height: 100%; z-index: -1; pointer-events: none;
-  filter: drop-shadow(1px 1px 0 rgba(255,255,255,.75)) drop-shadow(-1px -1px 0 rgba(120,90,55,.12)); }
-body { background-image: none; }
-.ornate { position: relative; isolation: isolate; background: linear-gradient(160deg, #f8f1e6, #f1e6d4); border: 0 !important; }
-.ornate::before { content: ""; position: absolute; inset: 14px; border: 1px solid rgba(176,138,74,.55); box-shadow: inset 0 0 0 4px rgba(246,239,228,.9), inset 0 0 0 5px rgba(176,138,74,.35); pointer-events: none; z-index: -1; }
-.ornate::after { content: ""; position: absolute; inset: 0; z-index: -2; box-shadow: 0 1px 0 rgba(255,255,255,.8) inset, 0 30px 50px -36px rgba(70,30,20,.45); }
-.orn { position: absolute; width: 96px; height: 96px; color: #e6d7bf; pointer-events: none; z-index: 0;
-  filter: drop-shadow(1.2px 1.6px .6px rgba(110,80,45,.42)) drop-shadow(-1px -1px .4px rgba(255,255,255,.95)); }
-.orn.tl { top: 4px; left: 4px; } .orn.tr { top: 4px; right: 4px; transform: scaleX(-1); }
-.orn.bl { bottom: 4px; left: 4px; transform: scaleY(-1); } .orn.br { bottom: 4px; right: 4px; transform: scale(-1, -1); }
-.orn.crest { width: 120px; height: 40px; left: 50%; top: 2px; transform: translateX(-50%); }
-.orn.crest.b { top: auto; bottom: 2px; transform: translateX(-50%) scaleY(-1); }
-.ornate > *:not(.orn) { position: relative; z-index: 1; }
-
-/* Royal package cards */
-.packages { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 26px; }
-@media (min-width: 1100px) { .packages { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 18px; } }
-@media (max-width: 640px) { .packages { grid-template-columns: minmax(0, 1fr); } }
-.pk { padding: 58px 34px 40px; gap: 0; background: none; }
-.pk::before { content: none; }
-.pk .num { font-family: var(--display); font-style: italic; font-size: 22px; color: var(--rouge); }
-.pk h3 { font-family: var(--display); font-style: normal; font-weight: 400; font-size: 38px; line-height: 1.05; color: var(--ink); margin: 4px 0 6px; }
-.pk .guests { margin-bottom: 26px; }
-.pk .price { font-family: var(--display); font-weight: 500; font-size: 64px; color: var(--rouge); margin: 0 0 14px; font-variant-numeric: oldstyle-nums proportional-nums; }
-.pk .price sup { font-size: .5em; top: .38em; }
-.pk .desc { margin: 0 0 22px; font-size: 14.5px; color: var(--ink-soft); }
-.pk .ticks { list-style: none; margin: 0; padding: 18px 0; border-block: 1px solid var(--line); display: grid; gap: 10px; font-size: 14px; }
-.pk .ticks li { display: grid; grid-template-columns: 18px minmax(0, 1fr); gap: 8px; }
-.pk .ticks li::before { content: "✓"; color: var(--rouge); font-weight: 600; }
-.pk .before { margin: 20px 0 22px; flex: 1; }
-.pk .before h4 { font-family: var(--display); font-weight: 500; font-size: 22px; color: var(--rouge); margin: 0 0 6px; }
-.pk details { border-bottom: 1px solid var(--line); padding-block: 10px; font-size: 13.5px; }
-.pk summary { cursor: pointer; list-style: none; display: flex; justify-content: space-between; gap: 10px; color: var(--ink); }
-.pk summary::-webkit-details-marker { display: none; }
-.pk summary::after { content: "+"; color: var(--rouge); }
-.pk details[open] summary::after { content: "−"; }
-.pk details p { margin: 8px 0 0; color: var(--ink-soft); font-size: 13.5px; }
-.pk .btn { border-radius: 0; padding: 18px 20px; width: 100%; font-size: 11.5px; }
-.pk .fine { text-align: center; font-size: 11.5px; color: var(--ink-soft); margin-top: 12px; }
-.pk .ribbon { position: absolute; top: 18px; left: 50%; transform: translateX(-50%); z-index: 2; background: var(--rouge); color: #f6efe4; font-size: 10px; font-weight: 500; letter-spacing: .2em; text-transform: uppercase; padding: 7px 14px; white-space: nowrap; }
-.pk.top { background: none; color: var(--ink); }
-.pk.top h3 { color: var(--ink); } .pk.top .price { color: var(--rouge); }
-.pk.top .guests, .pk.top p { color: var(--ink-soft); }
-.pk.top .btn { background: var(--rouge); color: var(--paper); border-color: var(--rouge); }
-
-/* Royal design cards and hero frame */
-.d-art.ornate { padding: 34px; }
-.d-art .tag { top: 44px; left: 44px; }
-.d-art .try { bottom: 44px; }
-.frame.ornate { padding: 46px; }
-.frame.ornate::before { inset: 14px; }
 </style>
 </head>
 <body>
 
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
-
-  <!-- Baroque corner: acanthus scrolls, curls, leaves and a small flower. Drawn for Unveil. -->
-  <symbol id="corner" viewBox="0 0 160 160">
-    <g fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round">
-      <path d="M10 34 C10 16 18 10 36 10 C62 10 76 24 98 20 C114 17 120 8 136 10 C146 11 150 18 146 24"/>
-      <path d="M34 10 C16 10 10 18 10 36 C10 62 24 76 20 98 C17 114 8 120 10 136 C11 146 18 150 24 146"/>
-      <path d="M36 36 C24 36 20 26 26 20 C32 14 42 18 40 26 C38 32 30 30 31 25"/>
-      <path d="M32 62 C32 46 46 32 62 32"/>
-      <path d="M98 20 C102 30 94 36 88 32 C84 29 86 24 90 25"/>
-      <path d="M20 98 C30 102 36 94 32 88 C29 84 24 86 25 90"/>
-      <path d="M62 32 C74 30 82 36 84 46"/>
-      <path d="M32 62 C30 74 36 82 46 84"/>
-      <path d="M120 12 C124 22 132 24 140 20"/>
-      <path d="M12 120 C22 124 24 132 20 140"/>
-    </g>
-    <g fill="currentColor">
-      <path d="M44 44 C60 32 76 38 84 52 C70 46 58 48 48 58 Z"/>
-      <path d="M44 44 C32 60 38 76 52 84 C46 70 48 58 58 48 Z"/>
-      <path d="M66 18 C74 12 84 14 88 22 C80 20 72 22 66 18 Z"/>
-      <path d="M18 66 C12 74 14 84 22 88 C20 80 22 72 18 66 Z"/>
-      <circle cx="58" cy="58" r="4"/><circle cx="66" cy="54" r="3.4"/><circle cx="54" cy="66" r="3.4"/><circle cx="64" cy="64" r="3"/>
-      <circle cx="112" cy="20" r="2.6"/><circle cx="20" cy="112" r="2.6"/><circle cx="124" cy="15" r="2"/><circle cx="15" cy="124" r="2"/>
-    </g>
-  </symbol>
-  <!-- Shell crest for the top and bottom of a frame -->
-  <symbol id="crest" viewBox="0 0 140 46">
-    <g fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
-      <path d="M8 40 C24 40 30 28 44 30 C52 31 54 38 60 38"/>
-      <path d="M132 40 C116 40 110 28 96 30 C88 31 86 38 80 38"/>
-      <path d="M48 38 C48 18 60 6 70 6 C80 6 92 18 92 38"/>
-      <path d="M70 8 L70 36 M60 12 L64 36 M80 12 L76 36 M53 22 L60 37 M87 22 L80 37"/>
-      <path d="M24 34 C20 26 26 22 30 26"/><path d="M116 34 C120 26 114 22 110 26"/>
-    </g>
-    <circle cx="70" cy="40" r="3.4" fill="currentColor"/>
-  </symbol>
-  <!-- Damask motif for the paper -->
-  <pattern id="damask" width="180" height="180" patternUnits="userSpaceOnUse">
-    <g color="#d9c9ae" opacity=".55">
-      <use href="#corner" x="10" y="10" width="80" height="80"/>
-      <use href="#corner" x="10" y="10" width="80" height="80" transform="translate(180 0) scale(-1 1)"/>
-      <use href="#corner" x="10" y="10" width="80" height="80" transform="translate(0 180) scale(1 -1)"/>
-      <use href="#corner" x="10" y="10" width="80" height="80" transform="translate(180 180) scale(-1 -1)"/>
-    </g>
-  </pattern>
   <symbol id="m" viewBox="0 0 120 112">
     <path fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" d="M16 100 V66 A12 12 0 0 1 40 66 V100"/>
     <path fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" d="M80 100 V66 A12 12 0 0 1 104 66 V100"/>
@@ -294,8 +197,6 @@ body { background-image: none; }
     <path stroke="currentColor" stroke-width="2.4" stroke-linecap="round" d="M8 100 H112"/>
   </symbol>
 </svg>
-
-<svg class="damask" aria-hidden="true"><rect width="100%" height="100%" fill="url(#damask)"/></svg>
 
 <div class="strip"><div class="wrap"><span>Unveil · Animated invitations</span><span class="hide-sm">Made in Lebanon · Sent worldwide</span></div></div>
 
@@ -329,7 +230,7 @@ body { background-image: none; }
         <div><b>Live</b>guest list &amp; RSVP</div>
       </div>
     </div>
-    <figure class="frame ornate">
+    <figure class="frame">
       <div class="phone" aria-hidden="true">
         <div class="screen">
           <div class="p-invite">
@@ -362,21 +263,21 @@ body { background-image: none; }
     <p class="intro">Each design begins with a small ritual on your guest’s phone, then reveals your invitation in the same style. Tap a design to try it.</p>
     <div class="designs">
       <article class="design">
-        <a class="d-art ornate" href="demo.html" aria-label="Try The Veil"><span class="tag">Signature</span><span class="in veil"><svg class="mark" viewBox="0 0 120 112" aria-hidden="true"><use href="#m"/></svg></span><span class="try">Tap to try</span></a>
+        <a class="d-art" href="demo.html" aria-label="Try The Veil"><span class="tag">Signature</span><span class="in veil"><svg class="mark" viewBox="0 0 120 112" aria-hidden="true"><use href="#m"/></svg></span><span class="try">Tap to try</span></a>
         <div class="meta"><span>Wedding</span><span>All packages</span></div>
         <h3>The Veil</h3>
         <p>A sheer bridal veil covers the screen. Guests swipe it up, and your names come into focus as gold dust falls.</p>
         <a class="go" href="demo.html">Try the demo →</a>
       </article>
       <article class="design">
-        <a class="d-art ornate" href="demo.html?reveal=seal" aria-label="Try The Seal"><span class="tag">Classic</span><span class="in seal"><span class="wax">L·K</span></span><span class="try">Tap to try</span></a>
+        <a class="d-art" href="demo.html?reveal=seal" aria-label="Try The Seal"><span class="tag">Classic</span><span class="in seal"><span class="wax">L·K</span></span><span class="try">Tap to try</span></a>
         <div class="meta"><span>Wedding · Engagement</span><span>All packages</span></div>
         <h3>The Seal</h3>
         <p>A wax seal with your initials. Guests tap to break it, the envelope opens, and the invitation appears.</p>
         <a class="go" href="demo.html?reveal=seal">Try the demo →</a>
       </article>
       <article class="design">
-        <a class="d-art ornate" href="demo-gold.html" aria-label="Try The Stage"><span class="tag">New</span><span class="in stage"><span class="spot"></span></span><span class="try">Tap to try</span></a>
+        <a class="d-art" href="demo-gold.html" aria-label="Try The Stage"><span class="tag">New</span><span class="in stage"><span class="spot"></span></span><span class="try">Tap to try</span></a>
         <div class="meta"><span>Wedding</span><span>All packages</span></div>
         <h3>The Stage</h3>
         <p>Red glitter melts away with a breath, velvet curtains part, your names write themselves in and a spotlight finds the two of you.</p>
@@ -424,45 +325,29 @@ body { background-image: none; }
     <h2 id="h-pk">One price per event, <em>sized to your guest list.</em></h2>
     <p class="intro">One payment per event, in US dollars. Every feature is included in every package.</p>
     <div class="packages">
-      <article class="pk ornate">
-        <span class="num">i</span>
+      <article class="pk">
         <h3>Intimate</h3><div class="guests">Up to 50 guests</div>
         <div class="price"><sup>$</sup>39.99</div>
-        <p class="desc">For engagements, small weddings and family dinners.</p>
-        <ul class="ticks"><li>Your choice of opening</li><li>A personal link for every family</li><li>RSVP and your guest dashboard</li><li>Countdown, schedule and map</li></ul>
-        <div class="before"><h4>Good to know</h4><details><summary>Is RSVP included?</summary><p>Yes. Every package includes RSVP and your live guest dashboard.</p></details><details><summary>Will it open on every phone?</summary><p>Yes. It opens in the browser, with nothing to download.</p></details></div>
-        <a class="btn" href="https://instagram.com/unveil.invitations" target="_blank" rel="noopener noreferrer">Order Intimate · $39.99 ↗</a>
-        <div class="fine">Ready after you approve your preview</div>
+        <p>Engagements, small weddings and family dinners.</p>
+        <a class="btn" href="https://instagram.com/unveil.invitations" target="_blank" rel="noopener noreferrer">Order now</a>
       </article>
-      <article class="pk ornate">
-        <span class="num">ii</span>
+      <article class="pk">
         <h3>Classic</h3><div class="guests">Up to 100 guests</div>
         <div class="price"><sup>$</sup>69.99</div>
-        <p class="desc">For a close circle of family and friends.</p>
-        <ul class="ticks"><li>Everything in Intimate</li><li>Up to 100 guests</li><li>WhatsApp invites and reminders</li><li>Guest list for your venue</li></ul>
-        <div class="before"><h4>Good to know</h4><details><summary>Is RSVP included?</summary><p>Yes. Every package includes RSVP and your live guest dashboard.</p></details><details><summary>Will it open on every phone?</summary><p>Yes. It opens in the browser, with nothing to download.</p></details></div>
-        <a class="btn" href="https://instagram.com/unveil.invitations" target="_blank" rel="noopener noreferrer">Order Classic · $69.99 ↗</a>
-        <div class="fine">Ready after you approve your preview</div>
+        <p>A close circle of family and friends.</p>
+        <a class="btn" href="https://instagram.com/unveil.invitations" target="_blank" rel="noopener noreferrer">Order now</a>
       </article>
-      <article class="pk ornate">
-        <span class="num">iii</span>
+      <article class="pk">
         <h3>Grand</h3><div class="guests">Up to 150 guests</div>
         <div class="price"><sup>$</sup>74.99</div>
-        <p class="desc">For the full family, on both sides.</p>
-        <ul class="ticks"><li>Everything in Classic</li><li>Up to 150 guests</li><li>Your story, dress code and gifts</li><li>Background music</li></ul>
-        <div class="before"><h4>Good to know</h4><details><summary>Is RSVP included?</summary><p>Yes. Every package includes RSVP and your live guest dashboard.</p></details><details><summary>Will it open on every phone?</summary><p>Yes. It opens in the browser, with nothing to download.</p></details></div>
-        <a class="btn" href="https://instagram.com/unveil.invitations" target="_blank" rel="noopener noreferrer">Order Grand · $74.99 ↗</a>
-        <div class="fine">Ready after you approve your preview</div>
+        <p>The full family, both sides.</p>
+        <a class="btn" href="https://instagram.com/unveil.invitations" target="_blank" rel="noopener noreferrer">Order now</a>
       </article>
-      <article class="pk ornate top"><span class="ribbon">For the big wedding</span>
-        <span class="num">iv</span>
+      <article class="pk top">
         <h3>Unlimited</h3><div class="guests">Unlimited guests</div>
         <div class="price"><sup>$</sup>99</div>
-        <p class="desc">For the big Lebanese wedding: invite everyone.</p>
-        <ul class="ticks"><li>Everything in Grand</li><li>No limit on guests</li><li>Ideal for 300+ invitations</li><li>Every feature included</li></ul>
-        <div class="before"><h4>Good to know</h4><details><summary>Is there really no limit?</summary><p>None. Invite as many guests as your wedding needs.</p></details><details><summary>Will it open on every phone?</summary><p>Yes. It opens in the browser, with nothing to download.</p></details></div>
-        <a class="btn btn-solid" href="https://instagram.com/unveil.invitations" target="_blank" rel="noopener noreferrer">Order Unlimited · $99 ↗</a>
-        <div class="fine">Ready after you approve your preview</div>
+        <p>For the big Lebanese wedding: invite everyone.</p>
+        <a class="btn" href="https://instagram.com/unveil.invitations" target="_blank" rel="noopener noreferrer">Order now</a>
       </article>
     </div>
     <p class="note">Orders are taken on Instagram for now. Tell us your date and guest count.</p>
@@ -507,14 +392,5 @@ body { background-image: none; }
   </div>
 </footer>
 
-
-<script>
-document.querySelectorAll('.ornate').forEach(function (el) {
-  var parts = ['tl', 'tr', 'bl', 'br'].map(function (c) { return '<svg class="orn ' + c + '" aria-hidden="true"><use href="#corner"/></svg>'; });
-  parts.push('<svg class="orn crest" viewBox="0 0 140 46" aria-hidden="true"><use href="#crest"/></svg>');
-  parts.push('<svg class="orn crest b" viewBox="0 0 140 46" aria-hidden="true"><use href="#crest"/></svg>');
-  el.insertAdjacentHTML('afterbegin', parts.join(''));
-});
-</script>
 </body>
 </html>
