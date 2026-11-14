@@ -86,7 +86,7 @@ body { background: radial-gradient(120% 80% at 50% 30%, #eee7da, #cfc4b1 70%, #b
 
 .k { font: 500 .62em/1.4 'Jost', sans-serif; letter-spacing: .3em; text-transform: uppercase; color: var(--gold); margin: 0 0 .7em; }
 .names { font-family: 'Pinyon Script', cursive; font-weight: 400; color: #8a6a35; line-height: 1; margin: .1em 0 .2em; }
-.names span { display: block; font-size: 2.6em; overflow-wrap: break-word; hyphens: auto; }
+.names span { display: block; font-size: 2.6em; white-space: nowrap; padding: 0 .15em; }
 .names i { display: block; font-style: normal; font-size: 1.3em; color: var(--gold-l); margin: .05em 0 .1em; }
 .lead { font-size: 1.08em; margin: .6em 0; }
 .date { font-family: 'Cormorant Garamond', serif; font-size: 1.35em; letter-spacing: .18em; margin: .5em 0 .1em; }
@@ -357,6 +357,16 @@ input:focus, textarea:focus, select:focus, .btn:focus-visible { outline: 2px sol
     var sn = el('p', 'names'); sn.appendChild(el('span', '', couple)); sg.appendChild(sn);
     var mk = el('a', 'made', 'Made with Unveil'); mk.href = 'index.html'; sg.appendChild(mk);
     card.appendChild(sg);
+    fitNames(); if (document.fonts) document.fonts.ready.then(fitNames); addEventListener('resize', fitNames);
+  }
+
+  /* Long names shrink to fit their line instead of breaking in two */
+  function fitNames() {
+    card.querySelectorAll('.names span').forEach(function (s) {
+      s.style.fontSize = ''; var size = parseFloat(getComputedStyle(s).fontSize), room = card.clientWidth * 0.9;
+      if (!room) return;
+      for (var i = 0; i < 30 && s.scrollWidth > room; i++) { size *= 0.94; s.style.fontSize = size + 'px'; }
+    });
   }
 })();
 </script>
