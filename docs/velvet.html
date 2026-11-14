@@ -261,13 +261,13 @@ textarea { min-height: 80px; resize: vertical; }
         <filter id="shadow" x="-30%" y="-30%" width="160%" height="180%"><feDropShadow dx="0" dy="30" stdDeviation="26" flood-color="#000" flood-opacity=".75"/></filter>
       </defs>
       <g filter="url(#shadow)">
-        <polygon points="40,385 560,385 560,445 510,492 90,492 40,445" fill="url(#front)"/>
+        <path d="M40,385 H560 V448 Q560,492 516,492 H84 Q40,492 40,448 Z" fill="url(#front)"/>
         <polygon points="40,385 560,385 560,392 40,392" fill="#2c040a" opacity=".5"/>
         <line x1="50" y1="430" x2="550" y2="430" stroke="#2c040a" stroke-width="1.5" opacity=".6"/>
         <line x1="50" y1="432" x2="550" y2="432" stroke="#a42a40" stroke-width="1" opacity=".35"/>
       </g>
-      <polygon points="95,30 505,30 560,85 560,390 40,390 40,85" fill="#3a0710"/>
-      <polygon points="104,44 496,44 544,92 544,382 56,382 56,92" fill="url(#satin)"/>
+      <path d="M74,30 H526 Q560,30 560,64 V390 H40 V64 Q40,30 74,30 Z" fill="#3a0710"/>
+      <path d="M84,44 H516 Q544,44 544,72 V382 H56 V72 Q56,44 84,44 Z" fill="url(#satin)"/>
       <g class="card-in">
         <rect x="132" y="104" width="336" height="238" fill="#fcf7ec" stroke="url(#gold)" stroke-width="3"/>
         <rect x="144" y="116" width="312" height="214" fill="none" stroke="#c9a35b" stroke-width="1"/>
@@ -275,8 +275,7 @@ textarea { min-height: 80px; resize: vertical; }
         <line x1="230" y1="240" x2="370" y2="240" stroke="#c9a35b" stroke-width="1"/>
         <text x="300" y="276" text-anchor="middle" font-family="Jost, sans-serif" font-size="13" letter-spacing="6" fill="#a8813c" id="cardNames">LARA &amp; KARIM</text>
       </g>
-      <rect x="289" y="396" width="22" height="36" rx="10" fill="url(#gold)"/>
-      <ellipse cx="300" cy="436" rx="10" ry="5" fill="#6b4718"/>
+      <circle cx="300" cy="414" r="13" fill="url(#gold)"/><circle cx="300" cy="414" r="7" fill="none" stroke="#8a6326" stroke-width="1.2"/><circle cx="296" cy="410" r="3" fill="#fff6d8" opacity=".7"/>
     </svg>
     <div class="box-glow"></div>
 
@@ -284,29 +283,58 @@ textarea { min-height: 80px; resize: vertical; }
       <svg class="front" viewBox="0 0 600 520" aria-hidden="true">
         <defs>
           <linearGradient id="gold2" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f8e4ae"/><stop offset=".45" stop-color="#c99a4b"/><stop offset=".7" stop-color="#f2d58e"/><stop offset="1" stop-color="#9c7432"/></linearGradient>
-          <radialGradient id="leather" cx="38%" cy="28%" r="85%"><stop offset="0" stop-color="#b8223d"/><stop offset=".55" stop-color="#8c1229"/><stop offset="1" stop-color="#560716"/></radialGradient>
-          <filter id="grain"><feTurbulence type="fractalNoise" baseFrequency=".85 .3" numOctaves="2" seed="5"/><feColorMatrix values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 .32 0"/><feComposite in2="SourceGraphic" operator="in"/></filter>
-          <linearGradient id="sheen" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#fff" stop-opacity="0"/><stop offset=".5" stop-color="#fff" stop-opacity=".16"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient>
-          <clipPath id="lidClip"><polygon points="95,30 505,30 560,85 560,385 40,385 40,85"/></clipPath>
-          <symbol id="grose" viewBox="-12 -12 24 24"><g fill="none" stroke="url(#gold2)" stroke-width="1.3" stroke-linecap="round">
-            <path d="M0,0 m-1,0 a1,1 0 1,1 2,0 a2.2,2.2 0 1,1 -4.4,0 a3.6,3.6 0 1,1 7.2,0 a5,5 0 1,1 -10,.4"/>
-            <path d="M-7,3 q-3,5 2,7 M7,3 q3,5 -2,7" /></g></symbol>
+          <radialGradient id="vlid" cx="36%" cy="24%" r="90%"><stop offset="0" stop-color="#9c1a33"/><stop offset=".5" stop-color="#6e0f22"/><stop offset="1" stop-color="#3f0612"/></radialGradient>
+          <radialGradient id="dome" cx="50%" cy="45%" r="60%"><stop offset="0" stop-color="#fff" stop-opacity=".07"/><stop offset=".7" stop-color="#fff" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".35"/></radialGradient>
+          <filter id="pile" x="0" y="0" width="100%" height="100%"><feTurbulence type="fractalNoise" baseFrequency="1.1" numOctaves="2" seed="9"/><feColorMatrix values="0 0 0 0 1  0 0 0 0 .85  0 0 0 0 .9  0 0 0 .13 0"/><feComposite in2="SourceGraphic" operator="in"/></filter>
+          <linearGradient id="sheen" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#fff" stop-opacity="0"/><stop offset=".5" stop-color="#ffe9d0" stop-opacity=".14"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient>
+          <clipPath id="lidClip"><path d="M74,30 H526 Q560,30 560,64 V351 Q560,385 526,385 H74 Q40,385 40,351 V64 Q40,30 74,30 Z"/></clipPath>
+          <!-- Half of the baroque crest (mirrored for the other half). Original Unveil artwork. -->
+          <g id="crestHalf" fill="none" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M0,-112 C30,-112 50,-97 68,-93 C86,-89 95,-101 102,-91 C109,-81 97,-71 91,-61 C80,-41 93,-12 97,8 C101,33 87,57 77,73 C66,90 41,96 21,104 C10,108 4,115 0,122"/>
+            <path d="M0,-96 C24,-96 42,-83 58,-79 C72,-76 80,-80 84,-74 C76,-58 72,-38 80,-12 C86,10 82,38 68,58 C56,74 34,82 16,90 C8,94 3,99 0,104" stroke-width=".8"/>
+            <path d="M68,-93 C62,-111 79,-125 92,-117 C103,-110 97,-97 88,-101"/>
+            <path d="M97,8 C113,2 122,17 114,27 C107,35 97,29 101,23"/>
+            <path d="M77,73 C93,71 104,85 96,96 C89,104 78,98 82,90"/>
+            <path d="M0,122 C8,130 22,128 26,120 C29,113 22,108 17,112"/>
+            <path d="M91,-61 C104,-58 110,-46 104,-38 M86,40 C100,44 104,56 98,62"/>
+            <g class="leaves"><path d="M95,-40 q7,-6 12,-2 q-6,6 -12,2z M99,-20 q8,-4 12,1 q-7,4 -12,-1z M100,48 q8,2 10,8 q-8,0 -10,-8z M30,-112 q4,-8 11,-8 q-3,8 -11,8z M50,-105 q6,-6 12,-4 q-5,7 -12,4z"/></g>
+          </g>
+          <g id="fleuron" fill="none" stroke-linecap="round">
+            <path d="M0,-112 C-9,-123 -7,-138 0,-148 C7,-138 9,-123 0,-112 Z"/>
+            <path d="M0,-118 C-10,-114 -22,-122 -20,-133 C-12,-131 -6,-124 -3,-117 M0,-118 C10,-114 22,-122 20,-133 C12,-131 6,-124 3,-117"/>
+            <path d="M-12,-108 H12"/>
+          </g>
+          <g id="crest"><use href="#crestHalf"/><use href="#crestHalf" transform="scale(-1 1)"/><use href="#fleuron"/></g>
         </defs>
-        <polygon points="95,30 505,30 560,85 560,385 40,385 40,85" fill="url(#leather)"/>
-        <polygon points="95,30 505,30 560,85 560,385 40,385 40,85" fill="#000" filter="url(#grain)"/>
+        <path d="M74,30 H526 Q560,30 560,64 V351 Q560,385 526,385 H74 Q40,385 40,351 V64 Q40,30 74,30 Z" fill="url(#vlid)"/>
+        <path d="M74,30 H526 Q560,30 560,64 V351 Q560,385 526,385 H74 Q40,385 40,351 V64 Q40,30 74,30 Z" fill="#000" filter="url(#pile)"/>
+        <!-- tone-on-tone embossed scrollwork across the lid -->
+        <g clip-path="url(#lidClip)" transform="translate(300 210) scale(1.95 1.4)" stroke-width="1.1">
+          <use href="#crest" stroke="#24020a" opacity=".7" transform="translate(.9 1.1)"/>
+          <use href="#crest" stroke="#c23752" opacity=".55"/>
+        </g>
+        <path d="M74,30 H526 Q560,30 560,64 V351 Q560,385 526,385 H74 Q40,385 40,351 V64 Q40,30 74,30 Z" fill="url(#dome)"/>
         <g clip-path="url(#lidClip)"><rect class="lid-sheen" x="-160" y="0" width="160" height="520" fill="url(#sheen)" transform="skewX(-20)"/></g>
-        <polygon points="95,30 505,30 560,85 560,96 40,96 40,85" fill="#fff" opacity=".06"/>
-        <polygon points="104,46 496,46 544,94 544,370 56,370 56,94" fill="none" stroke="url(#gold2)" stroke-width="2"/>
-        <path id="garland" d="M132,80 L468,80 L508,120 L508,336 L92,336 L92,120 Z" fill="none"/>
-        <g id="roses"></g>
+        <!-- gold piping -->
+        <path d="M80,44 H520 Q546,44 546,70 V345 Q546,371 520,371 H80 Q54,371 54,345 V70 Q54,44 80,44 Z" fill="none" stroke="#2a030a" stroke-width="4.5" opacity=".5" transform="translate(0 1.5)"/>
+        <path d="M80,44 H520 Q546,44 546,70 V345 Q546,371 520,371 H80 Q54,371 54,345 V70 Q54,44 80,44 Z" fill="none" stroke="url(#gold2)" stroke-width="3.2"/>
+        <path d="M80,44 H520 Q546,44 546,70" fill="none" stroke="#fff6d8" stroke-width="1" opacity=".6"/>
+        <!-- the embossed gold crest -->
+        <g transform="translate(300 216) scale(1.12)">
+          <use href="#crest" stroke="#26020a" stroke-width="3.4" opacity=".75" transform="translate(1.4 2)"/>
+          <use href="#crest" stroke="url(#gold2)" stroke-width="2.8"/>
+          <use href="#crest" stroke="#fff3cf" stroke-width=".7" opacity=".55" transform="translate(-.6 -.8)"/>
+        </g>
         <g id="mono" transform="translate(300 222)">
-          <text id="m1" text-anchor="middle" x="-30" y="6" font-family="Pinyon Script, cursive" font-size="138" fill="url(#gold2)">L</text>
-          <text id="m2" text-anchor="middle" x="34" y="52" font-family="Pinyon Script, cursive" font-size="138" fill="url(#gold2)">K</text>
+          <text id="m1" text-anchor="middle" x="-14" y="-6" font-family="Bodoni Moda, Didot, Georgia, serif" font-size="96" fill="#2a030a" opacity=".6" dx="1.5" dy="2">L</text>
+          <text text-anchor="middle" x="-14" y="-6" font-family="Bodoni Moda, Didot, Georgia, serif" font-size="96" fill="url(#gold2)" class="mi1">L</text>
+          <text id="m2" text-anchor="middle" x="20" y="62" font-family="Bodoni Moda, Didot, Georgia, serif" font-size="96" fill="#2a030a" opacity=".6" dx="1.5" dy="2">K</text>
+          <text text-anchor="middle" x="20" y="62" font-family="Bodoni Moda, Didot, Georgia, serif" font-size="96" fill="url(#gold2)" class="mi2">K</text>
         </g>
       </svg>
       <svg class="back" viewBox="0 0 600 520" aria-hidden="true">
-        <polygon points="95,30 505,30 560,85 560,385 40,385 40,85" fill="#e7d4ad"/>
-        <polygon points="110,48 490,48 540,98 540,368 60,368 60,98" fill="#f3e5c6" stroke="#c9a35b" stroke-width="1.5" stroke-dasharray="5 4"/>
+        <path d="M74,30 H526 Q560,30 560,64 V351 Q560,385 526,385 H74 Q40,385 40,351 V64 Q40,30 74,30 Z" fill="#e3cfa6"/>
+        <path d="M84,48 H516 Q540,48 540,72 V344 Q540,368 516,368 H84 Q60,368 60,344 V72 Q60,48 84,48 Z" fill="#f3e5c6" stroke="#c9a35b" stroke-width="1.5" stroke-dasharray="5 4"/>
       </svg>
     </div>
   </div>
@@ -518,25 +546,12 @@ textarea { min-height: 80px; resize: vertical; }
     palette: ['#f3ece0', '#d8b77a', '#a3283c', '#6e1423', '#2a1014'], notes: [{ title: 'Gifts', text: 'Your presence is our gift. A wishing well will be at the venue.' }, { title: 'An adults-only evening', text: 'We adore your little ones, yet this night is for grown-ups.' }, { title: 'Unplugged ceremony', text: 'Please keep phones away during the vows. Our photographer will share every picture.' }],
     meals: ['Meat', 'Fish', 'Vegetarian'], replyBy: '1 May 2027' }, guest: null, reply: null };
 
-  /* ---------- Art: garland on the lid, roses and light in the hall ---------- */
+  /* ---------- Art: roses and light in the hall ---------- */
   function use(parent, id, x, y, w, h, rot) {
     var u = document.createElementNS(NS, 'use'); u.setAttribute('href', '#' + id);
     u.setAttribute('x', -w / 2); u.setAttribute('y', -h / 2); u.setAttribute('width', w); u.setAttribute('height', h);
     var g = document.createElementNS(NS, 'g'); g.setAttribute('transform', 'translate(' + x + ' ' + y + ') rotate(' + (rot || 0) + ')'); g.appendChild(u); parent.appendChild(g); return g;
   }
-  (function garland() {
-    var path = $('garland'), g = $('roses'), L = path.getTotalLength(), n = 22;
-    for (var i = 0; i < n; i++) {
-      var p = path.getPointAtLength(L * i / n), q2 = path.getPointAtLength(L * (i + .5) / n), a = Math.atan2(q2.y - p.y, q2.x - p.x) * 180 / Math.PI;
-      use(g, 'grose', p.x, p.y, 28, 28, a);
-      var mid = { x: (p.x + q2.x) / 2, y: (p.y + q2.y) / 2 };
-      [-1, 1].forEach(function (s) {
-        var e = document.createElementNS(NS, 'path');
-        e.setAttribute('d', 'M0,0 q6,' + (-7 * s) + ' 13,' + (-4 * s) + ' q-6,' + (6 * s) + ' -13,' + (4 * s) + 'z');
-        e.setAttribute('fill', 'url(#gold2)'); e.setAttribute('transform', 'translate(' + mid.x + ' ' + mid.y + ') rotate(' + a + ')'); g.appendChild(e);
-      });
-    }
-  })();
   (function hall() {
     var hr = $('hallRoses');
     [[10, 760, 0, 'leaf', 60, 22, -30], [70, 780, 0, 'leaf', 56, 20, 25], [380, 760, 0, 'leaf', 60, 22, 210], [440, 790, 0, 'leaf', 56, 20, 150]].forEach(function (l) { use(hr, l[3], l[0], l[1], l[4], l[5], l[6]); });
@@ -581,7 +596,7 @@ textarea { min-height: 80px; resize: vertical; }
     var longDate = fmt({ weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
     var ini1 = w.partner1.trim().charAt(0).toUpperCase(), ini2 = w.partner2.trim().charAt(0).toUpperCase();
 
-    $('m1').textContent = ini1; $('m2').textContent = ini2; $('cardNames').textContent = couple.toUpperCase();
+    $('m1').textContent = ini1; $('m2').textContent = ini2; document.querySelector('.mi1').textContent = ini1; document.querySelector('.mi2').textContent = ini2; $('cardNames').textContent = couple.toUpperCase();
     $('introNames').textContent = couple;
     [['heroNames'], ['byeNames']].forEach(function (k) { var e = $(k[0]); e.children[0].textContent = w.partner1; e.children[2].textContent = w.partner2; });
     $('heroDate').textContent = fmt({ day: 'numeric', month: 'long', year: 'numeric' });
