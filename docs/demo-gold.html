@@ -40,11 +40,22 @@ body { touch-action: none; user-select: none; -webkit-user-select: none; }
   filter: blur(14px); animation: drift 9s ease-in-out infinite alternate; }
 .lit .mist { opacity: 1; }
 @keyframes drift { to { transform: translateX(6%); } }
-.couple { position: absolute; left: 50%; bottom: 10.5%; width: min(58vw, 300px); transform: translateX(-50%); opacity: 0; transition: opacity 2s ease 2.2s; filter: drop-shadow(0 0 18px rgba(255,170,185,.45)); }
+.couple { position: absolute; left: 50%; bottom: 9%; width: min(72vw, 340px); transform: translateX(-50%); opacity: 0; transition: opacity 2s ease 2.2s; filter: drop-shadow(0 0 18px rgba(255,170,185,.45)); }
 .lit .couple { opacity: 1; }
 .couple svg { width: 100%; height: auto; display: block; }
-.sway { transform-origin: 50% 100%; animation: sway 5s ease-in-out infinite; }
-@keyframes sway { 50% { transform: rotate(1.6deg); } }
+/* The dance: the couple turn around each other, sway, rise and fall, and the dress swirls. */
+.spin { transform-box: fill-box; transform-origin: 50% 50%; animation: spin 7s cubic-bezier(.6,0,.4,1) infinite; }
+@keyframes spin { 0%, 30% { transform: scaleX(1); } 50%, 80% { transform: scaleX(-1); } 100% { transform: scaleX(1); } }
+.sway { transform-box: fill-box; transform-origin: 50% 100%; animation: sway 3.5s ease-in-out infinite; }
+@keyframes sway {
+  0% { transform: translate(-7px, 0) rotate(-3deg); }
+  25% { transform: translate(0, -5px) rotate(0deg); }
+  50% { transform: translate(7px, 0) rotate(3deg); }
+  75% { transform: translate(0, -5px) rotate(0deg); }
+  100% { transform: translate(-7px, 0) rotate(-3deg); }
+}
+.skirt { transform-box: fill-box; transform-origin: 50% 0; animation: skirt 1.75s ease-in-out infinite alternate; }
+@keyframes skirt { from { transform: skewX(-7deg) scaleX(.94); } to { transform: skewX(7deg) scaleX(1.07); } }
 .dust { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
 
 /* ---------- Words over the stage ---------- */
@@ -91,7 +102,7 @@ canvas#glitter.gone { opacity: 0; }
 @media (prefers-reduced-motion: reduce) {
   canvas.curtain { transition-duration: 1.2s; }
   .write { animation-duration: .6s; }
-  .mist, .sway, .pulse { animation: none; }
+  .mist, .sway, .spin, .skirt, .pulse { animation: none; }
 }
 </style>
 </head>
@@ -108,7 +119,7 @@ canvas#glitter.gone { opacity: 0; }
         <linearGradient id="suit" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3a1018"/><stop offset="1" stop-color="#14040a"/></linearGradient>
         <radialGradient id="skin" cx=".4" cy=".35" r=".7"><stop offset="0" stop-color="#ffe3d6"/><stop offset="1" stop-color="#e9b7a6"/></radialGradient>
       </defs>
-      <g class="sway">
+      <g class="spin"><g class="sway">
         <!-- groom -->
         <path d="M168 120 C160 150 160 190 164 232 L168 318 L184 318 L186 246 L192 318 L208 318 L206 232 C210 190 206 150 196 122 Z" fill="url(#suit)"/>
         <path d="M168 122 C176 112 192 112 198 124 L204 160 L166 160 Z" fill="url(#suit)"/>
@@ -117,7 +128,7 @@ canvas#glitter.gone { opacity: 0; }
         <path d="M171 98 C172 84 196 82 199 98 C196 92 178 90 171 98 Z" fill="#2a0c10"/>
         <path d="M170 130 C150 140 136 150 124 150" stroke="#2a0c14" stroke-width="11" stroke-linecap="round" fill="none"/>
         <!-- bride -->
-        <path d="M126 140 C110 180 92 230 40 316 C110 330 190 330 236 316 C200 250 170 190 152 140 Z" fill="url(#dress)"/>
+        <path class="skirt" d="M126 140 C110 180 92 230 40 316 C110 330 190 330 236 316 C200 250 170 190 152 140 Z" fill="url(#dress)"/>
         <path d="M60 300 C100 290 150 300 200 294" stroke="#ffffff" stroke-opacity=".5" stroke-width="2" fill="none"/>
         <path d="M80 270 C110 262 150 268 180 262" stroke="#ffffff" stroke-opacity=".35" stroke-width="2" fill="none"/>
         <path d="M128 142 C126 118 132 104 140 100 C148 104 154 118 150 142 Z" fill="#fff4f2"/>
@@ -126,7 +137,7 @@ canvas#glitter.gone { opacity: 0; }
         <path d="M152 82 C190 96 214 150 230 230 C200 180 176 130 150 104 Z" fill="#ffffff" fill-opacity=".35"/>
         <path d="M150 112 C162 108 174 116 182 126" stroke="url(#skin)" stroke-width="7" stroke-linecap="round" fill="none"/>
         <path d="M130 116 C118 130 116 140 122 150" stroke="url(#skin)" stroke-width="7" stroke-linecap="round" fill="none"/>
-      </g>
+      </g></g>
     </svg>
   </div>
   <canvas class="dust" id="dust"></canvas>
@@ -268,13 +279,15 @@ canvas#glitter.gone { opacity: 0; }
     if (blow > 0) {
       const k = Math.ceil(blow * 10);
       for (let i = 0; i < k; i++) hole(Math.random() * W, H - Math.pow(Math.random(), 1.8) * H * 1.05, 18 + 50 * blow * Math.random());
+      blowTime += 1 / 60;
     }
-    if (!cleared && ++frame % 12 === 0 && coverage() < .38) reveal();
+    // A short breath or one swipe is enough: once a little is cleared, the rest melts away by itself.
+    if (!cleared && ++frame % 8 === 0 && (coverage() < .9 || blowTime > .7)) reveal();
     requestAnimationFrame(drawGlitter);
   }
 
   /* ===== Microphone: breath detection ===== */
-  let blow = 0, stream = null, actx = null, anal = null, buf = null, micRaf = 0;
+  let blow = 0, blowTime = 0, stream = null, actx = null, anal = null, buf = null, micRaf = 0;
   async function startMic() {
     $('startBtn').hidden = true;
     started = true;
@@ -322,7 +335,9 @@ canvas#glitter.gone { opacity: 0; }
   function reveal() {
     if (cleared) return;
     cleared = true; stopMic();
-    gl.classList.add('gone'); $('cover').classList.add('gone');
+    // melt the rest of the glitter from the cleared spots outwards, then fade it
+    for (let i = 0; i < 26; i++) at(i * 45, () => { for (let j = 0; j < 14; j++) hole(Math.random() * W, Math.random() * H, 40 + Math.random() * 70); });
+    at(500, () => { gl.classList.add('gone'); $('cover').classList.add('gone'); });
     if (navigator.vibrate) try { navigator.vibrate(25); } catch (e) {}
     at(900, () => document.body.classList.add('opening'));
     at(1300, () => { $('stage').classList.add('lit'); startDust(); });
@@ -361,7 +376,7 @@ canvas#glitter.gone { opacity: 0; }
     ['wFam', 'wAmp', 'wReq', 'wDate', 'wPlace', 'after'].forEach(id => $(id).classList.remove('show'));
     ['wN1', 'wN2'].forEach(id => $(id).classList.remove('write'));
     dustOn = false; dx.clearRect(0, 0, W, H);
-    cleared = false; frame = 0;
+    cleared = false; frame = 0; blowTime = 0;
     $('startBtn').hidden = false; $('call').textContent = 'Blow gently'; $('sub').textContent = 'one soft breath on your screen'; $('alt').hidden = false;
     buildGlitter();
     gl.classList.remove('gone'); $('cover').classList.remove('gone');
