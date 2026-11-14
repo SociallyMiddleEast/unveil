@@ -226,6 +226,26 @@ footer { border-top: 1px solid var(--gold-soft); padding-block: 30px; font-size:
 footer a { color: #f1dfb6; }
 
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } .foil { animation: none; } .p-veil { animation: none; opacity: 0; } .d-art .in { transition: none; } }
+
+/* ---------- Embossed floral frame (one tone, pressed into the velvet) ---------- */
+.floral { position: relative; --fc: 46%; --fm: 36%; }
+.floral::after { content: ""; position: absolute; inset: 4px; pointer-events: none; z-index: 0; mix-blend-mode: overlay; opacity: 1;
+  background:
+    url("assets/fr-tl.png") left top / var(--fc) auto no-repeat,
+    url("assets/fr-tr.png") right top / var(--fc) auto no-repeat,
+    url("assets/fr-bl.png") left bottom / var(--fc) auto no-repeat,
+    url("assets/fr-br.png") right bottom / var(--fc) auto no-repeat,
+    url("assets/fr-top.png") center top / var(--fm) auto no-repeat,
+    url("assets/fr-bottom.png") center bottom / var(--fm) auto no-repeat; }
+.floral > * { position: relative; z-index: 1; }
+.pk.floral { padding-top: 64px; padding-bottom: 56px; }
+.design.floral { --fc: 40%; --fm: 30%; padding: 40px 30px 46px; }
+.design.floral .d-art { margin-inline: 8px; }
+.couture.floral, .board.floral { --fc: 26%; --fm: 20%; }
+.couture.floral { padding: 70px 64px; }
+.board.floral { padding: 52px 40px; }
+.hero-frame { --fc: 30%; --fm: 24%; padding: 70px 40px 64px; border: 1px solid rgba(201,166,93,.25); }
+@media (max-width: 700px) { .hero-frame { --fc: 46%; --fm: 38%; padding: 64px 18px 56px; } .couture.floral, .board.floral { --fc: 44%; --fm: 34%; padding: 64px 26px; } }
 </style>
 </head>
 <body>
@@ -246,7 +266,7 @@ footer a { color: #f1dfb6; }
 </nav>
 
 <header class="hero" id="top">
-  <div class="wrap in">
+  <div class="wrap"><div class="in hero-frame floral">
     <div class="crest"><span class="foil">U</span></div>
     <div class="fleuron"><hr class="foil-line"><i class="foil">❦</i><hr class="foil-line"></div>
     <h1 class="foil">Every invitation deserves an entrance</h1>
@@ -260,7 +280,7 @@ footer a { color: #f1dfb6; }
       <div><b class="foil">1 link</b>for every guest</div>
       <div><b class="foil">Live</b>RSVP &amp; guest list</div>
     </div>
-  </div>
+  </div></div>
 </header>
 
 <section class="deep" id="how-it-opens" aria-labelledby="h-two">
@@ -314,19 +334,19 @@ footer a { color: #f1dfb6; }
     <h2 id="h-designs" class="foil">Choose your opening</h2>
     <p class="intro">Three signature openings, each made yours with your names, date and colours. Try each one as your guests will.</p>
     <div class="designs">
-      <article class="design card">
+      <article class="design card floral">
         <a class="d-art" href="demo.html" aria-label="Try The Veil"><span class="tag">SIGNATURE</span><span class="in veil"><b>L &amp; K</b></span><span class="try">TAP TO TRY</span></a>
         <h3>The Veil</h3>
         <p>A sheer bridal veil covers the screen. Guests swipe it up and your names appear in a fall of gold.</p>
         <div class="row"><a class="btn btn-line btn-sm" href="demo.html">TRY IT</a><a class="btn btn-foil btn-sm" href="#packages">CHOOSE</a></div>
       </article>
-      <article class="design card">
+      <article class="design card floral">
         <a class="d-art" href="demo.html?reveal=seal" aria-label="Try The Seal"><span class="tag">CLASSIC</span><span class="in seal"><span class="wax">L·K</span></span><span class="try">TAP TO TRY</span></a>
         <h3>The Seal</h3>
         <p>A wax seal pressed with your initials. One tap breaks it, and the envelope opens.</p>
         <div class="row"><a class="btn btn-line btn-sm" href="demo.html?reveal=seal">TRY IT</a><a class="btn btn-foil btn-sm" href="#packages">CHOOSE</a></div>
       </article>
-      <article class="design card">
+      <article class="design card floral">
         <a class="d-art" href="demo-gold.html" aria-label="Try The Stage"><span class="tag">NEW</span><span class="in stage"><span class="spot"></span></span><span class="try">TAP TO TRY</span></a>
         <h3>The Stage</h3>
         <p>Glitter melts away with a breath, velvet curtains part, and a spotlight finds the two of you.</p>
@@ -342,28 +362,28 @@ footer a { color: #f1dfb6; }
     <h2 id="h-pk" class="foil">One price per event</h2>
     <p class="intro">Every package includes every feature. Choose by the size of your guest list.</p>
     <div class="packages">
-      <article class="pk card">
+      <article class="pk card floral">
         <span class="n foil">I</span><h3>Intimate</h3><span class="guests">UP TO 50 GUESTS</span>
         <div class="price foil"><sup>$</sup>39.99</div>
         <p class="desc">Engagements, small weddings and family dinners.</p>
         <ul><li>Your choice of opening</li><li>A personal link for every family</li><li>RSVP and live guest list</li><li>Countdown, schedule and map</li></ul>
         <a class="btn btn-line" href="https://instagram.com/unveil.invitations" target="_blank" rel="noopener noreferrer">ORDER NOW</a>
       </article>
-      <article class="pk card">
+      <article class="pk card floral">
         <span class="n foil">II</span><h3>Classic</h3><span class="guests">UP TO 100 GUESTS</span>
         <div class="price foil"><sup>$</sup>69.99</div>
         <p class="desc">A close circle of family and friends.</p>
         <ul><li>Everything in Intimate</li><li>Up to 100 guests</li><li>WhatsApp invites and reminders</li><li>Guest list for your venue</li></ul>
         <a class="btn btn-line" href="https://instagram.com/unveil.invitations" target="_blank" rel="noopener noreferrer">ORDER NOW</a>
       </article>
-      <article class="pk card">
+      <article class="pk card floral">
         <span class="n foil">III</span><h3>Grand</h3><span class="guests">UP TO 150 GUESTS</span>
         <div class="price foil"><sup>$</sup>74.99</div>
         <p class="desc">The full family, both sides.</p>
         <ul><li>Everything in Classic</li><li>Up to 150 guests</li><li>Your story, dress code and gifts</li><li>Background music</li></ul>
         <a class="btn btn-line" href="https://instagram.com/unveil.invitations" target="_blank" rel="noopener noreferrer">ORDER NOW</a>
       </article>
-      <article class="pk card top">
+      <article class="pk card top floral">
         <span class="ribbon">FOR THE BIG WEDDING</span>
         <span class="n foil">IV</span><h3>Unlimited</h3><span class="guests">UNLIMITED GUESTS</span>
         <div class="price foil"><sup>$</sup>99</div>
@@ -378,7 +398,7 @@ footer a { color: #f1dfb6; }
 
 <section id="couture" aria-labelledby="h-couture">
   <div class="wrap">
-    <div class="couture card">
+    <div class="couture card floral">
       <div>
         <div class="eyebrow" style="text-align:left">UNVEIL COUTURE</div>
         <h2 id="h-couture" class="foil">An opening made only for you</h2>
@@ -421,7 +441,7 @@ footer a { color: #f1dfb6; }
         <li><div><b>Ready for your venue</b>Download the final list for seating and catering.</div></li>
       </ul>
     </div>
-    <div class="board card" aria-label="Example of the couple's guest list">
+    <div class="board card floral" aria-label="Example of the couple's guest list">
       <div class="eg">EXAMPLE</div>
       <div class="stats">
         <div class="stat"><b class="foil">186</b><span>Attending</span></div>
