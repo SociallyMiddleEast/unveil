@@ -246,9 +246,31 @@ footer a { color: #f1dfb6; }
 .board.floral { padding: 52px 40px; }
 .hero-frame { --fc: 30%; --fm: 24%; padding: 70px 40px 64px; border: 1px solid rgba(201,166,93,.25); }
 @media (max-width: 700px) { .hero-frame { --fc: 46%; --fm: 38%; padding: 64px 18px 56px; } .couture.floral, .board.floral { --fc: 44%; --fm: 34%; padding: 64px 26px; } }
+
+/* ---------- Wax seal logo ---------- */
+.seal { width: 150px; height: 150px; filter: drop-shadow(0 12px 16px rgba(0,0,0,.5)) drop-shadow(0 2px 2px rgba(0,0,0,.35)); }
+.seal svg { width: 100%; height: 100%; overflow: visible; display: block; }
+@media (max-width: 520px) { .seal { width: 124px; height: 124px; } }
 </style>
 </head>
 <body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <radialGradient id="waxBody" cx="36%" cy="30%" r="78%"><stop offset="0" stop-color="#d9475a"/><stop offset=".42" stop-color="#a4192d"/><stop offset="1" stop-color="#560914"/></radialGradient>
+    <radialGradient id="waxWell" cx="64%" cy="70%" r="78%"><stop offset="0" stop-color="#b02236"/><stop offset=".6" stop-color="#86121f"/><stop offset="1" stop-color="#5a0a15"/></radialGradient>
+    <filter id="waxMelt" x="-25%" y="-25%" width="150%" height="150%">
+      <feTurbulence type="fractalNoise" baseFrequency=".032" numOctaves="2" seed="11"/>
+      <feDisplacementMap in="SourceGraphic" scale="18" xChannelSelector="R" yChannelSelector="G"/>
+    </filter>
+    <filter id="waxGloss" x="-25%" y="-25%" width="150%" height="150%">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="5" result="blur"/>
+      <feSpecularLighting in="blur" surfaceScale="6" specularConstant=".85" specularExponent="24" lighting-color="#ffe6ea" result="spec"><fePointLight x="50" y="18" z="160"/></feSpecularLighting>
+      <feComposite in="spec" in2="SourceAlpha" operator="in" result="specIn"/>
+      <feComposite in="SourceGraphic" in2="specIn" operator="arithmetic" k1="0" k2="1" k3=".6" k4="0"/>
+    </filter>
+  </defs>
+</svg>
 
 <nav aria-label="Main">
   <div class="wrap nav-in">
@@ -267,7 +289,23 @@ footer a { color: #f1dfb6; }
 
 <header class="hero" id="top">
   <div class="wrap"><div class="in hero-frame floral">
-    <div class="crest"><span class="foil">U</span></div>
+    <div class="seal" role="img" aria-label="Unveil wax seal">
+      <svg viewBox="0 0 220 220" aria-hidden="true">
+        <g filter="url(#waxGloss)"><g filter="url(#waxMelt)">
+          <circle cx="110" cy="110" r="88" fill="url(#waxBody)"/>
+          <ellipse cx="166" cy="172" rx="20" ry="15" fill="url(#waxBody)"/>
+          <ellipse cx="44" cy="66" rx="15" ry="12" fill="url(#waxBody)"/>
+          <ellipse cx="58" cy="176" rx="11" ry="9" fill="url(#waxBody)"/>
+        </g></g>
+        <circle cx="110" cy="110" r="66" fill="none" stroke="rgba(255,196,204,.38)" stroke-width="2.5"/>
+        <circle cx="110" cy="110" r="63" fill="url(#waxWell)"/>
+        <circle cx="110" cy="110" r="63" fill="none" stroke="rgba(40,0,6,.5)" stroke-width="2"/>
+        <circle cx="110" cy="110" r="54" fill="none" stroke="rgba(255,205,212,.3)" stroke-width="1.4" stroke-dasharray="1.5 4.5" stroke-linecap="round"/>
+        <text x="112" y="142" text-anchor="middle" font-family="Pinyon Script, cursive" font-size="94" fill="rgba(40,0,6,.6)">U</text>
+        <text x="109" y="139" text-anchor="middle" font-family="Pinyon Script, cursive" font-size="94" fill="rgba(255,205,212,.55)">U</text>
+        <text x="110" y="140" text-anchor="middle" font-family="Pinyon Script, cursive" font-size="94" fill="#a01a2d">U</text>
+      </svg>
+    </div>
     <div class="fleuron"><hr class="foil-line"><i class="foil">❦</i><hr class="foil-line"></div>
     <h1 class="foil">Every invitation deserves an entrance</h1>
     <p class="sub">Animated wedding invitations, made in Lebanon. Your guests open it like a royal letter, then find everything about your day.</p>
@@ -475,7 +513,23 @@ footer a { color: #f1dfb6; }
 
 <section class="final" aria-labelledby="h-final">
   <div class="wrap in">
-    <div class="crest"><span class="foil">U</span></div>
+    <div class="seal" role="img" aria-label="Unveil wax seal">
+      <svg viewBox="0 0 220 220" aria-hidden="true">
+        <g filter="url(#waxGloss)"><g filter="url(#waxMelt)">
+          <circle cx="110" cy="110" r="88" fill="url(#waxBody)"/>
+          <ellipse cx="166" cy="172" rx="20" ry="15" fill="url(#waxBody)"/>
+          <ellipse cx="44" cy="66" rx="15" ry="12" fill="url(#waxBody)"/>
+          <ellipse cx="58" cy="176" rx="11" ry="9" fill="url(#waxBody)"/>
+        </g></g>
+        <circle cx="110" cy="110" r="66" fill="none" stroke="rgba(255,196,204,.38)" stroke-width="2.5"/>
+        <circle cx="110" cy="110" r="63" fill="url(#waxWell)"/>
+        <circle cx="110" cy="110" r="63" fill="none" stroke="rgba(40,0,6,.5)" stroke-width="2"/>
+        <circle cx="110" cy="110" r="54" fill="none" stroke="rgba(255,205,212,.3)" stroke-width="1.4" stroke-dasharray="1.5 4.5" stroke-linecap="round"/>
+        <text x="112" y="142" text-anchor="middle" font-family="Pinyon Script, cursive" font-size="94" fill="rgba(40,0,6,.6)">U</text>
+        <text x="109" y="139" text-anchor="middle" font-family="Pinyon Script, cursive" font-size="94" fill="rgba(255,205,212,.55)">U</text>
+        <text x="110" y="140" text-anchor="middle" font-family="Pinyon Script, cursive" font-size="94" fill="#a01a2d">U</text>
+      </svg>
+    </div>
     <h2 id="h-final" class="foil">Reserve your date</h2>
     <p>Tell us your wedding date and guest count, and we’ll take it from there.</p>
     <div class="cta">
