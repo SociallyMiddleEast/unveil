@@ -19,7 +19,7 @@ A small Apps Script inside the Sheet lets the website read invitations and save 
 ## Day to day
 
 - **New wedding:** add a row in **Weddings**. Fill in the details, then use the **Unveil → Fill codes and links** menu. It creates the couple's private code and fills in their **coupleLink** (their private page) and **sharedLink** (the invitation for group chats).
-- **Design:** pick the wedding's invitation in the **template** column: `velvet-court` (the wax seal envelope) or `jewel-box` (the ivory box with golden doors). Blank means `velvet-court`. Guest links stay the same whichever design you choose.
+- **Design:** pick the wedding's invitation in the **template** column: `velvet-court` (the wax seal envelope) or `jewel-box` (the ivory box with golden doors) or `velvet-box` (the red jewellery box that opens into a gold hall, with a long scrolling invitation). Blank means `velvet-court`. Guest links stay the same whichever design you choose.
 - **Date format:** `2027-06-12 17:00`, in the wedding's time zone (`Asia/Beirut`).
 - **Multi-line cells** (letter, schedule, notes): use Ctrl+Enter or Cmd+Enter for a new line inside a cell.
   - schedule: `17:00 | The ceremony | St. John's Church`

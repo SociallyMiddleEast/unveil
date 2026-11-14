@@ -363,7 +363,7 @@ textarea.inp { min-height: 80px; resize: vertical; font-size: 19px; }
     .then(function (d) {
       if (d.error) return fail('This link isn’t working. Please ask the couple to send it again.');
       /* Each wedding opens in the design the couple chose (the "template" column in the Sheet). */
-      var page = { 'jewel-box': 'box.html' }[d.wedding.template];
+      var page = { 'jewel-box': 'box.html', 'velvet-box': 'velvet.html' }[d.wedding.template];
       if (page) return location.replace(page + location.search);
       render(d);
     })

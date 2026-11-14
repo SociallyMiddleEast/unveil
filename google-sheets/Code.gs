@@ -21,7 +21,7 @@ var TABS = {
 };
 var STAGES = ['details', 'designing', 'preview', 'approved', 'live'];
 /* Invitation designs a wedding can use (the "template" column in Weddings). Blank means velvet-court. */
-var TEMPLATES = ['velvet-court', 'jewel-box'];
+var TEMPLATES = ['velvet-court', 'jewel-box', 'velvet-box'];
 
 /* ---------------- Menu and setup ---------------- */
 
