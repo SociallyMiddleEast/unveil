@@ -1,0 +1,458 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex">
+<title>Lara &amp; Karim · Unveil demo</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;1,6..96,400;1,6..96,500&family=Pinyon+Script&family=Jost:wght@300;400;500;600&display=swap">
+<style>
+/* Layout: one phone-width column on a wine ground. A sheer veil covers the whole screen; the guest swipes it up to reveal the invitation, then scrolls down through the day. Single-theme by design: the Unveil palette. */
+:root {
+  --wine: #2a0d14;
+  --velvet: #5a1624;
+  --champagne: #d8b67a;
+  --ivory: #f3e9e1;
+  --blush: #c99a94;
+  --line: rgba(216,182,122,.28);
+  --display: "Bodoni Moda", "Didot", Georgia, serif;
+  --script: "Pinyon Script", "Snell Roundhand", cursive;
+  --ui: "Jost", "Futura", system-ui, sans-serif;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html, body { background: var(--wine); }
+body { color: var(--ivory); font-family: var(--ui); font-weight: 300; font-size: 16px; line-height: 1.6; -webkit-font-smoothing: antialiased; }
+html.locked, html.locked body { overflow: hidden; height: 100%; }
+.col { max-width: 480px; margin: 0 auto; padding-left: max(22px, env(safe-area-inset-left, 0px)); padding-right: max(22px, env(safe-area-inset-right, 0px)); }
+.ground { background: radial-gradient(120% 60% at 50% 0%, var(--velvet) 0%, var(--wine) 60%) no-repeat, var(--wine); min-height: 100%; }
+
+.mark { display: block; }
+.mark .arch { fill: none; stroke: currentColor; stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }
+.mark .drape { fill: none; stroke: var(--champagne); stroke-width: 2.4; stroke-linecap: round; }
+.mark .base { stroke: currentColor; stroke-width: 2.4; stroke-linecap: round; }
+
+/* ---------- Hero ---------- */
+.hero { min-height: 100svh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding-block: 64px 48px; gap: 6px; position: relative; }
+.hero .dear { font-family: var(--display); font-style: italic; font-size: 17px; color: var(--champagne); min-height: 1.6em; }
+.hero .fam { font-size: 11.5px; letter-spacing: .28em; text-transform: uppercase; opacity: .78; margin-top: 4px; }
+.names { font-family: var(--script); font-weight: 400; color: #f1dcb4; line-height: 1; margin: 18px 0 14px; font-size: clamp(64px, 19vw, 92px); }
+.names .amp { display: block; font-size: .5em; opacity: .75; margin: 4px 0 2px; }
+.hero .req { font-family: var(--display); font-style: italic; font-size: 18px; max-width: 24ch; opacity: .92; }
+.hero .date { font-family: var(--display); font-size: 22px; letter-spacing: .32em; color: var(--champagne); margin-top: 22px; font-variant-numeric: tabular-nums; padding-left: .32em; }
+.hero .place { font-size: 12.5px; letter-spacing: .24em; text-transform: uppercase; opacity: .78; }
+.scroll-cue { position: absolute; bottom: 22px; left: 0; right: 0; font-size: 10.5px; letter-spacing: .26em; text-transform: uppercase; opacity: .55; }
+.scroll-cue::after { content: ""; display: block; width: 1px; height: 26px; background: var(--champagne); margin: 8px auto 0; opacity: .7; animation: cue 2.2s ease-in-out infinite; transform-origin: top; }
+@keyframes cue { 0%,100% { transform: scaleY(.3); } 50% { transform: scaleY(1); } }
+
+/* ---------- Sections ---------- */
+section.blk { padding-block: 56px; border-top: 1px solid var(--line); text-align: center; }
+.kicker { font-size: 11px; letter-spacing: .3em; text-transform: uppercase; color: var(--champagne); font-weight: 500; }
+.blk h2 { font-family: var(--display); font-style: italic; font-weight: 400; font-size: 32px; line-height: 1.15; margin: 8px 0 18px; text-wrap: balance; }
+.blk p { margin: 0 auto; max-width: 34ch; opacity: .88; }
+
+.count { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; margin-top: 8px; }
+.count div { border: 1px solid var(--line); border-radius: 3px; padding: 14px 4px 10px; }
+.count b { display: block; font-family: var(--display); font-weight: 400; font-size: 30px; line-height: 1; font-variant-numeric: tabular-nums; color: #f1dcb4; }
+.count small { display: block; margin-top: 8px; font-size: 10px; letter-spacing: .2em; text-transform: uppercase; opacity: .7; }
+
+.timeline { list-style: none; padding: 0; margin: 10px auto 0; max-width: 340px; text-align: left; position: relative; }
+.timeline::before { content: ""; position: absolute; left: 70px; top: 8px; bottom: 8px; width: 1px; background: var(--line); }
+.timeline li { display: grid; grid-template-columns: 58px minmax(0, 1fr); gap: 25px; padding: 12px 0; position: relative; }
+.timeline li::before { content: ""; position: absolute; left: 67px; top: 21px; width: 7px; height: 7px; border-radius: 50%; background: var(--champagne); }
+.timeline time { font-family: var(--display); font-size: 17px; color: var(--champagne); font-variant-numeric: tabular-nums; text-align: right; padding-top: 1px; }
+.timeline b { display: block; font-family: var(--display); font-style: italic; font-weight: 400; font-size: 20px; line-height: 1.25; }
+.timeline span { font-size: 14px; opacity: .78; }
+
+.venue-card { border: 1px solid var(--line); border-radius: 4px; padding: 26px 20px; margin-top: 6px; display: grid; gap: 4px; justify-items: center; }
+.venue-card .mark { width: 54px; color: var(--ivory); margin-bottom: 8px; }
+.venue-card .vn { font-family: var(--display); font-style: italic; font-size: 24px; }
+.venue-card .va { font-size: 14px; opacity: .8; }
+.btns { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin-top: 18px; }
+.btn { font-family: var(--ui); font-size: 12px; font-weight: 500; letter-spacing: .18em; text-transform: uppercase; text-decoration: none; color: var(--ivory); border: 1px solid rgba(243,233,225,.4); background: transparent; border-radius: 999px; padding: 12px 20px; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; }
+.btn.gold { background: var(--champagne); color: var(--wine); border-color: var(--champagne); }
+.btn:hover { border-color: var(--champagne); }
+.btn:focus-visible, input:focus-visible, textarea:focus-visible, .seg label:focus-within { outline: 2px solid var(--champagne); outline-offset: 3px; }
+
+.dress { display: flex; justify-content: center; gap: 10px; margin-top: 18px; }
+.dress i { width: 34px; height: 34px; border-radius: 50%; border: 1px solid rgba(243,233,225,.3); }
+
+/* ---------- RSVP ---------- */
+form.rsvp { display: grid; gap: 18px; text-align: left; margin-top: 8px; }
+.field { display: grid; gap: 6px; }
+.field > label, .field > .lbl { font-size: 11px; letter-spacing: .22em; text-transform: uppercase; color: var(--champagne); font-weight: 500; }
+input[type=text], textarea { width: 100%; font: inherit; font-size: 16px; color: var(--ivory); background: rgba(243,233,225,.05); border: 1px solid var(--line); border-radius: 3px; padding: 12px 14px; }
+input[type=text]::placeholder, textarea::placeholder { color: rgba(243,233,225,.45); }
+textarea { min-height: 88px; resize: vertical; }
+.seg { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.seg label { position: relative; border: 1px solid var(--line); border-radius: 3px; padding: 14px 10px; text-align: center; cursor: pointer; font-family: var(--display); font-style: italic; font-size: 17px; line-height: 1.25; }
+.seg input { position: absolute; opacity: 0; pointer-events: none; }
+.seg label:has(input:checked) { border-color: var(--champagne); background: rgba(216,182,122,.12); color: #f1dcb4; }
+.stepper { display: flex; align-items: center; gap: 16px; }
+.stepper button { width: 42px; height: 42px; border-radius: 50%; border: 1px solid var(--line); background: transparent; color: var(--ivory); font-size: 20px; cursor: pointer; font-family: var(--ui); }
+.stepper output { font-family: var(--display); font-size: 26px; min-width: 2ch; text-align: center; font-variant-numeric: tabular-nums; }
+.stepper small { opacity: .7; font-size: 13px; }
+.err { color: #f0a3a3; font-size: 13.5px; min-height: 1.2em; }
+.done { border: 1px solid var(--champagne); border-radius: 4px; padding: 26px 20px; display: grid; gap: 10px; justify-items: center; text-align: center; }
+.done h3 { font-family: var(--display); font-style: italic; font-weight: 400; font-size: 26px; margin: 0; }
+.done pre { white-space: pre-wrap; font-family: var(--ui); font-size: 14px; text-align: left; background: rgba(243,233,225,.05); border-radius: 3px; padding: 12px 14px; margin: 4px 0 0; width: 100%; opacity: .9; }
+.done .note { font-size: 13px; opacity: .7; max-width: 32ch; }
+.linkish { background: none; border: 0; color: var(--champagne); font: inherit; font-size: 13px; text-decoration: underline; cursor: pointer; padding: 4px; }
+
+footer.made { padding-block: 40px 56px; text-align: center; display: grid; justify-items: center; gap: 8px; border-top: 1px solid var(--line); }
+footer.made .mark { width: 30px; color: var(--ivory); opacity: .8; }
+footer.made .w { font-family: var(--display); font-style: italic; font-size: 18px; }
+footer.made .w span { color: var(--champagne); font-style: normal; }
+footer.made small { font-size: 11px; letter-spacing: .2em; text-transform: uppercase; opacity: .55; }
+
+/* ---------- Floating controls ---------- */
+.fab { position: fixed; z-index: 30; right: calc(14px + env(safe-area-inset-right, 0px)); bottom: calc(14px + env(safe-area-inset-bottom, 0px)); width: 46px; height: 46px; border-radius: 50%; background: rgba(42,13,20,.75); border: 1px solid var(--line); color: var(--champagne); display: grid; place-items: center; cursor: pointer; backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); }
+.fab svg { width: 18px; height: 18px; }
+.fab[aria-pressed="true"] { background: var(--champagne); color: var(--wine); }
+.fab:focus-visible { outline: 2px solid var(--champagne); outline-offset: 3px; }
+
+/* ---------- The veil ---------- */
+.veil { position: fixed; inset: 0; z-index: 50; touch-action: none; cursor: grab; user-select: none; -webkit-user-select: none;
+  display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; color: var(--wine);
+  backdrop-filter: blur(9px) saturate(.9); -webkit-backdrop-filter: blur(9px) saturate(.9);
+  background:
+    radial-gradient(circle at 50% 50%, rgba(255,255,255,.18) 0 1px, transparent 1.5px) 0 0 / 14px 14px,
+    repeating-linear-gradient(90deg, rgba(255,250,246,0) 0 10px, rgba(255,250,246,.16) 10px 12px, rgba(255,250,246,.03) 12px 26px, rgba(255,250,246,.12) 26px 27px, rgba(255,250,246,0) 27px 40px),
+    linear-gradient(180deg, rgba(246,236,230,.84) 0%, rgba(238,222,216,.74) 60%, rgba(232,212,206,.66) 100%);
+  will-change: transform; transform-origin: 50% 0; }
+.veil::after { content: ""; position: absolute; left: 0; right: 0; bottom: -14px; height: 14px;
+  background: radial-gradient(circle at 10px 0, rgba(236,218,212,.72) 9px, transparent 9.5px) 0 0 / 20px 14px repeat-x; }
+.veil.lifting { transition: transform 1.25s cubic-bezier(.55,.06,.25,1), opacity 1.25s ease; transform: translateY(-112%) scaleY(1.08) !important; opacity: .0; }
+.veil.settle { transition: transform .45s cubic-bezier(.3,1.4,.5,1); }
+.veil .vm { width: 70px; color: var(--velvet); margin-bottom: 18px; }
+.veil .vm .drape { stroke: #a8823f; }
+.veil .who { font-family: var(--display); font-style: italic; font-size: 22px; line-height: 1.3; max-width: 18ch; }
+.veil .sub { font-size: 11px; letter-spacing: .26em; text-transform: uppercase; margin-top: 12px; opacity: .7; }
+.veil .cta { position: absolute; left: 0; right: 0; bottom: calc(40px + env(safe-area-inset-bottom, 0px)); display: grid; justify-items: center; gap: 10px; font-size: 11.5px; letter-spacing: .28em; text-transform: uppercase; font-weight: 500; }
+.veil .cta svg { width: 20px; height: 20px; animation: up 1.8s ease-in-out infinite; }
+@keyframes up { 0%,100% { transform: translateY(4px); opacity: .5; } 50% { transform: translateY(-6px); opacity: 1; } }
+.veil:focus-visible { outline: 3px solid var(--velvet); outline-offset: -8px; }
+canvas#dust { position: fixed; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 40; }
+
+@media (prefers-reduced-motion: reduce) {
+  .veil.lifting { transition: opacity .3s ease; transform: none !important; }
+  .scroll-cue::after, .veil .cta svg { animation: none; }
+}
+</style>
+</head>
+<body>
+
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="m" viewBox="0 0 120 112">
+    <path class="arch" d="M16 100 V66 A12 12 0 0 1 40 66 V100"/>
+    <path class="arch" d="M80 100 V66 A12 12 0 0 1 104 66 V100"/>
+    <path class="arch" d="M45 100 V44 A15 15 0 0 1 75 44 V100"/>
+    <path class="drape" d="M60 30 C55 48, 52 70, 48.5 99"/>
+    <path class="drape" d="M60 30 C65 48, 68 70, 71.5 99"/>
+    <path class="base" d="M8 100 H112"/>
+  </symbol>
+</svg>
+
+<div class="ground">
+<main class="col">
+  <header class="hero">
+    <div class="dear" id="dear"></div>
+    <div class="fam">Together with their families</div>
+    <h1 class="names">Lara<span class="amp">&amp;</span>Karim</h1>
+    <p class="req">request the pleasure of your company as they begin forever</p>
+    <div class="date">12 · 06 · 2027</div>
+    <div class="place">Byblos · Lebanon</div>
+    <div class="scroll-cue">Scroll</div>
+  </header>
+
+  <section class="blk" aria-labelledby="h-count">
+    <div class="kicker">Until we say I do</div>
+    <h2 id="h-count">The countdown has begun</h2>
+    <div class="count" aria-live="off">
+      <div><b id="cd-d">–</b><small>Days</small></div>
+      <div><b id="cd-h">–</b><small>Hours</small></div>
+      <div><b id="cd-m">–</b><small>Min</small></div>
+      <div><b id="cd-s">–</b><small>Sec</small></div>
+    </div>
+    <div class="btns"><a class="btn" id="cal" target="_blank" rel="noopener">Add to calendar</a></div>
+  </section>
+
+  <section class="blk" aria-labelledby="h-story">
+    <div class="kicker">Our story</div>
+    <h2 id="h-story">It started with a coffee in Gemmayzeh</h2>
+    <p>Seven years, two cities and one very nervous proposal at the Byblos lighthouse later, we can’t wait to celebrate with the people who made the journey so beautiful.</p>
+  </section>
+
+  <section class="blk" aria-labelledby="h-day">
+    <div class="kicker">Saturday · 12 June 2027</div>
+    <h2 id="h-day">The evening</h2>
+    <ol class="timeline">
+      <li><time>17:00</time><div><b>The ceremony</b><span>St. John the Baptist Church, Byblos</span></div></li>
+      <li><time>19:30</time><div><b>The zaffe</b><span>Drums, dabke and our grand entrance</span></div></li>
+      <li><time>20:30</time><div><b>Dinner &amp; dancing</b><span>By the old harbour</span></div></li>
+      <li><time>23:30</time><div><b>The cake</b><span>Then we dance until sunrise</span></div></li>
+    </ol>
+  </section>
+
+  <section class="blk" aria-labelledby="h-venue">
+    <div class="kicker">The venue</div>
+    <h2 id="h-venue">Where the sea meets the old town</h2>
+    <div class="venue-card">
+      <svg class="mark" viewBox="0 0 120 112" aria-hidden="true"><use href="#m"/></svg>
+      <div class="vn">The Harbour Terrace</div>
+      <div class="va">Old Port, Byblos, Lebanon</div>
+      <div class="btns"><a class="btn gold" id="map" target="_blank" rel="noopener">Open in Maps</a></div>
+    </div>
+    <p style="margin-top:18px;font-size:14px">Valet parking at the port entrance. A shuttle leaves Beirut (ABC Achrafieh) at 15:45.</p>
+  </section>
+
+  <section class="blk" aria-labelledby="h-dress">
+    <div class="kicker">Dress code</div>
+    <h2 id="h-dress">Black tie, evening glow</h2>
+    <p>Long gowns and dark suits. We’d love to see these colours, but please leave white to the bride.</p>
+    <div class="dress" aria-label="Suggested colours: wine, champagne, blush, black"><i style="background:#5a1624"></i><i style="background:#d8b67a"></i><i style="background:#c99a94"></i><i style="background:#111"></i></div>
+  </section>
+
+  <section class="blk" aria-labelledby="h-gift">
+    <div class="kicker">Gifts</div>
+    <h2 id="h-gift">Your presence is our gift</h2>
+    <p>If you’d like to celebrate with something more, there will be a wishing well at the venue for our honeymoon in Japan.</p>
+  </section>
+
+  <section class="blk" id="rsvp" aria-labelledby="h-rsvp">
+    <div class="kicker">Kindly reply by 1 May 2027</div>
+    <h2 id="h-rsvp">Will you join us?</h2>
+    <form class="rsvp" id="rsvpForm" novalidate>
+      <div class="field"><label for="g-name">Your name</label><input type="text" id="g-name" autocomplete="name" placeholder="Full name"></div>
+      <div class="field"><span class="lbl" id="lbl-att">Your answer</span>
+        <div class="seg" role="radiogroup" aria-labelledby="lbl-att">
+          <label><input type="radio" name="att" id="att-yes" value="yes">Joyfully accepts</label>
+          <label><input type="radio" name="att" id="att-no" value="no">Regretfully declines</label>
+        </div>
+      </div>
+      <div class="field" id="guestsField"><span class="lbl">Number of guests</span>
+        <div class="stepper"><button type="button" id="g-minus" aria-label="Fewer guests">−</button><output id="g-count">1</output><button type="button" id="g-plus" aria-label="More guests">+</button><small>including you</small></div>
+      </div>
+      <div class="field"><label for="g-msg">A note for the couple <span style="opacity:.6;text-transform:none;letter-spacing:0">(optional)</span></label><textarea id="g-msg" placeholder="Mabrouk! Can’t wait to dance with you…"></textarea></div>
+      <div class="err" id="err" role="alert"></div>
+      <button class="btn gold" type="submit" style="justify-self:center">Send my reply</button>
+    </form>
+    <div class="done" id="done" hidden>
+      <svg class="mark" viewBox="0 0 120 112" aria-hidden="true" style="width:44px;color:var(--ivory)"><use href="#m"/></svg>
+      <h3 id="doneTitle">Thank you</h3>
+      <pre id="doneMsg"></pre>
+      <div class="btns" style="margin-top:4px"><a class="btn gold" id="wa" target="_blank" rel="noopener">Send on WhatsApp</a><button class="btn" type="button" id="copy">Copy reply</button></div>
+      <p class="note" id="doneNote">WhatsApp opens with your reply written. Choose Lara or Karim and tap send.</p>
+      <button class="linkish" type="button" id="edit">Change my reply</button>
+    </div>
+  </section>
+
+  <footer class="made">
+    <svg class="mark" viewBox="0 0 120 112" aria-hidden="true"><use href="#m"/></svg>
+    <div class="w">Unveil<span>.</span></div>
+    <small>Invitations · Made in Lebanon</small>
+    <button class="linkish" type="button" id="again">Lift the veil again</button>
+    <a class="btn gold" href="index.html#packages" style="margin-top:14px">See Unveil packages</a>
+  </footer>
+</main>
+</div>
+
+<button class="fab" id="music" type="button" aria-pressed="false" aria-label="Play music">
+  <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M9 17.5V6.2l10-2.2v11.3a3 3 0 1 1-1.5-2.6V7.1l-7 1.6v8.8a3 3 0 1 1-1.5-2.6z"/></svg>
+</button>
+
+<canvas id="dust" aria-hidden="true"></canvas>
+
+<div class="veil" id="veil" role="button" tabindex="0" aria-label="Lift the veil to open your invitation">
+  <svg class="vm mark" viewBox="0 0 120 112" aria-hidden="true"><use href="#m"/></svg>
+  <div class="who" id="veilWho">Lara &amp; Karim have something for you</div>
+  <div class="sub">Something beautiful is waiting</div>
+  <div class="cta"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 14l6-6 6 6"/></svg>Swipe up to lift the veil</div>
+</div>
+
+<script>
+/* ===== Edit these details for each couple ===== */
+const CONFIG = {
+  couple: "Lara & Karim",
+  dateUTC: Date.UTC(2027, 5, 12, 14, 0),   // 17:00 Beirut (UTC+3) = 14:00 UTC
+  endUTC:  Date.UTC(2027, 5, 12, 23, 0),
+  calendarTitle: "Lara & Karim's Wedding",
+  location: "The Harbour Terrace, Old Port, Byblos, Lebanon",
+  mapsQuery: "Byblos Old Port, Lebanon"
+};
+
+(function () {
+  const root = document.documentElement;
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ---- Personal greeting from the link, e.g. ...#Nadine-and-Tony ---- */
+  const raw = decodeURIComponent((location.hash || '').slice(1));
+  const guest = /^[A-Za-z][A-Za-z-]{0,40}$/.test(raw) ? raw.replace(/-/g, ' ') : '';
+  if (guest) {
+    document.getElementById('dear').textContent = 'Dear ' + guest + ',';
+    document.getElementById('veilWho').textContent = guest + ', ' + CONFIG.couple + ' have something for you';
+    document.getElementById('g-name').value = guest;
+  }
+
+  /* ---- Links ---- */
+  const fmt = (t) => new Date(t).toISOString().replace(/[-:]/g, '').replace(/\.\d{3}/, '');
+  document.getElementById('cal').href = 'https://calendar.google.com/calendar/render?action=TEMPLATE&text=' + encodeURIComponent(CONFIG.calendarTitle) + '&dates=' + fmt(CONFIG.dateUTC) + '/' + fmt(CONFIG.endUTC) + '&location=' + encodeURIComponent(CONFIG.location);
+  document.getElementById('map').href = 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(CONFIG.mapsQuery);
+
+  /* ---- Countdown ---- */
+  const cd = ['d','h','m','s'].map(k => document.getElementById('cd-' + k));
+  function tick() {
+    let s = Math.max(0, Math.floor((CONFIG.dateUTC - Date.now()) / 1000));
+    const v = [Math.floor(s / 86400), Math.floor(s % 86400 / 3600), Math.floor(s % 3600 / 60), s % 60];
+    cd.forEach((el, i) => { el.textContent = i === 0 ? v[0] : String(v[i]).padStart(2, '0'); });
+  }
+  tick(); setInterval(tick, 1000);
+
+  /* ---- The veil ---- */
+  const veil = document.getElementById('veil');
+  let startY = null, dy = 0, lifted = false;
+  root.classList.add('locked');
+
+  function setY(y) {
+    const p = Math.min(1, Math.abs(Math.min(0, y)) / innerHeight);
+    veil.style.transform = 'translateY(' + y + 'px) scaleY(' + (1 + p * .06) + ')';
+    veil.style.backdropFilter = veil.style.webkitBackdropFilter = 'blur(' + (9 * (1 - p)) + 'px)';
+  }
+  function lift() {
+    if (lifted) return;
+    lifted = true;
+    veil.classList.remove('settle');
+    veil.classList.add('lifting');
+    root.classList.remove('locked');
+    setTimeout(() => { veil.hidden = true; }, 1300);
+    setTimeout(dust, 350);
+  }
+  veil.addEventListener('pointerdown', (e) => { if (lifted) return; startY = e.clientY; dy = 0; veil.classList.remove('settle'); veil.setPointerCapture(e.pointerId); });
+  veil.addEventListener('pointermove', (e) => { if (startY === null) return; dy = Math.min(40, e.clientY - startY); setY(dy < 0 ? dy : dy * .3); });
+  function end() {
+    if (startY === null) return;
+    startY = null;
+    if (Math.abs(dy) < 6 || dy < -innerHeight * .18) lift();
+    else { veil.classList.add('settle'); setY(0); }
+  }
+  veil.addEventListener('pointerup', end);
+  veil.addEventListener('pointercancel', end);
+  veil.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ' || e.key === 'ArrowUp') { e.preventDefault(); lift(); } });
+
+  document.getElementById('again').addEventListener('click', () => {
+    scrollTo({ top: 0 });
+    lifted = false;
+    veil.hidden = false;
+    veil.classList.remove('lifting', 'settle');
+    veil.style.transform = ''; veil.style.backdropFilter = veil.style.webkitBackdropFilter = '';
+    root.classList.add('locked');
+    veil.focus();
+  });
+
+  /* ---- Gold dust after the reveal ---- */
+  function dust() {
+    if (reduce) return;
+    const c = document.getElementById('dust'), x = c.getContext('2d');
+    const dpr = Math.min(2, devicePixelRatio || 1);
+    c.width = innerWidth * dpr; c.height = innerHeight * dpr; x.scale(dpr, dpr);
+    const P = Array.from({ length: 140 }, () => ({
+      x: Math.random() * innerWidth, y: -Math.random() * innerHeight * .6,
+      r: .6 + Math.random() * 1.8, v: .6 + Math.random() * 1.4, w: Math.random() * 6.28, a: .5 + Math.random() * .5
+    }));
+    const t0 = performance.now();
+    (function frame(t) {
+      const age = (t - t0) / 1000;
+      x.clearRect(0, 0, innerWidth, innerHeight);
+      const fade = age < 3.2 ? 1 : Math.max(0, 1 - (age - 3.2) / 1.2);
+      P.forEach(p => {
+        p.y += p.v; p.w += .03; p.x += Math.sin(p.w) * .5;
+        x.globalAlpha = p.a * fade * (.6 + .4 * Math.sin(p.w * 3));
+        x.fillStyle = '#e6c88e';
+        x.beginPath(); x.arc(p.x, p.y, p.r, 0, 6.283); x.fill();
+      });
+      if (fade > 0) requestAnimationFrame(frame); else x.clearRect(0, 0, innerWidth, innerHeight);
+    })(t0);
+  }
+
+  /* ---- Gentle music, generated in the browser (no files) ---- */
+  const musicBtn = document.getElementById('music');
+  let ctx = null, timer = null;
+  const notes = [[57,64,69,72],[53,60,65,69],[55,62,67,71],[52,59,64,67]]; // Am – F – G – Em, soft arpeggios
+  function hz(n) { return 440 * Math.pow(2, (n - 69) / 12); }
+  function playBar(i) {
+    const now = ctx.currentTime, chord = notes[i % notes.length];
+    [0,1,2,3,2,1].forEach((k, j) => {
+      const o = ctx.createOscillator(), g = ctx.createGain();
+      o.type = 'triangle'; o.frequency.value = hz(chord[k] + 12);
+      const t = now + j * .42;
+      g.gain.setValueAtTime(0, t); g.gain.linearRampToValueAtTime(.05, t + .03); g.gain.exponentialRampToValueAtTime(.0008, t + 1.8);
+      o.connect(g); g.connect(ctx.out); o.start(t); o.stop(t + 1.9);
+    });
+    const b = ctx.createOscillator(), bg = ctx.createGain();
+    b.type = 'sine'; b.frequency.value = hz(chord[0] - 12);
+    bg.gain.setValueAtTime(0, now); bg.gain.linearRampToValueAtTime(.06, now + .2); bg.gain.exponentialRampToValueAtTime(.001, now + 2.5);
+    b.connect(bg); bg.connect(ctx.out); b.start(now); b.stop(now + 2.6);
+  }
+  musicBtn.addEventListener('click', () => {
+    const on = musicBtn.getAttribute('aria-pressed') !== 'true';
+    musicBtn.setAttribute('aria-pressed', String(on));
+    musicBtn.setAttribute('aria-label', on ? 'Pause music' : 'Play music');
+    if (on) {
+      try {
+        ctx = ctx || new (window.AudioContext || window.webkitAudioContext)();
+        if (!ctx.out) {
+          const d = ctx.createDelay(); d.delayTime.value = .33;
+          const fb = ctx.createGain(); fb.gain.value = .35;
+          const m = ctx.createGain(); m.gain.value = .9;
+          m.connect(ctx.destination); m.connect(d); d.connect(fb); fb.connect(d); d.connect(ctx.destination);
+          ctx.out = m;
+        }
+        ctx.resume();
+        let i = 0; playBar(i++); timer = setInterval(() => playBar(i++), 2520);
+      } catch (e) { musicBtn.setAttribute('aria-pressed', 'false'); }
+    } else { clearInterval(timer); timer = null; if (ctx) ctx.suspend(); }
+  });
+
+  /* ---- RSVP → a ready-to-send WhatsApp reply ---- */
+  const form = document.getElementById('rsvpForm'), done = document.getElementById('done');
+  const countEl = document.getElementById('g-count'), guestsField = document.getElementById('guestsField');
+  let n = 1;
+  document.getElementById('g-minus').onclick = () => { n = Math.max(1, n - 1); countEl.textContent = n; };
+  document.getElementById('g-plus').onclick = () => { n = Math.min(6, n + 1); countEl.textContent = n; };
+  form.addEventListener('change', () => { guestsField.hidden = form.att.value === 'no'; });
+
+  let replyText = '';
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const name = document.getElementById('g-name').value.trim();
+    const att = form.att.value;
+    const note = document.getElementById('g-msg').value.trim();
+    const err = document.getElementById('err');
+    if (!name) { err.textContent = 'Please add your name so the couple knows who replied.'; document.getElementById('g-name').focus(); return; }
+    if (!att) { err.textContent = 'Please choose whether you can come.'; return; }
+    err.textContent = '';
+    replyText = att === 'yes'
+      ? '💌 RSVP · ' + CONFIG.couple + '\n' + name + ' joyfully accepts. Guests: ' + n + '.' + (note ? '\n“' + note + '”' : '')
+      : '💌 RSVP · ' + CONFIG.couple + '\n' + name + ' regretfully declines.' + (note ? '\n“' + note + '”' : '');
+    document.getElementById('doneTitle').textContent = att === 'yes' ? 'We can’t wait to see you' : 'You’ll be missed';
+    document.getElementById('doneMsg').textContent = replyText;
+    document.getElementById('wa').href = 'https://wa.me/?text=' + encodeURIComponent(replyText);
+    form.hidden = true; done.hidden = false;
+    if (att === 'yes') dust();
+  });
+  document.getElementById('edit').onclick = () => { done.hidden = true; form.hidden = false; };
+  document.getElementById('copy').onclick = async (e) => {
+    const b = e.currentTarget;
+    try { await navigator.clipboard.writeText(replyText); b.textContent = 'Copied'; }
+    catch (_) { const r = document.createRange(); r.selectNodeContents(document.getElementById('doneMsg')); const s = getSelection(); s.removeAllRanges(); s.addRange(r); b.textContent = 'Selected, copy it'; }
+    setTimeout(() => { b.textContent = 'Copy reply'; }, 2200);
+  };
+})();
+</script>
+
+</body>
+</html>

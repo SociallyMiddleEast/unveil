@@ -1,0 +1,348 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Unveil Invitations · Animated wedding invitations, made in Lebanon</title>
+<meta name="description" content="Animated wedding invitations your guests open with a gesture. Personal links, RSVP tracking and WhatsApp sharing. From $39.99.">
+<meta property="og:title" content="Unveil Invitations">
+<meta property="og:description" content="Every invitation deserves an entrance. Animated wedding invitations, made in Lebanon.">
+<meta name="theme-color" content="#2a0d14">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 112'%3E%3Crect width='120' height='112' rx='22' fill='%232a0d14'/%3E%3Cg fill='none' stroke='%23f3e9e1' stroke-width='5' stroke-linecap='round'%3E%3Cpath d='M16 100V66a12 12 0 0 1 24 0v34M80 100V66a12 12 0 0 1 24 0v34M45 100V44a15 15 0 0 1 30 0v56M8 100h104'/%3E%3C/g%3E%3Cg fill='none' stroke='%23d8b67a' stroke-width='5' stroke-linecap='round'%3E%3Cpath d='M60 30C55 48 52 70 48.5 99M60 30c5 18 8 40 11.5 69'/%3E%3C/g%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;1,6..96,400&family=Pinyon+Script&family=Jost:wght@300;400;500;600&display=swap">
+<style>
+:root {
+  --wine: #2a0d14; --velvet: #5a1624; --champagne: #d8b67a; --gold-text: #f1dcb4; --ivory: #f3e9e1;
+  --ink: #1a080c; --ink-soft: #6b4a50; --line: rgba(216,182,122,.28); --line-ink: rgba(90,22,36,.16);
+  --display: "Bodoni Moda", "Didot", Georgia, serif; --script: "Pinyon Script", "Snell Roundhand", cursive; --ui: "Jost", "Futura", system-ui, sans-serif;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { margin: 0; font-family: var(--ui); font-size: 16px; line-height: 1.6; color: var(--ivory); background: var(--wine); -webkit-font-smoothing: antialiased; }
+a { color: inherit; }
+:focus-visible { outline: 2px solid var(--champagne); outline-offset: 3px; }
+.mark .arch { fill: none; stroke: currentColor; stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }
+.mark .drape { fill: none; stroke: var(--champagne); stroke-width: 2.4; stroke-linecap: round; }
+.mark .base { stroke: currentColor; stroke-width: 2.4; stroke-linecap: round; }
+.word { font-family: var(--display); font-style: italic; white-space: nowrap; }
+.word span { color: var(--champagne); font-style: normal; }
+
+.btn { font-family: var(--ui); font-size: 12px; font-weight: 500; letter-spacing: .16em; text-transform: uppercase; text-decoration: none; border-radius: 999px; padding: 12px 22px;
+  display: inline-flex; align-items: center; justify-content: center; border: 1px solid rgba(243,233,225,.45); color: var(--ivory); background: transparent; white-space: nowrap; }
+.btn-sm { padding: 8px 14px; font-size: 11px; letter-spacing: .12em; }
+.btn-gold { background: var(--champagne); border-color: var(--champagne); color: var(--wine); }
+.btn-wine { background: var(--wine); border-color: var(--wine); color: var(--ivory); }
+
+.wrap { max-width: 1120px; margin: 0 auto; padding-left: max(20px, env(safe-area-inset-left, 0px)); padding-right: max(20px, env(safe-area-inset-right, 0px)); }
+h2 { font-family: var(--display); font-style: italic; font-weight: 400; font-size: clamp(32px, 4.6vw, 50px); line-height: 1.08; margin: 10px 0 14px; text-wrap: balance; max-width: 20ch; }
+h3 { font-family: var(--display); font-style: italic; font-weight: 400; margin: 0; }
+.eyebrow { font-size: 12px; font-weight: 600; letter-spacing: .22em; text-transform: uppercase; color: var(--champagne); }
+.intro { max-width: 56ch; opacity: .85; margin: 0 0 36px; font-size: 17px; }
+.small { font-size: 14px; opacity: .75; margin: 22px 0 0; }
+
+/* Nav */
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 21; background: var(--wine); }
+nav { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 20; background: rgba(42,13,20,.92); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border-bottom: 1px solid var(--line); }
+.nav-in { display: flex; align-items: center; gap: 24px; padding-block: 12px; }
+.brand { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+.brand .mark { width: 30px; color: var(--ivory); }
+.brand .word { font-size: 24px; }
+.links { display: flex; gap: 22px; margin-left: auto; font-size: 14px; }
+.links a { text-decoration: none; opacity: .85; }
+.links a:hover { opacity: 1; color: var(--champagne); }
+@media (max-width: 760px) { .links { display: none; } .nav-in > .btn { margin-left: auto; } }
+
+/* Hero */
+.hero { background: radial-gradient(80% 90% at 75% 20%, var(--velvet) 0%, var(--wine) 65%); padding-block: 64px 80px; overflow: hidden; }
+.hero-in { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, .85fr); gap: 48px; align-items: center; }
+@media (max-width: 860px) { .hero-in { grid-template-columns: minmax(0, 1fr); gap: 44px; } }
+.hero h1 { font-family: var(--display); font-weight: 400; font-size: clamp(44px, 7vw, 82px); line-height: 1.02; margin: 16px 0 20px; text-wrap: balance; }
+.hero h1 em { color: var(--gold-text); }
+.lede { font-size: 18px; max-width: 50ch; opacity: .88; margin: 0; }
+.cta { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 30px; }
+
+.phone { justify-self: center; width: 280px; max-width: 100%; aspect-ratio: 9 / 18.5; border-radius: 40px; padding: 10px; background: #0d0c0e;
+  box-shadow: 0 40px 80px -30px rgba(0,0,0,.7), inset 0 0 0 2px #2a282c; transform: rotate(3deg); }
+.screen { position: relative; width: 100%; height: 100%; border-radius: 31px; overflow: hidden; background: radial-gradient(120% 70% at 50% 0%, var(--velvet), var(--wine) 70%); }
+.p-invite { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; gap: 8px; padding: 20px; }
+.p-fam { font-size: 9px; letter-spacing: .24em; text-transform: uppercase; opacity: .75; }
+.p-names { font-family: var(--script); font-size: 54px; line-height: 1; color: var(--gold-text); display: grid; }
+.p-names i { font-style: normal; font-size: 26px; opacity: .75; }
+.p-date { font-family: var(--display); font-size: 15px; letter-spacing: .28em; color: var(--champagne); margin-top: 10px; }
+.p-place { font-size: 9.5px; letter-spacing: .22em; text-transform: uppercase; opacity: .75; }
+.p-rsvp { margin-top: 22px; font-size: 10px; letter-spacing: .16em; text-transform: uppercase; background: var(--champagne); color: var(--wine); border-radius: 999px; padding: 8px 14px; font-weight: 600; }
+.p-veil { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px; text-align: center; padding: 24px; color: var(--wine);
+  background: repeating-linear-gradient(90deg, rgba(255,250,246,0) 0 8px, rgba(255,250,246,.18) 8px 10px, rgba(255,250,246,.03) 10px 20px), linear-gradient(180deg, rgba(246,236,230,.92), rgba(232,212,206,.8));
+  animation: lift 7s cubic-bezier(.55,.06,.25,1) infinite; transform-origin: 50% 0; }
+.p-veil .mark { width: 52px; color: var(--velvet); }
+.p-veil .mark .drape { stroke: #a8823f; }
+.p-veil span { font-family: var(--display); font-style: italic; font-size: 18px; line-height: 1.3; }
+.p-veil small { position: absolute; bottom: 28px; font-size: 8.5px; letter-spacing: .24em; text-transform: uppercase; font-weight: 600; }
+@keyframes lift { 0%, 30% { transform: none; opacity: 1; } 48%, 88% { transform: translateY(-110%) scaleY(1.08); opacity: 0; } 89% { transform: none; opacity: 0; } 100% { transform: none; opacity: 1; } }
+
+/* Bands */
+section { padding-block: 88px; scroll-margin-top: 64px; }
+.light { background: var(--ivory); color: var(--ink); color-scheme: light; }
+.light .eyebrow { color: var(--velvet); }
+.light .btn { color: var(--wine); border-color: rgba(90,22,36,.4); }
+.light .btn-gold { color: var(--wine); border-color: var(--champagne); }
+.light .btn-wine { color: var(--ivory); border-color: var(--wine); }
+.tight { padding-top: 0; }
+
+.reveals { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; }
+@media (max-width: 700px) { .reveals { grid-template-columns: minmax(0, 1fr); } }
+.reveal { display: grid; gap: 10px; align-content: start; }
+.reveal h3 { font-size: 30px; color: var(--velvet); }
+.reveal p { margin: 0; max-width: 46ch; }
+.reveal a { color: var(--velvet); font-weight: 500; text-underline-offset: 4px; justify-self: start; }
+.art { height: 200px; border-radius: 6px; display: grid; place-items: center; overflow: hidden; position: relative; }
+.art.veil { color: var(--velvet); background: repeating-linear-gradient(90deg, rgba(255,250,246,0) 0 10px, rgba(255,250,246,.5) 10px 12px, rgba(255,250,246,.05) 12px 26px), linear-gradient(180deg, #eadbd4, #d9c3bb); }
+.art.veil .mark { width: 74px; }
+.art.veil .mark .drape { stroke: #a8823f; }
+.art.seal { background: linear-gradient(180deg, #efe4da, #e2d3c6); }
+.art.seal::before { content: ""; position: absolute; left: 0; right: 0; top: 0; height: 55%; background: linear-gradient(180deg, #e3d4c7, #d7c5b6); clip-path: polygon(0 0, 100% 0, 50% 100%); }
+.art.seal span { position: relative; width: 84px; height: 84px; display: grid; place-items: center; margin-top: 30px; font-family: var(--display); font-size: 24px; color: var(--gold-text);
+  border-radius: 46% 54% 50% 50% / 52% 48% 52% 48%; background: radial-gradient(circle at 35% 30%, #8a2a3c, var(--velvet) 55%, #3a0e18); box-shadow: 0 4px 10px rgba(0,0,0,.3); }
+.soon { font-size: 11px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--ink-soft); }
+
+.inc { display: grid; grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); gap: 40px; border-top: 1px solid var(--line-ink); padding-top: 64px; }
+@media (max-width: 800px) { .inc { grid-template-columns: minmax(0, 1fr); gap: 8px; } }
+.checks { list-style: none; margin: 0; padding: 0; display: grid; gap: 12px; align-content: start; }
+.checks li { position: relative; padding-left: 30px; }
+.checks li::before { content: ""; position: absolute; left: 0; top: 5px; width: 16px; height: 9px; border-left: 2px solid var(--velvet); border-bottom: 2px solid var(--velvet); transform: rotate(-45deg); }
+
+.steps { list-style: none; margin: 30px 0 0; padding: 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 24px; }
+@media (max-width: 900px) { .steps { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 520px) { .steps { grid-template-columns: minmax(0, 1fr); } }
+.steps li { border-top: 1px solid var(--line); padding-top: 18px; display: grid; gap: 8px; align-content: start; }
+.steps .n { font-family: var(--display); font-size: 34px; line-height: 1; color: var(--champagne); }
+.steps h3 { font-size: 22px; }
+.steps p { margin: 0; opacity: .82; font-size: 15px; }
+
+.packages { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; }
+@media (max-width: 960px) { .packages { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 520px) { .packages { grid-template-columns: minmax(0, 1fr); } }
+.pk { background: #fbf6f1; border: 1px solid var(--line-ink); border-radius: 8px; padding: 26px 22px 22px; display: flex; flex-direction: column; gap: 6px; }
+.pk h3 { font-size: 28px; color: var(--velvet); }
+.pk .guests { font-size: 12px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--ink-soft); }
+.pk .price { font-family: var(--display); font-size: 48px; line-height: 1; margin: 18px 0 6px; color: var(--wine); font-variant-numeric: tabular-nums; }
+.pk .price sup { font-size: .45em; vertical-align: top; position: relative; top: .35em; margin-right: 2px; }
+.pk p { margin: 0 0 20px; font-size: 14.5px; color: var(--ink-soft); flex: 1; }
+.pk .btn { width: 100%; }
+.pk.top { background: var(--wine); border-color: var(--wine); color: var(--ivory); }
+.pk.top h3, .pk.top .price { color: var(--gold-text); }
+.pk.top .guests, .pk.top p { color: var(--champagne); }
+
+.faq-wrap { display: grid; grid-template-columns: minmax(0, .8fr) minmax(0, 1.2fr); gap: 40px; border-top: 1px solid var(--line-ink); padding-top: 64px; }
+@media (max-width: 800px) { .faq-wrap { grid-template-columns: minmax(0, 1fr); gap: 8px; } }
+.faq details { border-bottom: 1px solid var(--line-ink); padding-block: 16px; }
+.faq summary { cursor: pointer; font-family: var(--display); font-style: italic; font-size: 21px; list-style: none; display: flex; justify-content: space-between; gap: 16px; }
+.faq summary::-webkit-details-marker { display: none; }
+.faq summary::after { content: "+"; font-family: var(--ui); font-style: normal; color: var(--velvet); }
+.faq details[open] summary::after { content: "−"; }
+.faq p { margin: 10px 0 0; max-width: 60ch; color: var(--ink-soft); }
+
+.final { background: radial-gradient(80% 100% at 50% 0%, var(--velvet), var(--wine) 70%); text-align: center; }
+.final-in { display: grid; justify-items: center; gap: 4px; }
+.final .mark { width: 64px; color: var(--ivory); margin-bottom: 8px; }
+.final h2 { max-width: none; }
+.final p { margin: 0; opacity: .85; }
+.final .cta { justify-content: center; }
+
+footer { border-top: 1px solid var(--line); padding-block: 26px; font-size: 14px; }
+.foot-in { display: flex; flex-wrap: wrap; gap: 12px 28px; align-items: center; }
+.foot-in > :first-child { margin-right: auto; }
+footer a { color: var(--champagne); }
+
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } .p-veil { animation: none; opacity: 0; } }
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="m" viewBox="0 0 120 112">
+    <path class="arch" d="M16 100 V66 A12 12 0 0 1 40 66 V100"/>
+    <path class="arch" d="M80 100 V66 A12 12 0 0 1 104 66 V100"/>
+    <path class="arch" d="M45 100 V44 A15 15 0 0 1 75 44 V100"/>
+    <path class="drape" d="M60 30 C55 48, 52 70, 48.5 99"/>
+    <path class="drape" d="M60 30 C65 48, 68 70, 71.5 99"/>
+    <path class="base" d="M8 100 H112"/>
+  </symbol>
+</svg>
+
+<nav aria-label="Main">
+  <div class="wrap nav-in">
+    <a href="#top" class="brand"><svg class="mark" viewBox="0 0 120 112" aria-hidden="true"><use href="#m"/></svg><span class="word">Unveil<span>.</span></span></a>
+    <div class="links">
+      <a href="#reveals">Reveals</a>
+      <a href="#how">How it works</a>
+      <a href="#packages">Packages</a>
+      <a href="#faq">FAQ</a>
+    </div>
+    <a class="btn btn-gold btn-sm" href="#packages">See prices</a>
+  </div>
+</nav>
+
+<header class="hero" id="top">
+  <div class="wrap hero-in">
+    <div>
+      <div class="eyebrow">Animated invitations · Made in Lebanon</div>
+      <h1>Every invitation deserves an <em>entrance.</em></h1>
+      <p class="lede">Your guests lift a veil and your wedding unfolds on their phone: the date, the venue, the schedule, and a reply in one tap. Made for Lebanese weddings, sent on WhatsApp, opened anywhere in the world.</p>
+      <div class="cta">
+        <a class="btn btn-gold" href="demo.html">Open a live invitation</a>
+        <a class="btn" href="#packages">From $39.99</a>
+      </div>
+    </div>
+    <div class="phone" aria-hidden="true">
+      <div class="screen">
+        <div class="p-invite">
+          <span class="p-fam">Together with their families</span>
+          <span class="p-names">Lara<i>&amp;</i>Karim</span>
+          <span class="p-date">12 · 06 · 2027</span>
+          <span class="p-place">Byblos · Lebanon</span>
+          <span class="p-rsvp">Will you join us?</span>
+        </div>
+        <div class="p-veil">
+          <svg class="mark" viewBox="0 0 120 112"><use href="#m"/></svg>
+          <span>Lara &amp; Karim have something for you</span>
+          <small>Swipe up to lift the veil</small>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<section class="light" id="reveals" aria-labelledby="h-reveals">
+  <div class="wrap">
+    <div class="eyebrow">The reveal</div>
+    <h2 id="h-reveals">It opens with a gesture they’ll remember</h2>
+    <p class="intro">Every Unveil invitation starts with a small ritual. Choose the one that feels like your wedding.</p>
+    <div class="reveals">
+      <article class="reveal">
+        <div class="art veil" aria-hidden="true"><svg class="mark" viewBox="0 0 120 112"><use href="#m"/></svg></div>
+        <h3>The Veil</h3>
+        <p>A sheer bridal veil covers the screen. Guests swipe it up, and your names come into focus as gold dust falls.</p>
+        <a href="demo.html">Try The Veil</a>
+      </article>
+      <article class="reveal">
+        <div class="art seal" aria-hidden="true"><span>L·K</span></div>
+        <h3>The Seal</h3>
+        <p>A wax seal with your initials. Guests tap to break it, the envelope opens, and the invitation appears.</p>
+        <span class="soon">Demo coming soon</span>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="light tight" aria-labelledby="h-inc">
+  <div class="wrap inc">
+    <div>
+      <div class="eyebrow">In every package</div>
+      <h2 id="h-inc">Everything about your day, in one link</h2>
+      <p class="intro">Every package includes every feature. The only difference is how many guests you invite.</p>
+    </div>
+    <ul class="checks">
+      <li>Your choice of reveal: The Veil or The Seal</li>
+      <li>A personal link for every guest or family, greeting them by name</li>
+      <li>Countdown, schedule, venue map and add to calendar</li>
+      <li>Our story, dress code and gifts sections</li>
+      <li>Background music</li>
+      <li>RSVP that saves straight to your guest list</li>
+      <li>Your own dashboard: who opened, who’s coming, who to remind</li>
+      <li>Send each link on WhatsApp in one tap</li>
+      <li>Guest list download for your venue</li>
+    </ul>
+  </div>
+</section>
+
+<section id="how" aria-labelledby="h-how">
+  <div class="wrap">
+    <div class="eyebrow">How it works</div>
+    <h2 id="h-how">From your first message to the last reply</h2>
+    <ol class="steps">
+      <li><span class="n">1</span><h3>Choose your package</h3><p>Pick the size of your guest list and message us on Instagram.</p></li>
+      <li><span class="n">2</span><h3>Send us your details</h3><p>Names, date, venue, your story and your guest list. A spreadsheet is fine.</p></li>
+      <li><span class="n">3</span><h3>Approve your invitation</h3><p>We build it in your colours and send you a preview. Ask for changes until it feels like you.</p></li>
+      <li><span class="n">4</span><h3>Share and relax</h3><p>Send each guest their personal link on WhatsApp, then watch the replies arrive.</p></li>
+    </ol>
+  </div>
+</section>
+
+<section class="light" id="packages" aria-labelledby="h-pk">
+  <div class="wrap">
+    <div class="eyebrow">Packages</div>
+    <h2 id="h-pk">One price per event, sized to your guest list</h2>
+    <p class="intro">One payment per event. Prices in US dollars.</p>
+    <div class="packages">
+      <article class="pk">
+        <h3>Intimate</h3><div class="guests">Up to 50 guests</div>
+        <div class="price"><sup>$</sup>39.99</div>
+        <p>Engagements, small weddings and family dinners</p>
+        <a class="btn btn-wine" href="https://instagram.com/unveil.invitations" target="_blank" rel="noopener noreferrer">Order on Instagram</a>
+      </article>
+      <article class="pk">
+        <h3>Classic</h3><div class="guests">Up to 100 guests</div>
+        <div class="price"><sup>$</sup>69.99</div>
+        <p>A close circle of family and friends</p>
+        <a class="btn btn-wine" href="https://instagram.com/unveil.invitations" target="_blank" rel="noopener noreferrer">Order on Instagram</a>
+      </article>
+      <article class="pk">
+        <h3>Grand</h3><div class="guests">Up to 150 guests</div>
+        <div class="price"><sup>$</sup>74.99</div>
+        <p>The full family, both sides</p>
+        <a class="btn btn-wine" href="https://instagram.com/unveil.invitations" target="_blank" rel="noopener noreferrer">Order on Instagram</a>
+      </article>
+      <article class="pk top">
+        <h3>Unlimited</h3><div class="guests">Unlimited guests</div>
+        <div class="price"><sup>$</sup>99</div>
+        <p>For the big Lebanese wedding: invite everyone</p>
+        <a class="btn btn-gold" href="https://instagram.com/unveil.invitations" target="_blank" rel="noopener noreferrer">Order on Instagram</a>
+      </article>
+    </div>
+    <p class="small">All packages include every feature listed above.</p>
+  </div>
+</section>
+
+<section class="light tight" id="faq" aria-labelledby="h-faq">
+  <div class="wrap faq-wrap">
+    <div>
+      <div class="eyebrow">Questions</div>
+      <h2 id="h-faq">Good to know</h2>
+    </div>
+    <div class="faq">
+      <details><summary>How do guests receive it?</summary><p>As a link, usually on WhatsApp. Each family gets their own link that greets them by name and knows how many seats are saved for them.</p></details>
+      <details><summary>Do guests need to download anything?</summary><p>No. It opens in the browser on any phone or computer.</p></details>
+      <details><summary>How do guests reply?</summary><p>Right inside the invitation, in a few seconds. Their answer goes straight to your guest list, and they can change it later.</p></details>
+      <details><summary>Can we change details after it’s sent?</summary><p>Yes. If the time or venue changes, we update it and every guest sees the new details the next time they open their link.</p></details>
+      <details><summary>What does a guest count include?</summary><p>Every person invited. A family of four counts as four guests.</p></details>
+      <details><summary>Is it only for weddings?</summary><p>No. Engagements, birthdays, baptisms and other events work the same way.</p></details>
+    </div>
+  </div>
+</section>
+
+<section class="final" aria-labelledby="h-final">
+  <div class="wrap final-in">
+    <svg class="mark" viewBox="0 0 120 112" aria-hidden="true"><use href="#m"/></svg>
+    <h2 id="h-final">Reserve your date</h2>
+    <p>Tell us your wedding date and guest count, and we’ll take it from there.</p>
+    <div class="cta">
+      <a class="btn btn-gold" href="https://instagram.com/unveil.invitations" target="_blank" rel="noopener noreferrer">Order on Instagram</a>
+      <a class="btn" href="demo.html">Open a live invitation</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap foot-in">
+    <span class="brand"><svg class="mark" viewBox="0 0 120 112" aria-hidden="true"><use href="#m"/></svg><span class="word">Unveil<span>.</span></span></span>
+    <span>Instagram <a href="https://instagram.com/unveil.invitations" target="_blank" rel="noopener noreferrer">@unveil.invitations</a></span>
+    <span>Beirut, Lebanon</span>
+  </div>
+</footer>
+
+</body>
+</html>
