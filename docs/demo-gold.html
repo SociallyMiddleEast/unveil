@@ -282,7 +282,7 @@ canvas#glitter.gone { opacity: 0; }
       blowTime += 1 / 60;
     }
     // A short breath or one swipe is enough: once a little is cleared, the rest melts away by itself.
-    if (!cleared && ++frame % 8 === 0 && (coverage() < .9 || blowTime > .7)) reveal();
+    if (!cleared && ++frame % 8 === 0 && (userHoles >= 14 || blowTime > .5 || coverage() < .92)) reveal();
     requestAnimationFrame(drawGlitter);
   }
 
@@ -318,12 +318,12 @@ canvas#glitter.gone { opacity: 0; }
   $('startBtn').addEventListener('click', e => { e.stopPropagation(); startMic(); });
 
   /* ===== Finger brushing ===== */
-  let down = false, last = null;
-  gl.addEventListener('pointerdown', e => { down = true; last = [e.clientX, e.clientY]; hole(e.clientX, e.clientY, 46); });
+  let down = false, last = null, userHoles = 0;
+  gl.addEventListener('pointerdown', e => { down = true; last = [e.clientX, e.clientY]; hole(e.clientX, e.clientY, 46); userHoles++; });
   addEventListener('pointermove', e => {
     if (!down || cleared) return;
     const [lx, ly] = last, dx = e.clientX - lx, dy = e.clientY - ly, steps = Math.max(1, Math.hypot(dx, dy) / 14);
-    for (let i = 1; i <= steps; i++) hole(lx + dx * i / steps, ly + dy * i / steps, 46);
+    for (let i = 1; i <= steps; i++) { hole(lx + dx * i / steps, ly + dy * i / steps, 46); userHoles++; }
     last = [e.clientX, e.clientY];
   });
   addEventListener('pointerup', () => { down = false; });
@@ -376,7 +376,7 @@ canvas#glitter.gone { opacity: 0; }
     ['wFam', 'wAmp', 'wReq', 'wDate', 'wPlace', 'after'].forEach(id => $(id).classList.remove('show'));
     ['wN1', 'wN2'].forEach(id => $(id).classList.remove('write'));
     dustOn = false; dx.clearRect(0, 0, W, H);
-    cleared = false; frame = 0; blowTime = 0;
+    cleared = false; frame = 0; blowTime = 0; userHoles = 0;
     $('startBtn').hidden = false; $('call').textContent = 'Blow gently'; $('sub').textContent = 'one soft breath on your screen'; $('alt').hidden = false;
     buildGlitter();
     gl.classList.remove('gone'); $('cover').classList.remove('gone');
