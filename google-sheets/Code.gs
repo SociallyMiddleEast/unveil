@@ -15,11 +15,13 @@ var SITE = 'https://sociallymiddleeast.github.io/unveil';
 var TABS = {
   Weddings: ['slug', 'coupleCode', 'partner1', 'partner2', 'date', 'timeZone', 'city', 'venueName', 'venueAddress', 'mapsQuery', 'venueNote',
     'letter', 'schedule', 'dressTitle', 'dressText', 'dressHer', 'dressHim', 'palette', 'notes', 'meals', 'replyBy',
-    'stage', 'approvedAt', 'changeRequest', 'changeRequestAt', 'coupleLink', 'sharedLink'],
+    'stage', 'approvedAt', 'changeRequest', 'changeRequestAt', 'coupleLink', 'sharedLink', 'template'],
   Guests: ['wedding', 'code', 'name', 'side', 'phone', 'seats', 'openedAt', 'addedAt', 'link'],
   Replies: ['wedding', 'guestCode', 'name', 'attending', 'seats', 'meal', 'note', 'updatedAt']
 };
 var STAGES = ['details', 'designing', 'preview', 'approved', 'live'];
+/* Invitation designs a wedding can use (the "template" column in Weddings). Blank means velvet-court. */
+var TEMPLATES = ['velvet-court', 'jewel-box'];
 
 /* ---------------- Menu and setup ---------------- */
 
@@ -41,6 +43,9 @@ function setup() {
     sh.getRange(2, 1, Math.max(1, sh.getMaxRows() - 1), head.length).setNumberFormat('@'); // keep everything as plain text
   });
   var w = ss.getSheetByName('Weddings');
+  var tcol = TABS.Weddings.indexOf('template') + 1; // a dropdown so each wedding picks its design
+  w.getRange(2, tcol, Math.max(1, w.getMaxRows() - 1), 1).setDataValidation(
+    SpreadsheetApp.newDataValidation().requireValueInList(TEMPLATES, true).setAllowInvalid(false).build());
   if (w.getLastRow() < 2) {
     w.getRange(2, 1, 1, TABS.Weddings.length).setValues([[
       'lara-karim', '', 'Lara', 'Karim', '2027-06-12 17:00', 'Asia/Beirut', 'Byblos · Lebanon', 'The Harbour Terrace', 'Old Port, Byblos, Lebanon', 'Byblos Old Port, Lebanon', 'Valet parking at the port entrance. A shuttle leaves Beirut at 15:45.',
@@ -49,7 +54,7 @@ function setup() {
       'Black tie', 'Kindly leave white to the bride.', 'A long gown in wine, gold or blush', 'A dark suit or tuxedo',
       '#3a0812, #6e1423, #a3343f, #c99a94, #d8b67a',
       'Gifts | Your presence is our gift. A wishing well will be at the venue.\nChildren | This evening is for adults only.',
-      'Meat, Fish, Vegetarian', '1 May 2027', 'details', '', '', '', '', ''
+      'Meat, Fish, Vegetarian', '1 May 2027', 'details', '', '', '', '', '', 'velvet-court'
     ]]);
     var g = ss.getSheetByName('Guests');
     g.getRange(2, 1, 3, 6).setValues([
@@ -143,7 +148,8 @@ function publicWedding(w) {
     dressTitle: w.dressTitle, dressText: w.dressText, dressHer: w.dressHer, dressHim: w.dressHim,
     palette: list(w.palette).filter(function (c) { return /^#[0-9a-fA-F]{3,8}$/.test(c); }),
     notes: lines(w.notes).map(function (l) { var p = l.split('|'); return { title: (p[0] || '').trim(), text: p.slice(1).join('|').trim() }; }).filter(function (n) { return n.title; }),
-    meals: list(w.meals), replyBy: w.replyBy
+    meals: list(w.meals), replyBy: w.replyBy,
+    template: String(w.template || '').trim().toLowerCase() || 'velvet-court'
   };
 }
 

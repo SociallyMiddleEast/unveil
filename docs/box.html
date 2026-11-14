@@ -1,0 +1,364 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Your invitation · Unveil</title>
+<meta name="theme-color" content="#d9cfbf">
+<meta name="robots" content="noindex">
+<link rel="icon" href="assets/seal-u.png">
+<link rel="preload" as="image" href="assets/jewel-box/doors.jpg">
+<link rel="preload" as="image" href="assets/jewel-box/open.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Pinyon+Script&family=Jost:wght@400;500&display=swap">
+<script src="config.js"></script>
+<!--
+  Unveil · The Jewel Box template.
+  The box never moves. Tap anywhere: the rings lift away, the doors swing open,
+  and every wedding detail appears inside the card, which is the only part that scrolls.
+  Address: box.html?w=<wedding>&g=<guest code>   ·   box.html?demo  for the library preview.
+-->
+<style>
+:root { --ink: #5b4423; --ink-soft: #7d6440; --gold: #a8843f; --gold-l: #c9a85f; --paper: #f7f1e5; --line: rgba(168,132,63,.45); }
+* { box-sizing: border-box; }
+html, body { margin: 0; height: 100%; overflow: hidden; }
+body { background: radial-gradient(120% 80% at 50% 30%, #eee7da, #cfc4b1 70%, #b9ad98); font-family: 'Cormorant Garamond', Georgia, serif; color: var(--ink); -webkit-tap-highlight-color: transparent; }
+
+/* The stage keeps the photo's exact 9:16 shape, so every overlay lines up on any screen. */
+.stage { position: fixed; left: 50%; top: 50%; height: min(100dvh, 177.78vw); aspect-ratio: 9 / 16; transform: translate(-50%, -50%);
+  container-type: size; perspective: 1400px; perspective-origin: 50% 50%; overflow: hidden; box-shadow: 0 30px 80px rgba(60,45,20,.35); }
+.open-img, .layer { position: absolute; inset: 0; width: 100%; height: 100%; }
+.open-img { object-fit: cover; transform: scale(1.06); filter: brightness(.82); transition: transform 2.4s cubic-bezier(.2,.7,.2,1), filter 2.4s ease; }
+.is-open .open-img { transform: scale(1); filter: none; }
+
+/* Light pouring from the seam */
+.glow { position: absolute; inset: 0; pointer-events: none; opacity: 0;
+  background: radial-gradient(30% 45% at 50.6% 50%, rgba(255,226,150,.95), rgba(255,200,90,.45) 45%, rgba(255,190,80,0) 75%); mix-blend-mode: screen; }
+.is-opening .glow { animation: glow 2.2s ease-out .55s forwards; }
+@keyframes glow { 0% { opacity: 0; transform: scaleX(.15); } 35% { opacity: 1; transform: scaleX(1); } 100% { opacity: 0; transform: scaleX(1.6); } }
+
+/* The two doors: halves of the closed photo, hinged on the outer edges */
+.door { position: absolute; top: 0; height: 100%; background: url(assets/jewel-box/doors.jpg) no-repeat; background-size: 100cqw 100cqh;
+  transition: transform 1.9s cubic-bezier(.55,.05,.25,1) .55s, opacity .7s ease 1.85s, filter 1.9s ease .55s; backface-visibility: hidden; will-change: transform; }
+.door.l { left: 0; width: 50.6%; background-position: 0 0; transform-origin: 0 50%; }
+.door.r { right: 0; width: 49.4%; background-position: right 0 top 0; transform-origin: 100% 50%; }
+.door::after { content: ""; position: absolute; inset: 0; opacity: 0; transition: opacity 1.9s ease .55s; }
+.door.l::after { background: linear-gradient(90deg, rgba(0,0,0,0), rgba(40,25,5,.45)); }
+.door.r::after { background: linear-gradient(270deg, rgba(0,0,0,0), rgba(40,25,5,.45)); }
+.is-opening .door.l { transform: rotateY(-108deg); opacity: 0; }
+.is-opening .door.r { transform: rotateY(108deg); opacity: 0; }
+.is-opening .door::after { opacity: 1; }
+
+/* The rings lift off first */
+.rings { position: absolute; left: 33.33%; top: 43.75%; width: 35.28%; height: 12.19%; z-index: 3;
+  filter: drop-shadow(0 .6cqh .8cqh rgba(60,40,10,.35)); transition: transform .9s cubic-bezier(.3,0,.2,1), opacity .6s ease .3s, filter .9s ease; }
+.is-opening .rings { transform: translateY(-14cqh) scale(1.25); opacity: 0; filter: drop-shadow(0 4cqh 3cqh rgba(60,40,10,0)) brightness(1.25); }
+.closed .rings { animation: breathe 3.2s ease-in-out infinite; }
+@keyframes breathe { 50% { transform: translateY(-.5cqh); filter: drop-shadow(0 1.2cqh 1.2cqh rgba(60,40,10,.3)); } }
+
+/* Gold sparkles */
+.spark { position: absolute; left: 50.6%; top: 50%; width: .9cqw; height: .9cqw; border-radius: 50%; pointer-events: none; opacity: 0;
+  background: radial-gradient(circle, #fff8dc, #f2cf78 45%, rgba(242,207,120,0) 70%); }
+.is-opening .spark { animation: spark var(--d) ease-out var(--t) forwards; }
+@keyframes spark { 0% { opacity: 0; transform: translate(0, 0) scale(.4); } 15% { opacity: 1; } 100% { opacity: 0; transform: translate(var(--x), var(--y)) scale(1.2); } }
+
+/* Tap hint */
+.hint { position: absolute; left: 0; right: 0; bottom: 7cqh; text-align: center; z-index: 4; pointer-events: none;
+  font: 500 2.6cqw/1 'Jost', sans-serif; letter-spacing: .32em; text-transform: uppercase; color: #fffaf0; text-shadow: 0 1px 6px rgba(70,45,10,.7);
+  animation: pulse 2.4s ease-in-out infinite; transition: opacity .4s; }
+.is-opening .hint, .loading .hint { opacity: 0; animation: none; }
+@keyframes pulse { 50% { opacity: .45; } }
+.status { position: absolute; left: 10%; right: 10%; bottom: 7cqh; z-index: 4; text-align: center; font-size: 3.6cqw; color: #fffaf0; text-shadow: 0 1px 6px rgba(70,45,10,.8); }
+
+/* ---------- The card: the only part that moves ---------- */
+.card { position: absolute; left: 27%; right: 26.4%; top: 34%; bottom: 25.2%; z-index: 2; overflow-y: auto; overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch; scrollbar-width: none; text-align: center; font-size: 3.55cqw; line-height: 1.45; padding: 1.2em .9em 1.6em;
+  opacity: 0; visibility: hidden; transition: opacity 1s ease, visibility 0s 1s;
+  -webkit-mask-image: linear-gradient(180deg, transparent, #000 6%, #000 92%, transparent); mask-image: linear-gradient(180deg, transparent, #000 6%, #000 92%, transparent); }
+.card::-webkit-scrollbar { display: none; }
+.is-open .card { opacity: 1; visibility: visible; transition: opacity 1.1s ease .2s; }
+.is-open .card > * { animation: rise .9s cubic-bezier(.2,.7,.2,1) both; }
+.is-open .card > :nth-child(2) { animation-delay: .15s; } .is-open .card > :nth-child(3) { animation-delay: .3s; }
+.is-open .card > :nth-child(4) { animation-delay: .45s; } .is-open .card > :nth-child(5) { animation-delay: .6s; }
+.is-open .card > :nth-child(n+6) { animation-delay: .75s; }
+@keyframes rise { from { opacity: 0; transform: translateY(.8em); } }
+
+.k { font: 500 .62em/1.4 'Jost', sans-serif; letter-spacing: .3em; text-transform: uppercase; color: var(--gold); margin: 0 0 .7em; }
+.names { font-family: 'Pinyon Script', cursive; font-weight: 400; color: #8a6a35; line-height: 1; margin: .1em 0 .2em; }
+.names span { display: block; font-size: 2.6em; overflow-wrap: break-word; hyphens: auto; }
+.names i { display: block; font-style: normal; font-size: 1.3em; color: var(--gold-l); margin: .05em 0 .1em; }
+.lead { font-size: 1.08em; margin: .6em 0; }
+.date { font-family: 'Cormorant Garamond', serif; font-size: 1.35em; letter-spacing: .18em; margin: .5em 0 .1em; }
+.place { font: 500 .6em/1.4 'Jost', sans-serif; letter-spacing: .32em; text-transform: uppercase; color: var(--ink-soft); margin: 0; }
+.scroll-cue { margin: 1.4em 0 0; font: 500 .55em/1 'Jost', sans-serif; letter-spacing: .3em; color: var(--gold); text-transform: uppercase; }
+.scroll-cue::after { content: ""; display: block; width: .6em; height: .6em; margin: .7em auto 0; border-right: 1px solid; border-bottom: 1px solid; transform: rotate(45deg); animation: nudge 1.8s ease-in-out infinite; }
+@keyframes nudge { 50% { transform: translateY(.3em) rotate(45deg); } }
+
+.sec { margin-top: 2.2em; }
+.sec::before { content: "❦"; display: block; color: var(--gold-l); font-size: 1em; margin-bottom: .9em; }
+.sec h2 { font-family: 'Pinyon Script', cursive; font-weight: 400; font-size: 2em; color: #8a6a35; margin: 0 0 .35em; line-height: 1.1; }
+.letter p { margin: 0; font-style: italic; font-size: 1.05em; }
+.day { list-style: none; padding: 0; margin: 0; }
+.day li { padding: .55em 0; border-bottom: 1px solid var(--line); }
+.day li:last-child { border-bottom: 0; }
+.day time { display: block; font: 500 .62em/1.6 'Jost', sans-serif; letter-spacing: .25em; color: var(--gold); }
+.day b { display: block; font-weight: 600; font-size: 1.05em; }
+.day span { display: block; font-size: .92em; color: var(--ink-soft); }
+.venue b { display: block; font-weight: 600; font-size: 1.12em; }
+.muted { color: var(--ink-soft); font-size: .92em; margin: .3em 0; }
+.btns { display: grid; gap: .5em; margin-top: .9em; }
+.btn { display: block; padding: .8em .6em; border: 1px solid var(--gold); color: var(--ink); text-decoration: none; background: transparent; cursor: pointer;
+  font: 500 .58em/1.2 'Jost', sans-serif; letter-spacing: .25em; text-transform: uppercase; }
+.btn.solid { background: linear-gradient(135deg, #b8924a, #e2c88a 50%, #b0873e); border-color: transparent; color: #3b2a10; }
+.btn:disabled { opacity: .6; }
+.palette { display: flex; justify-content: center; gap: .4em; margin: .7em 0; }
+.palette i { width: 1.4em; height: 1.4em; border-radius: 50%; box-shadow: 0 0 0 1px rgba(168,132,63,.6), 0 2px 4px rgba(0,0,0,.15); }
+.looks { display: grid; gap: .5em; margin-top: .5em; }
+.looks small { display: block; font: 500 .6em/1.6 'Jost', sans-serif; letter-spacing: .25em; color: var(--gold); text-transform: uppercase; }
+details { border-bottom: 1px solid var(--line); text-align: left; }
+details summary { list-style: none; cursor: pointer; padding: .6em 0; font-weight: 600; display: flex; justify-content: space-between; }
+details summary::-webkit-details-marker { display: none; }
+details summary::after { content: "+"; color: var(--gold); }
+details[open] summary::after { content: "–"; }
+details p { margin: 0 0 .7em; color: var(--ink-soft); }
+
+/* RSVP */
+form { text-align: left; display: grid; gap: .9em; margin-top: .6em; }
+.fld > span { display: block; font: 500 .58em/1.6 'Jost', sans-serif; letter-spacing: .25em; text-transform: uppercase; color: var(--gold); margin-bottom: .3em; }
+input[type=text], textarea, select { width: 100%; font: inherit; font-size: 1em; color: var(--ink); background: rgba(255,255,255,.55); border: 1px solid var(--line); border-radius: 0; padding: .5em .6em; }
+textarea { min-height: 4.5em; resize: vertical; }
+input:focus, textarea:focus, select:focus, .btn:focus-visible { outline: 2px solid var(--gold-l); outline-offset: 1px; }
+.choice { display: grid; grid-template-columns: 1fr 1fr; gap: .4em; }
+.choice label { position: relative; }
+.choice input { position: absolute; opacity: 0; }
+.choice span { display: block; text-align: center; padding: .6em .2em; border: 1px solid var(--line); font-size: .95em; cursor: pointer; }
+.choice input:checked + span { background: linear-gradient(135deg, #b8924a, #e2c88a 50%, #b0873e); color: #3b2a10; border-color: transparent; }
+.choice input:focus-visible + span { outline: 2px solid var(--gold-l); }
+.stepper { display: flex; align-items: center; justify-content: space-between; border: 1px solid var(--line); }
+.stepper button { width: 2.4em; height: 2.2em; border: 0; background: transparent; color: var(--gold); font-size: 1.1em; cursor: pointer; }
+.stepper output { font-size: 1.15em; }
+.for { text-align: center; font-style: italic; margin: 0; }
+.err { color: #9a2f2f; font-size: .9em; margin: 0; min-height: 1em; text-align: center; }
+[data-come="no"] .if-yes { display: none; }
+.sent form { display: none; }
+.thanks { display: none; text-align: center; }
+.sent .thanks { display: block; }
+.thanks .big { font-family: 'Pinyon Script', cursive; font-size: 2em; color: #8a6a35; margin: .2em 0; }
+.sign { margin-top: 2.2em; }
+.sign p { margin: 0; }
+.sign .names span { font-size: 2.2em; }
+.made { display: block; margin-top: 2em; font: 500 .5em/1 'Jost', sans-serif; letter-spacing: .25em; text-transform: uppercase; color: var(--gold); text-decoration: none; }
+[hidden] { display: none !important; }
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+
+@media (prefers-reduced-motion: reduce) {
+  .door, .rings, .open-img, .card, .glow { transition-duration: .01s !important; transition-delay: 0s !important; animation: none !important; }
+  .spark, .hint, .scroll-cue::after, .is-open .card > * { animation: none !important; }
+}
+</style>
+</head>
+<body>
+<main class="stage closed loading" id="stage" tabindex="0" role="button" aria-label="Open the invitation">
+  <img class="open-img" src="assets/jewel-box/open.jpg" alt="" width="720" height="1280">
+  <div class="glow" aria-hidden="true"></div>
+
+  <article class="card" id="card" aria-live="polite"></article>
+
+  <div class="layer doors" aria-hidden="true">
+    <div class="door l"></div><div class="door r"></div>
+  </div>
+  <img class="rings" src="assets/jewel-box/rings.png" alt="" width="254" height="156" aria-hidden="true">
+  <div id="sparks" aria-hidden="true"></div>
+  <p class="hint" id="hint">Tap anywhere to open</p>
+  <p class="status" id="status" hidden></p>
+</main>
+
+<script>
+(function () {
+  var $ = function (id) { return document.getElementById(id); };
+  var stage = $('stage'), card = $('card');
+  var q = new URLSearchParams(location.search), W = (q.get('w') || '').trim(), G = (q.get('g') || '').trim();
+  var API = window.UNVEIL_API, DEMO = q.has('demo') || (!W && !API);
+  var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* Sample used by the Invitation Library preview (box.html?demo) */
+  var SAMPLE = { wedding: { slug: 'demo', partner1: 'Lara', partner2: 'Karim', start: '2027-06-12T14:00:00.000Z', timeZone: 'Asia/Beirut',
+    city: 'Byblos · Lebanon', venueName: 'The Harbour Terrace', venueAddress: 'Old Port, Byblos, Lebanon', mapsQuery: 'Byblos Old Port, Lebanon',
+    venueNote: 'Valet parking at the port entrance. A shuttle leaves Beirut at 15:45.',
+    letter: ['Dear family & friends,', 'after seven years, two cities', 'and one very nervous proposal,', 'we would love you beside us', 'as we begin forever.'],
+    schedule: [{ time: '17:00', title: 'The ceremony', detail: 'St. John the Baptist Church' }, { time: '19:30', title: 'The zaffe', detail: 'Drums, dabke and our grand entrance' },
+      { time: '20:30', title: 'Dinner', detail: 'By the old harbour' }, { time: '23:30', title: 'The cake', detail: 'And we dance until late' }],
+    dressTitle: 'Black tie', dressText: 'Kindly leave white to the bride.', dressHer: 'A long gown in champagne or gold', dressHim: 'A dark suit or tuxedo',
+    palette: ['#efe4cf', '#d8bf8a', '#b08a4a', '#7a5a2e'], notes: [{ title: 'Gifts', text: 'Your presence is our gift. A wishing well will be at the venue.' }, { title: 'Children', text: 'This evening is for adults only.' }],
+    meals: ['Meat', 'Fish', 'Vegetarian'], replyBy: '1 May 2027' }, guest: null, reply: null };
+
+  /* Sparkles */
+  var sp = $('sparks');
+  for (var i = 0; i < 26; i++) {
+    var s = document.createElement('i'); s.className = 'spark';
+    var a = Math.random() * Math.PI * 2, r = 12 + Math.random() * 34;
+    s.style.cssText = '--x:' + (Math.cos(a) * r).toFixed(1) + 'cqw;--y:' + (Math.sin(a) * r * 1.4).toFixed(1) + 'cqh;--d:' + (1.4 + Math.random() * 1.4).toFixed(2) + 's;--t:' + (.6 + Math.random() * .9).toFixed(2) + 's';
+    sp.appendChild(s);
+  }
+
+  function status(msg) { $('status').hidden = false; $('status').textContent = msg; $('hint').hidden = true; }
+  function post(o) { return fetch(API, { method: 'POST', body: JSON.stringify(o) }).then(function (r) { return r.json(); }); }
+  function el(tag, cls, text) { var e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; }
+  function add(parent) { for (var i = 1; i < arguments.length; i++) if (arguments[i]) parent.appendChild(arguments[i]); return parent; }
+
+  /* Load */
+  var data = null;
+  if (DEMO) { data = SAMPLE; build(SAMPLE); ready(); }
+  else if (!API) status('This invitation isn’t connected yet. Please check back soon.');
+  else if (!W) status('This link is incomplete. Please ask the couple to send it again.');
+  else fetch(API + '?a=invite&w=' + encodeURIComponent(W) + (G ? '&g=' + encodeURIComponent(G) : ''))
+    .then(function (r) { return r.json(); })
+    .then(function (d) { if (d.error) return status('This link isn’t working. Please ask the couple to send it again.'); data = d; build(d); ready(); })
+    .catch(function () { status('We couldn’t load your invitation. Please check your connection and try again.'); });
+
+  function ready() {
+    stage.classList.remove('loading');
+    if (data.guest) $('hint').textContent = 'For ' + data.guest.name + ' · tap to open';
+    stage.addEventListener('click', open);
+    stage.addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); open(); } });
+  }
+
+  /* Open: rings lift, doors swing, light pours out, card appears. The box itself never moves again. */
+  var opened = false;
+  function open() {
+    if (opened) return; opened = true;
+    stage.classList.remove('closed'); stage.classList.add('is-opening');
+    stage.removeAttribute('role'); stage.removeAttribute('aria-label'); stage.removeAttribute('tabindex');
+    setTimeout(function () { stage.classList.add('is-open'); card.focus({ preventScroll: true }); }, reduce ? 0 : 2300);
+    setTimeout(function () { document.querySelector('.doors').hidden = true; document.querySelector('.rings').hidden = true; }, reduce ? 0 : 3200);
+    if (G && !DEMO) post({ a: 'opened', w: W, g: G }).catch(function () {});
+  }
+
+  /* Build every detail inside the card */
+  function build(d) {
+    var w = d.wedding, guest = d.guest, reply = d.reply, couple = w.partner1 + ' & ' + w.partner2;
+    document.title = couple + ' · Unveil';
+    var start = Date.parse(w.start), dt = new Date(start);
+    var fmt = function (o) { return new Intl.DateTimeFormat('en-GB', Object.assign({ timeZone: w.timeZone }, o)).format(dt); };
+    var longDate = fmt({ weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
+    card.setAttribute('tabindex', '-1'); card.setAttribute('aria-label', 'Invitation from ' + couple);
+
+    /* Front of the card */
+    add(card, el('p', 'k', guest ? 'For ' + guest.name : 'The wedding of'));
+    var n = el('h1', 'names'); add(n, el('span', '', w.partner1), el('i', '', '&'), el('span', '', w.partner2)); card.appendChild(n);
+    add(card, el('p', 'lead', 'Together with our families, we invite you to celebrate the beginning of our forever.'));
+    add(card, el('p', 'date', fmt({ day: '2-digit' }) + ' · ' + fmt({ month: '2-digit' }) + ' · ' + fmt({ year: 'numeric' })));
+    add(card, el('p', 'place', w.city || ''));
+    add(card, el('p', 'scroll-cue', 'Scroll'));
+
+    function section(title) { var s = el('section', 'sec'); if (title) s.appendChild(el('h2', '', title)); card.appendChild(s); return s; }
+
+    /* Letter */
+    if (w.letter.length) {
+      var ls = section(); ls.classList.add('letter');
+      w.letter.forEach(function (l, i) { ls.appendChild(el('p', '', i === 0 && guest && /^dear\b/i.test(l) ? 'Dear ' + guest.name + ',' : l)); });
+    }
+
+    /* The day */
+    if (w.schedule.length) {
+      var ds = section('The day'); ds.appendChild(el('p', 'muted', longDate));
+      var ul = el('ul', 'day');
+      w.schedule.forEach(function (s) { var li = el('li'); add(li, el('time', '', s.time), el('b', '', s.title), s.detail ? el('span', '', s.detail) : null); ul.appendChild(li); });
+      ds.appendChild(ul);
+    }
+
+    /* Venue */
+    var g8 = function (t) { return new Date(t).toISOString().replace(/[-:]/g, '').replace(/\.\d{3}/, ''); };
+    var cal = 'https://calendar.google.com/calendar/render?action=TEMPLATE&text=' + encodeURIComponent(couple + "'s wedding") + '&dates=' + g8(start) + '/' + g8(start + 8 * 3600e3) + '&location=' + encodeURIComponent(w.venueName + ', ' + w.venueAddress);
+    var vs = section('The venue'); vs.classList.add('venue');
+    add(vs, el('b', '', w.venueName), el('p', 'muted', w.venueAddress), w.venueNote ? el('p', 'muted', w.venueNote) : null);
+    var b = el('div', 'btns'), dir = el('a', 'btn', 'Directions'), cl = el('a', 'btn', 'Save the date');
+    dir.href = 'https://www.google.com/maps/dir/?api=1&destination=' + encodeURIComponent(w.mapsQuery); cl.href = cal;
+    [dir, cl].forEach(function (a) { a.target = '_blank'; a.rel = 'noopener'; }); add(b, dir, cl); vs.appendChild(b);
+
+    /* Dress code */
+    if (w.dressTitle || w.dressText || w.dressHer || w.dressHim || w.palette.length) {
+      var dc = section(w.dressTitle || 'Dress code');
+      if (w.dressText) dc.appendChild(el('p', 'muted', w.dressText));
+      if (w.palette.length) { var pl = el('div', 'palette'); w.palette.forEach(function (c) { var i = el('i'); i.style.background = c; pl.appendChild(i); }); dc.appendChild(pl); }
+      if (w.dressHer || w.dressHim) {
+        var lk = el('div', 'looks');
+        if (w.dressHer) { var h = el('div'); add(h, el('small', '', 'For her'), el('span', '', w.dressHer)); lk.appendChild(h); }
+        if (w.dressHim) { var m = el('div'); add(m, el('small', '', 'For him'), el('span', '', w.dressHim)); lk.appendChild(m); }
+        dc.appendChild(lk);
+      }
+    }
+
+    /* Notes */
+    if (w.notes.length) {
+      var ns = section('Good to know');
+      w.notes.forEach(function (x) { var dd = el('details'); add(dd, el('summary', '', x.title), el('p', '', x.text)); ns.appendChild(dd); });
+    }
+
+    /* RSVP */
+    var rs = section('Kindly reply'); rs.id = 'rsvp';
+    rs.appendChild(el('p', 'muted', w.replyBy ? 'by ' + w.replyBy : 'at your earliest convenience'));
+    var box = el('div'); box.dataset.come = ''; rs.appendChild(box);
+    var max = guest ? guest.seats : 10, seats = 1;
+    var f = el('form'); f.noValidate = true;
+    f.innerHTML =
+      '<p class="for" hidden></p>' +
+      '<label class="fld nameFld"><span>Your name</span><input type="text" name="name" autocomplete="name" maxlength="120"></label>' +
+      '<div class="fld"><span id="comeL">Will you join us?</span><div class="choice" role="radiogroup" aria-labelledby="comeL">' +
+        '<label><input type="radio" name="come" value="yes"><span>Joyfully yes</span></label>' +
+        '<label><input type="radio" name="come" value="no"><span>Sadly no</span></label></div></div>' +
+      '<div class="fld if-yes seatsFld"><span>Seats</span><div class="stepper"><button type="button" data-s="-1" aria-label="One seat fewer">−</button><output aria-live="polite">1</output><button type="button" data-s="1" aria-label="One more seat">+</button></div></div>' +
+      '<label class="fld if-yes mealFld"><span>Meal</span><select name="meal"><option value="">Choose…</option></select></label>' +
+      '<label class="fld"><span>A note for the couple</span><textarea name="note" maxlength="1000"></textarea></label>' +
+      '<p class="err" role="alert"></p>' +
+      '<button class="btn solid" type="submit">Send my reply</button>';
+    var thanks = el('div', 'thanks'); thanks.setAttribute('tabindex', '-1');
+    add(thanks, el('p', 'k thK'), el('p', 'big thWho'), el('p', 'muted thMeta'));
+    var again = el('button', 'btn', 'Change my reply'); again.type = 'button'; thanks.appendChild(again);
+    add(box, f, thanks);
+
+    var Q = function (s) { return f.querySelector(s); };
+    if (guest) { Q('.nameFld').hidden = true; var fo = Q('.for'); fo.hidden = false; fo.textContent = 'For ' + guest.name + (guest.seats > 1 ? ', up to ' + guest.seats + ' seats' : ''); }
+    if (w.meals.length) w.meals.forEach(function (x) { var o = el('option', '', x); o.value = x; Q('select').appendChild(o); }); else Q('.mealFld').hidden = true;
+    if (max <= 1) Q('.seatsFld').hidden = true;
+    f.querySelectorAll('[data-s]').forEach(function (bt) { bt.addEventListener('click', function () { seats = Math.max(1, Math.min(max, seats + +bt.dataset.s)); Q('output').textContent = seats; }); });
+    f.addEventListener('change', function (e) { if (e.target.name === 'come') box.dataset.come = e.target.value; });
+
+    function showThanks(r) {
+      var yes = r.attending === 'yes' || r.attending === true;
+      thanks.querySelector('.thK').textContent = yes ? 'Your seat is saved' : 'Thank you for letting us know';
+      thanks.querySelector('.thWho').textContent = r.name;
+      thanks.querySelector('.thMeta').textContent = yes ? r.seats + (r.seats > 1 ? ' seats' : ' seat') + (r.meal ? ' · ' + r.meal : '') + ' · ' + longDate : 'You will be missed. ' + couple + ' send their love.';
+      box.classList.add('sent');
+    }
+    if (reply && guest) {
+      showThanks({ name: guest.name, attending: reply.attending, seats: reply.seats, meal: reply.meal });
+      var cv = reply.attending ? 'yes' : 'no'; Q('[name=come][value=' + cv + ']').checked = true; box.dataset.come = cv;
+      if (reply.attending) { seats = Math.max(1, reply.seats); Q('output').textContent = seats; }
+      Q('select').value = reply.meal || ''; Q('textarea').value = reply.note || '';
+    }
+    again.addEventListener('click', function () { box.classList.remove('sent'); });
+    f.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var err = Q('.err'), btn = Q('[type=submit]');
+      var name = guest ? guest.name : f.name.value.trim(), come = (Q('[name=come]:checked') || {}).value, meal = come === 'yes' ? Q('select').value : '';
+      if (!name) { err.textContent = 'Please write your name so the couple knows who replied.'; f.name.focus(); return; }
+      if (!come) { err.textContent = 'Please choose whether you can come.'; return; }
+      err.textContent = ''; btn.disabled = true; btn.textContent = 'Sending…';
+      var done = function (r) { btn.disabled = false; btn.textContent = 'Send my reply'; if (r.error) { err.textContent = r.error; return; } showThanks({ name: r.name, attending: r.attending, seats: r.seats, meal: meal }); thanks.focus(); };
+      if (DEMO) return setTimeout(function () { done({ name: name, attending: come, seats: come === 'yes' ? seats : 0 }); }, 500);
+      post({ a: 'rsvp', w: W, g: G, name: name, attending: come, seats: seats, meal: meal, note: Q('textarea').value })
+        .then(done).catch(function () { btn.disabled = false; btn.textContent = 'Send my reply'; err.textContent = 'Your reply didn’t go through. Please check your connection and try again.'; });
+    });
+
+    /* Signature */
+    var sg = el('div', 'sign'); sg.appendChild(el('p', 'muted', 'With love,'));
+    var sn = el('p', 'names'); sn.appendChild(el('span', '', couple)); sg.appendChild(sn);
+    var mk = el('a', 'made', 'Made with Unveil'); mk.href = 'index.html'; sg.appendChild(mk);
+    card.appendChild(sg);
+  }
+})();
+</script>
+</body>
+</html>

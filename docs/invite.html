@@ -360,7 +360,13 @@ textarea.inp { min-height: 80px; resize: vertical; font-size: 19px; }
   if (!W) return fail('This link is incomplete. Please ask the couple to send it again.');
   fetch(API + '?a=invite&w=' + encodeURIComponent(W) + (G ? '&g=' + encodeURIComponent(G) : ''))
     .then(function (r) { return r.json(); })
-    .then(function (d) { if (d.error) return fail('This link isn’t working. Please ask the couple to send it again.'); render(d); })
+    .then(function (d) {
+      if (d.error) return fail('This link isn’t working. Please ask the couple to send it again.');
+      /* Each wedding opens in the design the couple chose (the "template" column in the Sheet). */
+      var page = { 'jewel-box': 'box.html' }[d.wedding.template];
+      if (page) return location.replace(page + location.search);
+      render(d);
+    })
     .catch(function () { fail('We couldn’t load your invitation. Please check your connection and try again.'); });
 
   function sectionOf(el) { return el.closest('section'); }
