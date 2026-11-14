@@ -45,7 +45,7 @@ export function GuestTable({ wedding, rows, base, mode, removeAction }: {
                 <td><b style={{ fontWeight: 500 }}>{r.name}</b>{r.phone && <div className="note" style={{ fontStyle: "normal" }}>{r.phone}</div>}</td>
                 <td>{r.side}</td>
                 <td className="num">{r.seats}</td>
-                <td><Status r={r} /></td>
+                <td><Status r={r} />{r.rsvp?.meal && <div className="note" style={{ fontStyle: "normal" }}>Meal: {r.rsvp.meal}</div>}</td>
                 <td>{r.rsvp?.note && <div className="note">“{r.rsvp.note}”</div>}</td>
                 <td style={{ whiteSpace: "nowrap" }}>{formatStamp(r.rsvp?.updatedAt ?? r.openedAt, wedding.timeZone)}</td>
                 <td>

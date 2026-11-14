@@ -2,7 +2,12 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { getGuestByCode, getRsvpForGuest, getWeddingBySlug } from "@/lib/db";
 import { formatDateDots, formatDateLong, formatDeadline, formatTime } from "@/lib/time";
+import { Cinzel, Cormorant_Garamond } from "next/font/google";
 import { Invitation, type InvitationProps } from "@/components/invitation/Invitation";
+import { VelvetCourt } from "@/components/velvet/VelvetCourt";
+
+const cinzel = Cinzel({ subsets: ["latin"], weight: ["400", "500"], variable: "--vc-cinzel" });
+const cormorant = Cormorant_Garamond({ subsets: ["latin"], weight: ["400", "500"], style: ["normal", "italic"], variable: "--vc-serif" });
 
 type Params = { slug: string; code?: string[] };
 
@@ -29,6 +34,25 @@ export default async function InvitationPage({ params }: { params: Promise<Param
   const guest = guestCode ? await getGuestByCode(w.id, guestCode) : null;
   if (guestCode && !guest) notFound();
   const rsvp = guest ? await getRsvpForGuest(guest.id) : null;
+
+  if (w.reveal === "velvet") {
+    const notes = [...w.notes];
+    if (w.giftsText && !notes.some(n => /gift/i.test(n.title))) notes.unshift({ title: "Gifts", text: w.giftsText });
+    return (
+      <div className={`${cinzel.variable} ${cormorant.variable}`}>
+        <VelvetCourt
+          slug={w.slug} code={guest?.code ?? ""} p1={w.partner1} p2={w.partner2}
+          startsAt={w.startsAt} timeZone={w.timeZone} city={w.city}
+          venueName={w.venueName} venueAddress={w.venueAddress} mapsQuery={w.mapsQuery || `${w.venueName}, ${w.venueAddress}`}
+          intro={w.intro} letter={w.letter.split("\n").map(l => l.trim()).filter(Boolean)}
+          schedule={w.schedule} dressTitle={w.dressTitle} dressText={w.dressText} dressHer={w.dressHer} dressHim={w.dressHim}
+          palette={w.palette} notes={notes} meals={w.meals} deadline={formatDeadline(w.rsvpDeadline)} venueNote={w.venueNote}
+          guest={guest ? { name: guest.name, seats: guest.seats } : null}
+          existing={rsvp ? { attending: rsvp.attending, count: rsvp.count, note: rsvp.note, meal: rsvp.meal } : null}
+        />
+      </div>
+    );
+  }
 
   const props: InvitationProps = {
     slug: w.slug,

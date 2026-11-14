@@ -6,14 +6,16 @@ import { saveWedding, type FormState } from "./actions";
 export type WeddingFormValues = {
   id: string; partner1: string; partner2: string; startsLocal: string; city: string; venueName: string;
   venueAddress: string; mapsQuery: string; intro: string; storyTitle: string; story: string; schedule: string;
-  dressTitle: string; dressText: string; giftsText: string; rsvpDeadline: string; reveal: "veil" | "seal";
+  dressTitle: string; dressText: string; giftsText: string; rsvpDeadline: string; reveal: "veil" | "seal" | "velvet";
+  letter: string; venueNote: string; dressHer: string; dressHim: string; palette: string; notes: string; meals: string;
 };
 
 const EMPTY: WeddingFormValues = {
   id: "", partner1: "", partner2: "", startsLocal: "", city: "", venueName: "", venueAddress: "", mapsQuery: "",
   intro: "request the pleasure of your company as they begin forever", storyTitle: "", story: "",
   schedule: "17:00 | The ceremony | \n19:30 | The zaffe | Drums, dabke and our grand entrance\n20:30 | Dinner & dancing | \n23:30 | The cake | ",
-  dressTitle: "", dressText: "", giftsText: "", rsvpDeadline: "", reveal: "veil",
+  dressTitle: "", dressText: "", giftsText: "", rsvpDeadline: "", reveal: "velvet",
+  letter: "", venueNote: "", dressHer: "", dressHim: "", palette: "#3a0812, #6e1423, #a3343f, #c99a94, #d8b67a", notes: "Gifts | Your presence is our gift.\nChildren | This evening is for adults only.", meals: "Meat, Fish, Vegetarian",
 };
 
 export function WeddingForm({ values = EMPTY }: { values?: WeddingFormValues }) {
@@ -30,6 +32,7 @@ export function WeddingForm({ values = EMPTY }: { values?: WeddingFormValues }) 
       <div className="fld full">
         <span className="st-label">Reveal</span>
         <div className="st-reveal">
+          <label><span className="row"><input type="radio" name="reveal" value="velvet" defaultChecked={v.reveal === "velvet"} /><b>The Velvet Court</b></span><span>Template I · press and hold the wax seal, then the full royal invitation.</span></label>
           <label><span className="row"><input type="radio" name="reveal" value="veil" defaultChecked={v.reveal === "veil"} /><b>The Veil</b></span><span>Guests swipe up to lift a sheer veil.</span></label>
           <label><span className="row"><input type="radio" name="reveal" value="seal" defaultChecked={v.reveal === "seal"} /><b>The Seal</b></span><span>Guests break a wax seal and the envelope opens.</span></label>
         </div>
@@ -45,6 +48,14 @@ export function WeddingForm({ values = EMPTY }: { values?: WeddingFormValues }) 
       <div className="fld"><label htmlFor="story">Our story</label><textarea id="story" name="story" defaultValue={v.story} /><small>Leave empty to hide this section.</small></div>
       <div className="fld"><label htmlFor="dress">Dress code</label><textarea id="dress" name="dressText" defaultValue={v.dressText} /><small>Leave empty to hide this section.</small></div>
       <div className="fld full"><label htmlFor="sched">Schedule</label><textarea id="sched" className="mono" name="schedule" defaultValue={v.schedule} /><small>One line each: time | title | detail</small></div>
+      <div className="fld full"><span className="st-label">The Velvet Court sections</span><small>Used only by The Velvet Court template.</small></div>
+      <div className="fld full"><label htmlFor="letter">A letter from the couple</label><textarea id="letter" name="letter" defaultValue={v.letter} placeholder={"Dear family & friends,\nafter seven years…"} /><small>Each line appears one by one as guests scroll. The guest’s name replaces the first line when it starts with “Dear”.</small></div>
+      <div className="fld full"><label htmlFor="venueNote">Venue note</label><input id="venueNote" name="venueNote" type="text" defaultValue={v.venueNote} placeholder="Valet parking at the entrance. Shuttle from Beirut at 15:45." /></div>
+      <div className="fld"><label htmlFor="dressHer">Dress code: her</label><input id="dressHer" name="dressHer" type="text" defaultValue={v.dressHer} /></div>
+      <div className="fld"><label htmlFor="dressHim">Dress code: him</label><input id="dressHim" name="dressHim" type="text" defaultValue={v.dressHim} /></div>
+      <div className="fld"><label htmlFor="palette">Colour palette</label><input id="palette" name="palette" type="text" defaultValue={v.palette} /><small>Colour codes separated by commas.</small></div>
+      <div className="fld"><label htmlFor="meals">Meal choices in the RSVP</label><input id="meals" name="meals" type="text" defaultValue={v.meals} /><small>Separated by commas. Leave empty to skip the question.</small></div>
+      <div className="fld full"><label htmlFor="notes">Good to know</label><textarea id="notes" className="mono" name="notes" defaultValue={v.notes} /><small>One line each: title | text</small></div>
       <div className="fld full"><label htmlFor="gifts">Gifts</label><textarea id="gifts" name="giftsText" defaultValue={v.giftsText} /><small>Leave empty to hide this section.</small></div>
 
       <div className="full row">

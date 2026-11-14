@@ -38,7 +38,10 @@ async function readWedding(form: FormData): Promise<WeddingInput | string> {
   if (!s("venueName")) return "Add the venue name.";
   let startsAt: string;
   try { startsAt = localToUtcIso(s("startsLocal"), DEFAULT_TZ); } catch { return "The date and time aren’t valid."; }
-  const reveal = (s("reveal") === "seal" ? "seal" : "veil") as Reveal;
+  const rv = s("reveal");
+  const reveal = (rv === "seal" || rv === "velvet" ? rv : "veil") as Reveal;
+  const lines = (k: string) => s(k).split("\n").map(l => l.trim()).filter(Boolean);
+  const list = (k: string) => s(k).split(",").map(x => x.trim()).filter(Boolean);
   return {
     partner1: s("partner1"), partner2: s("partner2"), startsAt, timeZone: DEFAULT_TZ,
     city: s("city"), venueName: s("venueName"), venueAddress: s("venueAddress"), mapsQuery: s("mapsQuery"),
@@ -46,6 +49,10 @@ async function readWedding(form: FormData): Promise<WeddingInput | string> {
     storyTitle: s("storyTitle"), story: s("story"), schedule: await parseSchedule(s("schedule")),
     dressTitle: s("dressTitle"), dressText: s("dressText"), giftsText: s("giftsText"),
     rsvpDeadline: /^\d{4}-\d{2}-\d{2}$/.test(s("rsvpDeadline")) ? s("rsvpDeadline") : "", reveal,
+    letter: s("letter"), venueNote: s("venueNote"), dressHer: s("dressHer"), dressHim: s("dressHim"),
+    palette: list("palette").filter(c => /^#[0-9a-fA-F]{3,8}$/.test(c)).slice(0, 8),
+    notes: lines("notes").map(l => { const [title = "", ...rest] = l.split("|"); return { title: title.trim(), text: rest.join("|").trim() }; }).filter(n => n.title).slice(0, 10),
+    meals: list("meals").slice(0, 8),
   };
 }
 
@@ -100,7 +107,17 @@ export async function createSampleWedding() {
     ],
     dressTitle: "Black tie, evening glow", dressText: "Long gowns and dark suits. Please leave white to the bride.",
     giftsText: "Your presence is our gift. If you’d like to celebrate with something more, there will be a wishing well at the venue for our honeymoon.",
-    rsvpDeadline: "2027-05-01", reveal: "veil",
+    rsvpDeadline: "2027-05-01", reveal: "velvet",
+    letter: "Dear family & friends,\nafter seven years, two cities\nand one very nervous proposal,\nwe would love you beside us\nas we begin forever.",
+    venueNote: "Valet parking at the port entrance. A shuttle leaves Beirut at 15:45.",
+    dressHer: "A long gown in wine, gold or blush", dressHim: "A dark suit or tuxedo",
+    palette: ["#3a0812", "#6e1423", "#a3343f", "#c99a94", "#d8b67a"],
+    notes: [
+      { title: "Gifts", text: "Your presence is our gift. For those who wish, there will be a wishing well for our honeymoon." },
+      { title: "Children", text: "We love your little ones; this evening is for adults only." },
+      { title: "Photos", text: "Our photographer will capture the ceremony, so please keep phones away during the vows." },
+    ],
+    meals: ["Meat", "Fish", "Vegetarian", "Kids menu"],
   });
   await addGuests(w.id, [
     { name: "Nadine and Tony", side: "Bride's family", phone: "", seats: 2 },

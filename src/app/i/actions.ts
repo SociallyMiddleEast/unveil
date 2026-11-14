@@ -28,7 +28,9 @@ export async function submitRsvp(_prev: RsvpState, form: FormData): Promise<Rsvp
   if (count > max) return { status: "error", message: `Your invitation is for ${max} ${max === 1 ? "person" : "people"}. Please choose ${max} or fewer.` };
 
   const note = String(form.get("note") || "").trim().slice(0, 1000);
-  await saveRsvp(wedding.id, guest?.id ?? null, { name, attending, count: attending ? count : 0, note });
+  const mealIn = String(form.get("meal") || "").trim();
+  const meal = attending && wedding.meals.includes(mealIn) ? mealIn : "";
+  await saveRsvp(wedding.id, guest?.id ?? null, { name, attending, count: attending ? count : 0, note, meal });
   return { status: "saved", attending, count: attending ? count : 0, name };
 }
 

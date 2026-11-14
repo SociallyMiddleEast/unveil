@@ -11,7 +11,8 @@ import { randomBytes, randomUUID } from "node:crypto";
  */
 
 export type ScheduleItem = { time: string; title: string; detail: string };
-export type Reveal = "veil" | "seal";
+export type Reveal = "veil" | "seal" | "velvet";
+export type Note = { title: string; text: string };
 
 /** The order's progress, in the order a couple sees it. */
 export const STAGES = ["details", "designing", "preview", "approved", "live"] as const;
@@ -45,6 +46,14 @@ export type Wedding = {
   giftsText: string;
   rsvpDeadline: string; // YYYY-MM-DD or ""
   reveal: Reveal;
+  /* The Velvet Court template */
+  letter: string;
+  venueNote: string;
+  dressHer: string;
+  dressHim: string;
+  palette: string[];
+  notes: Note[];
+  meals: string[];
   createdAt: string;
   stage: Stage;
   approvedAt: string | null;
@@ -72,6 +81,7 @@ export type Rsvp = {
   attending: boolean;
   count: number;
   note: string;
+  meal: string;
   createdAt: string;
   updatedAt: string;
 };
@@ -109,6 +119,8 @@ async function open(): Promise<Client> {
     ["change_request", "TEXT NOT NULL DEFAULT ''"], ["change_request_at", "TEXT"],
   ];
   for (const [name, def] of add) if (!cols.includes(name)) await c.execute(`ALTER TABLE weddings ADD COLUMN ${name} ${def}`);
+  const rcols = (await c.execute("PRAGMA table_info(rsvps)")).rows.map(r => String(r.name));
+  if (!rcols.includes("meal")) await c.execute("ALTER TABLE rsvps ADD COLUMN meal TEXT NOT NULL DEFAULT ''");
   await c.execute("PRAGMA foreign_keys = ON");
   return c;
 }
@@ -129,10 +141,16 @@ async function one(sql: string, args: (string | number | null)[] = []): Promise<
 }
 
 const now = () => new Date().toISOString();
+
+/** Values for the template fields on weddings created before those fields existed. */
+export const TEMPLATE_DEFAULTS = {
+  letter: "", venueNote: "", dressHer: "", dressHim: "",
+  palette: [] as string[], notes: [] as Note[], meals: [] as string[],
+};
 export const newCode = (bytes = 5) => randomBytes(bytes).toString("base64url").replace(/[-_]/g, "x");
 
 function toWedding(r: Row): Wedding {
-  const data = JSON.parse(String(r.data));
+  const data = { ...TEMPLATE_DEFAULTS, ...JSON.parse(String(r.data)) };
   const stage = STAGES.includes(String(r.stage) as Stage) ? (String(r.stage) as Stage) : "details";
   return {
     ...data, id: String(r.id), slug: String(r.slug), coupleToken: String(r.couple_token), createdAt: String(r.created_at),
@@ -151,7 +169,7 @@ function toRsvp(r: Row): Rsvp {
   return {
     id: String(r.id), weddingId: String(r.wedding_id), guestId: r.guest_id ? String(r.guest_id) : null,
     name: String(r.name), attending: Number(r.attending) === 1, count: Number(r.count), note: String(r.note),
-    createdAt: String(r.created_at), updatedAt: String(r.updated_at),
+    meal: r.meal ? String(r.meal) : "", createdAt: String(r.created_at), updatedAt: String(r.updated_at),
   };
 }
 
@@ -246,20 +264,20 @@ export async function markGuestOpened(guestId: string) {
 
 /* ---------------- RSVPs ---------------- */
 
-export type RsvpInput = { name: string; attending: boolean; count: number; note: string };
+export type RsvpInput = { name: string; attending: boolean; count: number; note: string; meal?: string };
 
 export async function saveRsvp(weddingId: string, guestId: string | null, r: RsvpInput): Promise<void> {
   const t = now();
   if (guestId) {
     const existing = await one("SELECT id FROM rsvps WHERE guest_id = ?", [guestId]);
     if (existing) {
-      await run("UPDATE rsvps SET name = ?, attending = ?, count = ?, note = ?, updated_at = ? WHERE id = ?",
-        [r.name, r.attending ? 1 : 0, r.count, r.note, t, String(existing.id)]);
+      await run("UPDATE rsvps SET name = ?, attending = ?, count = ?, note = ?, meal = ?, updated_at = ? WHERE id = ?",
+        [r.name, r.attending ? 1 : 0, r.count, r.note, r.meal ?? "", t, String(existing.id)]);
       return;
     }
   }
-  await run("INSERT INTO rsvps (id, wedding_id, guest_id, name, attending, count, note, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)",
-    [randomUUID(), weddingId, guestId, r.name, r.attending ? 1 : 0, r.count, r.note, t, t]);
+  await run("INSERT INTO rsvps (id, wedding_id, guest_id, name, attending, count, note, meal, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+    [randomUUID(), weddingId, guestId, r.name, r.attending ? 1 : 0, r.count, r.note, r.meal ?? "", t, t]);
 }
 
 export async function getRsvpForGuest(guestId: string): Promise<Rsvp | null> {

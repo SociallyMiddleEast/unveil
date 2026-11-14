@@ -133,7 +133,7 @@ export default async function CouplePage({ params, searchParams }: {
                         <td><b>{r.name}</b>{r.phone && <div className="cp-sub">{r.phone}</div>}</td>
                         <td>{r.side}</td>
                         <td className="num">{r.seats}</td>
-                        <td><Status r={r} />{r.rsvp && <div className="cp-sub">{formatStamp(r.rsvp.updatedAt, w.timeZone)}</div>}</td>
+                        <td><Status r={r} />{r.rsvp?.meal && <div className="cp-sub">Meal: {r.rsvp.meal}</div>}{r.rsvp && <div className="cp-sub">{formatStamp(r.rsvp.updatedAt, w.timeZone)}</div>}</td>
                         <td>{r.rsvp?.note && <div className="cp-quote">“{r.rsvp.note}”</div>}</td>
                         <td>
                           <div className="cp-actions">

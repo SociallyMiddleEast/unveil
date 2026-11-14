@@ -14,14 +14,14 @@ export async function GET(_req: Request, { params }: { params: Promise<{ token: 
   const w = await getWeddingByCoupleToken(token);
   if (!w) return new Response("Not found", { status: 404 });
   const { rows, summary } = await guestRows(w.id);
-  const lines = [["Guest", "Side", "Phone", "Seats invited", "Answer", "Coming", "Note", "Opened", "Replied"]];
+  const lines = [["Guest", "Side", "Phone", "Seats invited", "Answer", "Coming", "Meal", "Note", "Opened", "Replied"]];
   for (const r of rows) {
     lines.push([r.name, r.side, r.phone, String(r.seats),
       r.rsvp ? (r.rsvp.attending ? "Attending" : "Declined") : "No reply",
-      r.rsvp ? String(r.rsvp.count) : "", r.rsvp?.note ?? "", r.openedAt ? "Yes" : "No", r.rsvp?.updatedAt ?? ""]);
+      r.rsvp ? String(r.rsvp.count) : "", r.rsvp?.meal ?? "", r.rsvp?.note ?? "", r.openedAt ? "Yes" : "No", r.rsvp?.updatedAt ?? ""]);
   }
   for (const r of summary.openLinkReplies) {
-    lines.push([r.name, "Shared link", "", "", r.attending ? "Attending" : "Declined", String(r.count), r.note, "", r.updatedAt]);
+    lines.push([r.name, "Shared link", "", "", r.attending ? "Attending" : "Declined", String(r.count), r.meal, r.note, "", r.updatedAt]);
   }
   const csv = "﻿" + lines.map(l => l.map(cell).join(",")).join("\r\n");
   const file = `${w.partner1}-${w.partner2}-guests.csv`.replace(/[^\w.-]+/g, "-");

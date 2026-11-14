@@ -38,7 +38,7 @@ export default async function WeddingStudio({ params, searchParams }: {
       <main className="st-main">
         <div>
           <h1>{w.partner1} &amp; {w.partner2}</h1>
-          <p className="st-sub">{formatDateLong(w.startsAt, w.timeZone)} · {w.venueName} · {w.reveal === "seal" ? "The Seal" : "The Veil"}</p>
+          <p className="st-sub">{formatDateLong(w.startsAt, w.timeZone)} · {w.venueName} · {w.reveal === "seal" ? "The Seal" : w.reveal === "velvet" ? "The Velvet Court" : "The Veil"}</p>
         </div>
 
         <Stats s={summary} />
@@ -89,6 +89,8 @@ export default async function WeddingStudio({ params, searchParams }: {
             city: w.city, venueName: w.venueName, venueAddress: w.venueAddress, mapsQuery: w.mapsQuery, intro: w.intro,
             storyTitle: w.storyTitle, story: w.story, schedule: w.schedule.map(s => `${s.time} | ${s.title} | ${s.detail}`).join("\n"),
             dressTitle: w.dressTitle, dressText: w.dressText, giftsText: w.giftsText, rsvpDeadline: w.rsvpDeadline, reveal: w.reveal,
+            letter: w.letter, venueNote: w.venueNote, dressHer: w.dressHer, dressHim: w.dressHim,
+            palette: w.palette.join(", "), notes: w.notes.map(n => `${n.title} | ${n.text}`).join("\n"), meals: w.meals.join(", "),
           }} />
         </section>
 
