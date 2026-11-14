@@ -54,58 +54,79 @@ h2 { font-family: var(--serif); font-weight: 400; font-size: 34px; letter-spacin
 .reveal { opacity: 0; transform: translateY(18px); transition: opacity 1s ease, transform 1s ease; }
 .reveal.in { opacity: 1; transform: none; }
 
-/* ---------- Intro: the box on velvet ---------- */
-#intro { position: fixed; inset: 0; z-index: 50; overflow: hidden; background: #2a040b; transition: opacity 1.4s ease 1.6s; }
+/* ---------- Intro: the velvet box (photos), with live monogram and card text ---------- */
+/* .cover keeps the photo's 9:16 shape and covers the screen, so overlays line up on any device */
+.cover { position: absolute; left: 50%; top: 50%; width: max(100vw, 56.25vh); aspect-ratio: 9 / 16; transform: translate(-50%, -50%); container-type: inline-size; }
+.cover > img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.bd { display: none; position: absolute; inset: -40px; width: calc(100% + 80px); height: calc(100% + 80px); object-fit: cover; filter: blur(28px) brightness(.45); }
+/* Wide screens: show the scene at its own shape in the middle, with a soft blurred copy behind */
+@media (min-aspect-ratio: 3 / 4) { .cover { width: 56.25vh; } .bd { display: block; } .cover { box-shadow: 0 0 80px rgba(0,0,0,.6); } }
+#intro { position: fixed; inset: 0; z-index: 50; overflow: hidden; background: #2a040b; transition: opacity 1.4s ease 1.4s; }
 #intro.gone { opacity: 0; pointer-events: none; }
-.vel { position: absolute; inset: 0; width: 100%; height: 100%; }
-.box-wrap { position: absolute; left: 50%; top: 47%; width: min(92vw, 470px); aspect-ratio: 600 / 520; transform: translate(-50%, -50%); perspective: 1200px; perspective-origin: 50% -30%;
-  transition: transform 2.8s cubic-bezier(.6,0,.25,1), opacity 1.2s ease 1.5s; }
-.box-wrap > svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
-.lid { position: absolute; inset: 0; transform-origin: 50% 5.8%; transform-style: preserve-3d; transition: transform 2.6s cubic-bezier(.55,0,.2,1) .2s; }
-.lid > svg { position: absolute; inset: 0; width: 100%; height: 100%; backface-visibility: hidden; overflow: visible; }
-.lid .back { transform: rotateX(180deg); }
-.box-glow { position: absolute; left: 8%; right: 8%; top: 4%; height: 70%; background: radial-gradient(closest-side, rgba(255,226,160,.9), rgba(255,200,110,0)); opacity: 0; mix-blend-mode: screen; pointer-events: none; transition: opacity 2s ease .9s; }
-.card-in { opacity: 0; transform: translateY(16px); transition: opacity 1.4s ease 1.7s, transform 1.6s ease 1.7s; }
-#intro.open .lid { transform: rotateX(-120deg); }
-#intro.open .box-glow { opacity: .75; }
-#intro.open .card-in { opacity: 1; transform: none; }
-#intro.dive .box-wrap { transform: translate(-50%, -42%) scale(3.4); opacity: 0; }
-.intro-title { position: absolute; left: 0; right: 0; bottom: max(9vh, 64px); text-align: center; transition: opacity .7s ease; }
-.intro-title .n { font-family: var(--script); font-size: clamp(38px, 11vw, 56px); margin: 0; color: #f8ead0; text-shadow: 0 2px 16px rgba(0,0,0,.6); }
-.intro-title .t { font: 500 11px/1 var(--sans); letter-spacing: .36em; color: var(--gold); margin: 18px 0 0; animation: pulse 2.4s ease-in-out infinite; }
+#intro .cover { transition: transform 2.8s cubic-bezier(.6,0,.25,1); transform-origin: 50% 55.5%; }
+#intro.dive .cover { transform: translate(-50%, -50%) scale(2.6); }
+.shot-closed { transition: transform 1.6s ease, filter 1.6s ease; }
+.shot-open { opacity: 0; transform: scale(1.05); filter: brightness(1.25); transition: opacity 1.6s ease 1.1s, transform 3s cubic-bezier(.2,.7,.2,1) 1.1s, filter 2.4s ease 1.1s; }
+#intro.open .shot-closed { transform: scale(1.03); filter: brightness(1.08); }
+#intro.open .shot-open { opacity: 1; transform: none; filter: none; }
+/* Monogram painted on the lid */
+.lidmark { position: absolute; left: 14%; right: 14%; top: 31%; height: 30%; display: grid; place-items: center; text-align: center; transition: opacity .9s ease .9s, filter .9s ease; pointer-events: none; }
+.lidmark .mono { font-family: var(--script); font-size: 17cqw; line-height: 1.15; padding: 0 .2em; letter-spacing: -.02em;
+  background: linear-gradient(135deg, #f6e1a6, #c4954a 40%, #f3d891 60%, #9c7432); -webkit-background-clip: text; background-clip: text; color: transparent;
+  filter: drop-shadow(0 .25cqw .2cqw rgba(30,0,6,.7)) drop-shadow(0 0 .6cqw rgba(255,214,140,.15)); }
+.lidmark .rule { display: flex; align-items: center; gap: 2cqw; justify-content: center; margin-top: 1.5cqw; color: #d8b56d; font: 500 1.9cqw/1 var(--sans); letter-spacing: .5em; text-indent: .5em; opacity: .85; }
+.lidmark .rule::before, .lidmark .rule::after { content: ""; width: 7cqw; height: 1px; background: currentColor; }
+#intro.open .lidmark { opacity: 0; filter: brightness(1.8); }
+.lidglow { position: absolute; left: 10%; right: 10%; top: 26%; height: 40%; border-radius: 12%; pointer-events: none; opacity: 0;
+  background: radial-gradient(closest-side, rgba(255,222,150,.55), rgba(255,200,110,0)); mix-blend-mode: screen; }
+#intro.open .lidglow { animation: lidglow 2.6s ease forwards; }
+@keyframes lidglow { 30% { opacity: 1; } 100% { opacity: 0; transform: scale(1.3); } }
+/* Text written on the card inside */
+.cardtext { position: absolute; left: 19%; right: 18%; top: 45%; height: 21%; display: grid; place-content: center; text-align: center; color: #6e1423; pointer-events: none; transform: rotate(-.4deg); }
+.cardtext > * { opacity: 0; transform: translateY(.8cqw); transition: opacity 1.3s ease, transform 1.3s ease; margin: 0; }
+#intro.open .cardtext > * { opacity: 1; transform: none; }
+#intro.open .cardtext > :nth-child(1) { transition-delay: 2.5s; } #intro.open .cardtext > :nth-child(2) { transition-delay: 2.9s; } #intro.open .cardtext > :nth-child(3) { transition-delay: 3.2s; }
+.cardtext .inv { font-family: var(--script); font-size: 8.4cqw; line-height: 1.1; }
+.cardtext .ln { width: 22cqw; height: 1px; margin: 1.6cqw auto; background: linear-gradient(90deg, transparent, #b08a43, transparent); }
+.cardtext .nm { font: 500 2.1cqw/1.4 var(--sans); letter-spacing: .38em; text-indent: .38em; color: #9a7434; text-transform: uppercase; }
+.intro-title { position: absolute; left: 0; right: 0; bottom: max(9vh, 64px); text-align: center; transition: opacity .7s ease; padding: 0 16px; }
+.intro-title .n { font-family: var(--script); font-size: clamp(38px, 11vw, 60px); margin: 0; color: #f8ead0; text-shadow: 0 2px 16px rgba(0,0,0,.7); }
+.intro-title .t { font: 500 11px/1 var(--sans); letter-spacing: .36em; color: var(--gold); margin: 18px 0 0; animation: pulse 2.4s ease-in-out infinite; text-shadow: 0 1px 8px rgba(0,0,0,.6); }
 @keyframes pulse { 50% { opacity: .4; } }
 #intro.open .intro-title, #intro.open .skip { opacity: 0; pointer-events: none; }
-.skip { position: absolute; left: 50%; bottom: max(2.5vh, 18px); transform: translateX(-50%); padding: 10px 22px; border: 0; border-radius: 99px; background: rgba(255,255,255,.12); color: #f3e3c3; font: 500 11px/1 var(--sans); letter-spacing: .24em; cursor: pointer; backdrop-filter: blur(6px); transition: opacity .5s; }
-.status { position: absolute; left: 10%; right: 10%; bottom: 14vh; text-align: center; font-size: 18px; color: #f3e3c3; }
-.lid-sheen { animation: sheen 5s ease-in-out 1.2s infinite; }
-@keyframes sheen { 0% { transform: translateX(-700px); } 40%, 100% { transform: translateX(700px); } }
+.skip { position: absolute; left: 50%; bottom: max(2.5vh, 18px); transform: translateX(-50%); padding: 10px 22px; border: 0; border-radius: 99px; background: rgba(0,0,0,.28); color: #f3e3c3; font: 500 11px/1 var(--sans); letter-spacing: .24em; cursor: pointer; backdrop-filter: blur(6px); transition: opacity .5s; }
+.status { position: absolute; left: 10%; right: 10%; bottom: 14vh; text-align: center; font-size: 18px; color: #f3e3c3; text-shadow: 0 1px 8px rgba(0,0,0,.7); }
 
-/* ---------- Hero: the hall ---------- */
-#hero { position: relative; height: 100svh; min-height: 560px; overflow: hidden; }
-.hall { position: absolute; inset: 0; width: 100%; height: 100%; transform: scale(1.22); transition: transform 4.5s cubic-bezier(.2,.7,.2,1); transform-origin: 50% 55%; }
-.entered .hall { transform: scale(1); }
-.hall-text { position: absolute; left: 0; right: 0; top: 29%; text-align: center; padding: 0 20px; }
-.hall-text > * { opacity: 0; transform: translateY(12px); transition: opacity 1.4s ease, transform 1.4s ease; }
-.entered .hall-text > * { opacity: 1; transform: none; }
-.entered .hall-text > :nth-child(2) { transition-delay: .5s; } .entered .hall-text > :nth-child(3) { transition-delay: 1s; } .entered .hall-text > :nth-child(4) { transition-delay: 1.6s; }
-.hall-names { font-family: var(--script); font-size: clamp(56px, 17vw, 92px); line-height: .9; margin: 14px 0; color: #f7e7c7; text-shadow: 0 0 22px rgba(255,200,120,.35); }
+/* ---------- Hero: the hall (photo) ---------- */
+#hero { position: relative; height: 100svh; min-height: 560px; overflow: hidden; background: #3a0610; }
+#hero .cover { transform: translate(-50%, -50%) scale(1.2); transition: transform 4.5s cubic-bezier(.2,.7,.2,1); }
+#hero.entered .cover { transform: translate(-50%, -50%) scale(1); }
+.lampglow { position: absolute; width: 22%; aspect-ratio: 1; border-radius: 50%; transform: translate(-50%, -50%); pointer-events: none; mix-blend-mode: screen;
+  background: radial-gradient(closest-side, rgba(255,214,140,.55), rgba(255,170,80,0)); animation: flicker 4s ease-in-out infinite; }
+@keyframes flicker { 40% { opacity: .7; } 60% { opacity: 1; } 75% { opacity: .8; } }
+.hall-motes { position: absolute; left: 30%; right: 30%; top: 30%; bottom: 30%; pointer-events: none; }
+.hall-motes i { position: absolute; width: .5cqw; height: .5cqw; border-radius: 50%; background: #ffe7b0; box-shadow: 0 0 1cqw #ffd27a; animation: mote linear infinite; opacity: 0; }
+@keyframes mote { from { transform: translateY(0); opacity: 0; } 20% { opacity: .9; } to { transform: translateY(-30cqw); opacity: 0; } }
+/* names painted inside the arch */
+.hall-text { position: absolute; left: 35%; right: 35%; top: 33%; height: 30%; display: flex; flex-direction: column; justify-content: center; text-align: center; color: #4a0914; }
+.hall-text > * { opacity: 0; transform: translateY(1cqw); transition: opacity 1.4s ease, transform 1.4s ease; margin: 0; }
+#hero.entered .hall-text > * { opacity: 1; transform: none; }
+#hero.entered .hall-text > :nth-child(2) { transition-delay: .5s; } #hero.entered .hall-text > :nth-child(3) { transition-delay: 1s; }
+.hall-text .k { color: #5e3d12; font-size: 1.9cqw; letter-spacing: .26em; font-weight: 500; line-height: 1.5; }
+.hall-names { font-family: var(--script); font-weight: 400; font-size: 9.6cqw; line-height: .95; margin: 1.8cqw 0 !important; color: #4a0914; text-shadow: 0 1px 0 rgba(255,236,190,.5); }
 .hall-names span { display: table; margin: 0 auto; white-space: nowrap; }
-.hall-names i { display: block; font-style: normal; font-size: .45em; color: var(--gold); margin: 4px 0; }
-.hall-date { font-family: var(--script); font-size: clamp(30px, 9vw, 44px); color: var(--gold); margin: 0; }
-.scroll-cue { position: absolute; left: 0; right: 0; bottom: 26px; font: 500 10px/1 var(--sans); letter-spacing: .32em; color: var(--gold); text-transform: uppercase; }
+.hall-names i { display: block; font-style: normal; font-size: .5em; color: #8a6226; }
+.hall-date { font: 500 2.2cqw/1 var(--sans); letter-spacing: .26em; color: #5e3d12; }
+.scroll-cue { position: absolute; left: 0; right: 0; bottom: 26px; font: 500 10px/1 var(--sans); letter-spacing: .32em; color: #f6e2b5; text-transform: uppercase; text-align: center; text-shadow: 0 1px 8px rgba(0,0,0,.9); }
 .scroll-cue::after { content: ""; display: block; width: 9px; height: 9px; margin: 12px auto 0; border-right: 1px solid; border-bottom: 1px solid; transform: rotate(45deg); animation: nudge 1.8s ease-in-out infinite; }
 @keyframes nudge { 50% { transform: translateY(5px) rotate(45deg); } }
-.flicker { animation: flicker 4s ease-in-out infinite; }
-@keyframes flicker { 40% { opacity: .8; } 60% { opacity: .95; } 75% { opacity: .85; } }
-.motes circle { animation: mote linear infinite; }
-@keyframes mote { from { transform: translateY(0); opacity: 0; } 15% { opacity: .9; } to { transform: translateY(-260px); opacity: 0; } }
 
 /* ---------- Letter (tap to turn over) ---------- */
 .letter { font: inherit; color: inherit; perspective: 1400px; margin: 0 auto; width: min(100%, 360px); aspect-ratio: 4 / 5; cursor: pointer; border: 0; padding: 0; background: none; display: block; }
 .letter-in { display: block; position: relative; width: 100%; height: 100%; transform-style: preserve-3d; transition: transform 1.3s cubic-bezier(.4,0,.2,1); }
 .letter.flipped .letter-in { transform: rotateY(180deg); }
 .face { position: absolute; inset: 0; -webkit-backface-visibility: hidden; backface-visibility: hidden; display: grid; place-items: center; padding: 34px 28px; box-shadow: 0 24px 50px rgba(60,20,20,.25); }
-.face.front { background: linear-gradient(160deg, #6e1324, #3e0712); color: var(--cream); }
+.face.front { background: #f4efe6 url(assets/velvet-box/petals.jpg) center / cover no-repeat; color: var(--cream); padding: 0; }
 .face.front .mono { display: block; font-family: var(--script); font-size: 88px; line-height: 1; color: var(--gold); }
 .face.front .frame { position: absolute; inset: 12px; border: 1px solid rgba(214,177,106,.55); }
 .face.back { transform: rotateY(180deg); background: linear-gradient(170deg, #fbf4e6, #ecdcc0); color: var(--ink); text-align: center; }
@@ -236,109 +257,14 @@ textarea { min-height: 80px; resize: vertical; }
 
 <!-- ================= Intro ================= -->
 <div id="intro" role="button" tabindex="0" aria-label="Open the invitation">
-  <svg class="vel" viewBox="0 0 450 975" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
-    <defs>
-      <filter id="folds" x="0" y="0" width="100%" height="100%">
-        <feTurbulence type="fractalNoise" baseFrequency="0.0042 0.0021" numOctaves="3" seed="23" result="n"/>
-        <feDiffuseLighting in="n" surfaceScale="46" lighting-color="#d23a52" diffuseConstant="1.1" result="l"><feDistantLight azimuth="225" elevation="38"/></feDiffuseLighting>
-        <feTurbulence type="fractalNoise" baseFrequency="1.6" numOctaves="1" seed="4" result="g"/>
-        <feColorMatrix in="g" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 .2 0" result="ga"/>
-        <feComposite in="ga" in2="l" operator="over"/>
-      </filter>
-      <radialGradient id="vig" cx="50%" cy="48%" r="75%"><stop offset="35%" stop-color="#000" stop-opacity="0"/><stop offset="100%" stop-color="#000" stop-opacity=".85"/></radialGradient>
-    </defs>
-    <rect width="450" height="975" fill="#5c0a1a"/>
-    <g transform="rotate(-24 225 487)"><rect x="-300" y="-300" width="1050" height="1575" filter="url(#folds)" style="mix-blend-mode:multiply"/></g>
-    <rect width="450" height="975" fill="url(#vig)"/>
-  </svg>
-
-  <div class="box-wrap">
-    <svg viewBox="0 0 600 520" aria-hidden="true">
-      <defs>
-        <linearGradient id="gold" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f8e4ae"/><stop offset=".45" stop-color="#c99a4b"/><stop offset=".7" stop-color="#f2d58e"/><stop offset="1" stop-color="#9c7432"/></linearGradient>
-        <linearGradient id="front" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#861529"/><stop offset=".5" stop-color="#5f0b1b"/><stop offset="1" stop-color="#36050e"/></linearGradient>
-        <radialGradient id="satin" cx="50%" cy="30%" r="75%"><stop offset="0" stop-color="#fcf3df"/><stop offset=".65" stop-color="#e6d2ab"/><stop offset="1" stop-color="#ad9062"/></radialGradient>
-        <filter id="shadow" x="-30%" y="-30%" width="160%" height="180%"><feDropShadow dx="0" dy="30" stdDeviation="26" flood-color="#000" flood-opacity=".75"/></filter>
-      </defs>
-      <g filter="url(#shadow)">
-        <path d="M40,385 H560 V448 Q560,492 516,492 H84 Q40,492 40,448 Z" fill="url(#front)"/>
-        <polygon points="40,385 560,385 560,392 40,392" fill="#2c040a" opacity=".5"/>
-        <line x1="50" y1="430" x2="550" y2="430" stroke="#2c040a" stroke-width="1.5" opacity=".6"/>
-        <line x1="50" y1="432" x2="550" y2="432" stroke="#a42a40" stroke-width="1" opacity=".35"/>
-      </g>
-      <path d="M74,30 H526 Q560,30 560,64 V390 H40 V64 Q40,30 74,30 Z" fill="#3a0710"/>
-      <path d="M84,44 H516 Q544,44 544,72 V382 H56 V72 Q56,44 84,44 Z" fill="url(#satin)"/>
-      <g class="card-in">
-        <rect x="132" y="104" width="336" height="238" fill="#fcf7ec" stroke="url(#gold)" stroke-width="3"/>
-        <rect x="144" y="116" width="312" height="214" fill="none" stroke="#c9a35b" stroke-width="1"/>
-        <text x="300" y="214" text-anchor="middle" font-family="Pinyon Script, cursive" font-size="46" fill="#7a1324">You are invited</text>
-        <line x1="230" y1="240" x2="370" y2="240" stroke="#c9a35b" stroke-width="1"/>
-        <text x="300" y="276" text-anchor="middle" font-family="Jost, sans-serif" font-size="13" letter-spacing="6" fill="#a8813c" id="cardNames">LARA &amp; KARIM</text>
-      </g>
-      <circle cx="300" cy="414" r="13" fill="url(#gold)"/><circle cx="300" cy="414" r="7" fill="none" stroke="#8a6326" stroke-width="1.2"/><circle cx="296" cy="410" r="3" fill="#fff6d8" opacity=".7"/>
-    </svg>
-    <div class="box-glow"></div>
-
-    <div class="lid">
-      <svg class="front" viewBox="0 0 600 520" aria-hidden="true">
-        <defs>
-          <linearGradient id="gold2" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f8e4ae"/><stop offset=".45" stop-color="#c99a4b"/><stop offset=".7" stop-color="#f2d58e"/><stop offset="1" stop-color="#9c7432"/></linearGradient>
-          <radialGradient id="vlid" cx="36%" cy="24%" r="90%"><stop offset="0" stop-color="#9c1a33"/><stop offset=".5" stop-color="#6e0f22"/><stop offset="1" stop-color="#3f0612"/></radialGradient>
-          <radialGradient id="dome" cx="50%" cy="45%" r="60%"><stop offset="0" stop-color="#fff" stop-opacity=".07"/><stop offset=".7" stop-color="#fff" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".35"/></radialGradient>
-          <filter id="pile" x="0" y="0" width="100%" height="100%"><feTurbulence type="fractalNoise" baseFrequency="1.1" numOctaves="2" seed="9"/><feColorMatrix values="0 0 0 0 1  0 0 0 0 .85  0 0 0 0 .9  0 0 0 .13 0"/><feComposite in2="SourceGraphic" operator="in"/></filter>
-          <linearGradient id="sheen" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#fff" stop-opacity="0"/><stop offset=".5" stop-color="#ffe9d0" stop-opacity=".14"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient>
-          <clipPath id="lidClip"><path d="M74,30 H526 Q560,30 560,64 V351 Q560,385 526,385 H74 Q40,385 40,351 V64 Q40,30 74,30 Z"/></clipPath>
-          <!-- Half of the baroque crest (mirrored for the other half). Original Unveil artwork. -->
-          <g id="crestHalf" fill="none" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M0,-112 C30,-112 50,-97 68,-93 C86,-89 95,-101 102,-91 C109,-81 97,-71 91,-61 C80,-41 93,-12 97,8 C101,33 87,57 77,73 C66,90 41,96 21,104 C10,108 4,115 0,122"/>
-            <path d="M0,-96 C24,-96 42,-83 58,-79 C72,-76 80,-80 84,-74 C76,-58 72,-38 80,-12 C86,10 82,38 68,58 C56,74 34,82 16,90 C8,94 3,99 0,104" stroke-width=".8"/>
-            <path d="M68,-93 C62,-111 79,-125 92,-117 C103,-110 97,-97 88,-101"/>
-            <path d="M97,8 C113,2 122,17 114,27 C107,35 97,29 101,23"/>
-            <path d="M77,73 C93,71 104,85 96,96 C89,104 78,98 82,90"/>
-            <path d="M0,122 C8,130 22,128 26,120 C29,113 22,108 17,112"/>
-            <path d="M91,-61 C104,-58 110,-46 104,-38 M86,40 C100,44 104,56 98,62"/>
-            <g class="leaves"><path d="M95,-40 q7,-6 12,-2 q-6,6 -12,2z M99,-20 q8,-4 12,1 q-7,4 -12,-1z M100,48 q8,2 10,8 q-8,0 -10,-8z M30,-112 q4,-8 11,-8 q-3,8 -11,8z M50,-105 q6,-6 12,-4 q-5,7 -12,4z"/></g>
-          </g>
-          <g id="fleuron" fill="none" stroke-linecap="round">
-            <path d="M0,-112 C-9,-123 -7,-138 0,-148 C7,-138 9,-123 0,-112 Z"/>
-            <path d="M0,-118 C-10,-114 -22,-122 -20,-133 C-12,-131 -6,-124 -3,-117 M0,-118 C10,-114 22,-122 20,-133 C12,-131 6,-124 3,-117"/>
-            <path d="M-12,-108 H12"/>
-          </g>
-          <g id="crest"><use href="#crestHalf"/><use href="#crestHalf" transform="scale(-1 1)"/><use href="#fleuron"/></g>
-        </defs>
-        <path d="M74,30 H526 Q560,30 560,64 V351 Q560,385 526,385 H74 Q40,385 40,351 V64 Q40,30 74,30 Z" fill="url(#vlid)"/>
-        <path d="M74,30 H526 Q560,30 560,64 V351 Q560,385 526,385 H74 Q40,385 40,351 V64 Q40,30 74,30 Z" fill="#000" filter="url(#pile)"/>
-        <!-- tone-on-tone embossed scrollwork across the lid -->
-        <g clip-path="url(#lidClip)" transform="translate(300 210) scale(1.95 1.4)" stroke-width="1.1">
-          <use href="#crest" stroke="#24020a" opacity=".7" transform="translate(.9 1.1)"/>
-          <use href="#crest" stroke="#c23752" opacity=".55"/>
-        </g>
-        <path d="M74,30 H526 Q560,30 560,64 V351 Q560,385 526,385 H74 Q40,385 40,351 V64 Q40,30 74,30 Z" fill="url(#dome)"/>
-        <g clip-path="url(#lidClip)"><rect class="lid-sheen" x="-160" y="0" width="160" height="520" fill="url(#sheen)" transform="skewX(-20)"/></g>
-        <!-- gold piping -->
-        <path d="M80,44 H520 Q546,44 546,70 V345 Q546,371 520,371 H80 Q54,371 54,345 V70 Q54,44 80,44 Z" fill="none" stroke="#2a030a" stroke-width="4.5" opacity=".5" transform="translate(0 1.5)"/>
-        <path d="M80,44 H520 Q546,44 546,70 V345 Q546,371 520,371 H80 Q54,371 54,345 V70 Q54,44 80,44 Z" fill="none" stroke="url(#gold2)" stroke-width="3.2"/>
-        <path d="M80,44 H520 Q546,44 546,70" fill="none" stroke="#fff6d8" stroke-width="1" opacity=".6"/>
-        <!-- the embossed gold crest -->
-        <g transform="translate(300 216) scale(1.12)">
-          <use href="#crest" stroke="#26020a" stroke-width="3.4" opacity=".75" transform="translate(1.4 2)"/>
-          <use href="#crest" stroke="url(#gold2)" stroke-width="2.8"/>
-          <use href="#crest" stroke="#fff3cf" stroke-width=".7" opacity=".55" transform="translate(-.6 -.8)"/>
-        </g>
-        <g id="mono" transform="translate(300 222)">
-          <text id="m1" text-anchor="middle" x="-14" y="-6" font-family="Bodoni Moda, Didot, Georgia, serif" font-size="96" fill="#2a030a" opacity=".6" dx="1.5" dy="2">L</text>
-          <text text-anchor="middle" x="-14" y="-6" font-family="Bodoni Moda, Didot, Georgia, serif" font-size="96" fill="url(#gold2)" class="mi1">L</text>
-          <text id="m2" text-anchor="middle" x="20" y="62" font-family="Bodoni Moda, Didot, Georgia, serif" font-size="96" fill="#2a030a" opacity=".6" dx="1.5" dy="2">K</text>
-          <text text-anchor="middle" x="20" y="62" font-family="Bodoni Moda, Didot, Georgia, serif" font-size="96" fill="url(#gold2)" class="mi2">K</text>
-        </g>
-      </svg>
-      <svg class="back" viewBox="0 0 600 520" aria-hidden="true">
-        <path d="M74,30 H526 Q560,30 560,64 V351 Q560,385 526,385 H74 Q40,385 40,351 V64 Q40,30 74,30 Z" fill="#e3cfa6"/>
-        <path d="M84,48 H516 Q540,48 540,72 V344 Q540,368 516,368 H84 Q60,368 60,344 V72 Q60,48 84,48 Z" fill="#f3e5c6" stroke="#c9a35b" stroke-width="1.5" stroke-dasharray="5 4"/>
-      </svg>
-    </div>
+  <img class="bd" src="assets/velvet-box/closed.jpg" alt="">
+  <div class="cover">
+    <img class="shot-closed" src="assets/velvet-box/closed.jpg" alt="" width="720" height="1289">
+    <img class="shot-open" src="assets/velvet-box/open.jpg" alt="" width="720" height="1289">
+    <div class="lidglow"></div>
+    <div class="lidmark" aria-hidden="true"><div><div class="mono" id="lidMono">L&amp;K</div><div class="rule" id="lidYear">2027</div></div></div>
+    <div class="cardtext" aria-hidden="true"><p class="inv">You are invited</p><div class="ln"></div><p class="nm" id="cardNames">Lara &amp; Karim</p></div>
   </div>
-
   <div class="intro-title"><p class="n" id="introNames">Lara &amp; Karim</p><p class="t">TAP TO OPEN YOUR INVITATION</p></div>
   <button class="skip" id="skip" type="button">SKIP</button>
   <p class="status" id="status" hidden></p>
@@ -347,55 +273,17 @@ textarea { min-height: 80px; resize: vertical; }
 <main id="main">
   <!-- ================= The hall ================= -->
   <section id="hero" aria-label="Welcome">
-    <svg class="hall" viewBox="0 0 450 975" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
-      <defs>
-        <linearGradient id="wall" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2e040c"/><stop offset=".5" stop-color="#6a121f"/><stop offset="1" stop-color="#2a040a"/></linearGradient>
-        <linearGradient id="hg" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#6b4a1c"/><stop offset=".3" stop-color="#e9c77f"/><stop offset=".5" stop-color="#fff1c6"/><stop offset=".72" stop-color="#c79a4c"/><stop offset="1" stop-color="#5e4017"/></linearGradient>
-        <linearGradient id="floor" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#40090f"/><stop offset=".35" stop-color="#1c0406"/><stop offset="1" stop-color="#0b0203"/></linearGradient>
-        <radialGradient id="lamp" cx="50%" cy="50%" r="50%"><stop offset="0" stop-color="#ffcf87" stop-opacity=".8"/><stop offset="1" stop-color="#ff8a3d" stop-opacity="0"/></radialGradient>
-        <radialGradient id="deep" cx="50%" cy="62%" r="62%"><stop offset="0" stop-color="#93222f"/><stop offset=".6" stop-color="#5a0d19"/><stop offset="1" stop-color="#2f050c"/></radialGradient>
-        <linearGradient id="refl" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f3d58f" stop-opacity=".55"/><stop offset="1" stop-color="#f3d58f" stop-opacity="0"/></linearGradient>
-        <radialGradient id="petal" cx="40%" cy="35%" r="75%"><stop offset="0" stop-color="#c0263f"/><stop offset=".7" stop-color="#8a0f24"/><stop offset="1" stop-color="#4f0612"/></radialGradient>
-        <symbol id="rose" viewBox="-30 -30 60 60">
-          <g stroke="#3e0510" stroke-width=".8">
-            <path d="M-26,4 C-28,-18 -6,-28 8,-24 C24,-20 30,-2 24,12 C18,26 -2,30 -14,24 C-22,20 -25,12 -26,4 Z" fill="url(#petal)"/>
-            <path d="M-18,6 C-20,-10 -4,-20 8,-16 C20,-12 22,2 16,10 C10,18 -6,20 -12,16 Z" fill="#9c1429"/>
-            <path d="M-10,4 C-11,-6 0,-12 7,-9 C14,-6 14,3 9,7 C4,11 -6,10 -10,4 Z" fill="#b01c33"/>
-            <path d="M-4,2 C-4,-3 2,-6 5,-3 C7,0 5,4 1,4" fill="none" stroke="#5a0715" stroke-width="1.4"/>
-            <path d="M-26,4 C-20,14 -8,14 -2,8 M24,12 C14,10 10,2 12,-6" fill="none" stroke="#4f0612" stroke-width="1"/>
-          </g>
-        </symbol>
-        <symbol id="leaf" viewBox="-20 -8 40 16"><path d="M-18,0 C-8,-9 10,-9 18,0 C10,9 -8,9 -18,0 Z" fill="#2f3a1e" stroke="#1b2310" stroke-width=".6"/><path d="M-16,0 L16,0" stroke="#55623a" stroke-width=".7"/></symbol>
-      </defs>
-      <rect width="450" height="975" fill="url(#wall)"/>
-      <g fill="none" stroke="url(#hg)" stroke-width="3" opacity=".7"><rect x="14" y="50" width="58" height="660"/><rect x="378" y="50" width="58" height="660"/></g>
-      <path d="M92,770 L92,330 A133,133 0 0 1 358,330 L358,770 Z" fill="url(#deep)"/>
-      <g fill="none">
-        <path d="M164,770 L164,372 A61,61 0 0 1 286,372 L286,770" stroke="url(#hg)" stroke-width="3" opacity=".45"/>
-        <path d="M140,770 L140,358 A85,85 0 0 1 310,358 L310,770" stroke="url(#hg)" stroke-width="5" opacity=".65"/>
-        <path d="M116,770 L116,344 A109,109 0 0 1 334,344 L334,770" stroke="url(#hg)" stroke-width="8" opacity=".85"/>
-        <path d="M92,770 L92,330 A133,133 0 0 1 358,330 L358,770" stroke="url(#hg)" stroke-width="15"/>
-      </g>
-      <g class="flicker" opacity=".9"><circle cx="225" cy="560" r="80" fill="url(#lamp)" opacity=".35"/></g>
-      <g>
-        <rect x="66" y="420" width="32" height="350" fill="url(#hg)"/><rect x="58" y="404" width="48" height="18" fill="url(#hg)"/><rect x="58" y="766" width="48" height="14" fill="url(#hg)"/>
-        <rect x="352" y="420" width="32" height="350" fill="url(#hg)"/><rect x="344" y="404" width="48" height="18" fill="url(#hg)"/><rect x="344" y="766" width="48" height="14" fill="url(#hg)"/>
-        <g stroke="#6b4a1c" stroke-width="1" opacity=".55"><line x1="74" y1="424" x2="74" y2="764"/><line x1="82" y1="424" x2="82" y2="764"/><line x1="90" y1="424" x2="90" y2="764"/><line x1="360" y1="424" x2="360" y2="764"/><line x1="368" y1="424" x2="368" y2="764"/><line x1="376" y1="424" x2="376" y2="764"/></g>
-        <circle cx="66" cy="413" r="7" fill="none" stroke="url(#hg)" stroke-width="3"/><circle cx="98" cy="413" r="7" fill="none" stroke="url(#hg)" stroke-width="3"/>
-        <circle cx="352" cy="413" r="7" fill="none" stroke="url(#hg)" stroke-width="3"/><circle cx="384" cy="413" r="7" fill="none" stroke="url(#hg)" stroke-width="3"/>
-      </g>
-      <rect y="780" width="450" height="195" fill="url(#floor)"/>
-      <path d="M160,780 L290,780 L360,975 L90,975 Z" fill="url(#refl)" opacity=".3"/>
-      <rect x="66" y="784" width="32" height="130" fill="url(#refl)" opacity=".5"/><rect x="352" y="784" width="32" height="130" fill="url(#refl)" opacity=".5"/>
-      <g class="flicker"><circle cx="34" cy="650" r="130" fill="url(#lamp)"/><circle cx="416" cy="650" r="130" fill="url(#lamp)"/></g>
-      <polygon points="16,628 52,628 62,682 6,682" fill="#fbe9c8"/><polygon points="398,628 434,628 444,682 388,682" fill="#fbe9c8"/>
-      <g class="motes" fill="#ffe2a0" id="motes"></g>
-      <g id="hallRoses"></g>
-    </svg>
-    <div class="hall-text">
-      <p class="k">We are getting married</p>
-      <h1 class="hall-names" id="heroNames"><span>Lara</span><i>&amp;</i><span>Karim</span></h1>
-      <p class="hall-date" id="heroDate">12 June 2027</p>
+    <img class="bd" src="assets/velvet-box/hall.jpg" alt="">
+    <div class="cover">
+      <img src="assets/velvet-box/hall.jpg" alt="" width="720" height="1289">
+      <span class="lampglow" style="left:6.5%;top:59.5%"></span><span class="lampglow" style="left:93.5%;top:59.5%"></span>
+      <span class="lampglow" style="left:23%;top:57.5%;width:12%"></span><span class="lampglow" style="left:79%;top:57.5%;width:12%"></span>
+      <div class="hall-motes" id="motes"></div>
+      <div class="hall-text">
+        <p class="k">We are getting married</p>
+        <h1 class="hall-names" id="heroNames"><span>Lara</span><i>&amp;</i><span>Karim</span></h1>
+        <p class="hall-date" id="heroDate">12 · 06 · 2027</p>
+      </div>
     </div>
     <p class="scroll-cue">Scroll to open our letter</p>
   </section>
@@ -406,7 +294,7 @@ textarea { min-height: 80px; resize: vertical; }
       <div class="orn"><i></i></div>
       <button class="letter reveal" id="letter" type="button" aria-label="Turn the letter over">
         <span class="letter-in">
-          <span class="face front"><span class="frame"></span><span><span class="mono" id="letterMono">L&amp;K</span><span class="k" style="display:block;margin-top:16px">A letter from us</span></span></span>
+          <span class="face front"><span class="sr" id="letterMono">A letter from us</span></span>
           <span class="face back"><span class="frame"></span><span id="letterBody"></span></span>
         </span>
       </button>
@@ -546,26 +434,9 @@ textarea { min-height: 80px; resize: vertical; }
     palette: ['#f3ece0', '#d8b77a', '#a3283c', '#6e1423', '#2a1014'], notes: [{ title: 'Gifts', text: 'Your presence is our gift. A wishing well will be at the venue.' }, { title: 'An adults-only evening', text: 'We adore your little ones, yet this night is for grown-ups.' }, { title: 'Unplugged ceremony', text: 'Please keep phones away during the vows. Our photographer will share every picture.' }],
     meals: ['Meat', 'Fish', 'Vegetarian'], replyBy: '1 May 2027' }, guest: null, reply: null };
 
-  /* ---------- Art: roses and light in the hall ---------- */
-  function use(parent, id, x, y, w, h, rot) {
-    var u = document.createElementNS(NS, 'use'); u.setAttribute('href', '#' + id);
-    u.setAttribute('x', -w / 2); u.setAttribute('y', -h / 2); u.setAttribute('width', w); u.setAttribute('height', h);
-    var g = document.createElementNS(NS, 'g'); g.setAttribute('transform', 'translate(' + x + ' ' + y + ') rotate(' + (rot || 0) + ')'); g.appendChild(u); parent.appendChild(g); return g;
-  }
-  (function hall() {
-    var hr = $('hallRoses');
-    [[10, 760, 0, 'leaf', 60, 22, -30], [70, 780, 0, 'leaf', 56, 20, 25], [380, 760, 0, 'leaf', 60, 22, 210], [440, 790, 0, 'leaf', 56, 20, 150]].forEach(function (l) { use(hr, l[3], l[0], l[1], l[4], l[5], l[6]); });
-    [[24, 812, 70], [78, 838, 62], [16, 872, 66], [64, 902, 74], [118, 880, 56], [30, 945, 70], [104, 950, 60],
-     [426, 812, 70], [372, 838, 62], [434, 872, 66], [386, 902, 74], [332, 880, 56], [420, 945, 70], [346, 950, 60]]
-      .forEach(function (r, i) { use(hr, 'rose', r[0], r[1], r[2], r[2], (i * 47) % 360); });
-    var m = $('motes');
-    for (var i = 0; i < 26; i++) {
-      var c = document.createElementNS(NS, 'circle'); c.setAttribute('cx', 110 + Math.random() * 230); c.setAttribute('cy', 520 + Math.random() * 260); c.setAttribute('r', .6 + Math.random() * 1.6);
-      c.style.animationDuration = (7 + Math.random() * 8) + 's'; c.style.animationDelay = (-Math.random() * 12) + 's'; m.appendChild(c);
-    }
-  })();
+  /* ---------- Gold dust in the hall ---------- */
+  (function () { var m = $('motes'); for (var i = 0; i < 22; i++) { var e = document.createElement('i'); e.style.left = Math.random() * 100 + '%'; e.style.top = 40 + Math.random() * 60 + '%'; e.style.animationDuration = (6 + Math.random() * 7) + 's'; e.style.animationDelay = (-Math.random() * 12) + 's'; m.appendChild(e); } })();
 
-  /* ---------- Load ---------- */
   function status(msg) { var s = $('status'); s.hidden = false; s.textContent = msg; document.querySelector('.intro-title .t').hidden = true; $('skip').hidden = true; }
   function post(o) { return fetch(API, { method: 'POST', body: JSON.stringify(o) }).then(function (r) { return r.json(); }); }
   function start(d) {
@@ -575,11 +446,11 @@ textarea { min-height: 80px; resize: vertical; }
       if (done) return; done = true;
       intro.classList.add('open'); intro.removeAttribute('role'); intro.removeAttribute('tabindex');
       if (G && !DEMO) post({ a: 'opened', w: W, g: G }).catch(function () {});
-      setTimeout(function () { intro.classList.add('dive'); }, reduce ? 0 : 4600);
-      setTimeout(enter, reduce ? 0 : 5600);
+      setTimeout(function () { intro.classList.add('dive'); }, reduce ? 0 : 5400);
+      setTimeout(enter, reduce ? 0 : 6400);
     }
     function enter() {
-      intro.classList.add('gone'); H.classList.remove('locked'); document.body.classList.add('entered'); $('hero').classList.add('entered');
+      intro.classList.add('gone'); H.classList.remove('locked'); $('hero').classList.add('entered'); fitNames();
       setTimeout(function () { intro.hidden = true; }, reduce ? 0 : 3000);
     }
     intro.addEventListener('click', function (e) { if (e.target.id !== 'skip') open(); });
@@ -596,11 +467,10 @@ textarea { min-height: 80px; resize: vertical; }
     var longDate = fmt({ weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
     var ini1 = w.partner1.trim().charAt(0).toUpperCase(), ini2 = w.partner2.trim().charAt(0).toUpperCase();
 
-    $('m1').textContent = ini1; $('m2').textContent = ini2; document.querySelector('.mi1').textContent = ini1; document.querySelector('.mi2').textContent = ini2; $('cardNames').textContent = couple.toUpperCase();
+    $('lidMono').textContent = ini1 + '&' + ini2; $('lidYear').textContent = fmt({ year: 'numeric' }); $('cardNames').textContent = couple;
     $('introNames').textContent = couple;
     [['heroNames'], ['byeNames']].forEach(function (k) { var e = $(k[0]); e.children[0].textContent = w.partner1; e.children[2].textContent = w.partner2; });
-    $('heroDate').textContent = fmt({ day: 'numeric', month: 'long', year: 'numeric' });
-    $('letterMono').textContent = ini1 + '&' + ini2;
+    $('heroDate').textContent = fmt({ day: '2-digit' }) + ' · ' + fmt({ month: '2-digit' }) + ' · ' + fmt({ year: 'numeric' });
 
     /* Letter */
     var lb = $('letterBody'), lines = w.letter.length ? w.letter.slice() : ['Dear family & friends,', 'we would love you beside us as we begin forever.'];
@@ -681,7 +551,7 @@ textarea { min-height: 80px; resize: vertical; }
 
   function fitNames() {
     document.querySelectorAll('.hall-names span, .bye-names span').forEach(function (s) {
-      s.style.fontSize = ''; var room = s.parentNode.clientWidth * .92; if (!room) return;
+      s.style.fontSize = ''; var room = s.parentNode.clientWidth * (s.closest('.hall-names') ? 1.05 : .92); if (!room) return;
       for (var i = 0; i < 30 && s.scrollWidth > room; i++) s.style.fontSize = (parseFloat(getComputedStyle(s).fontSize) * .93) + 'px';
     });
   }
