@@ -7,329 +7,358 @@
 <meta name="description" content="Animated wedding invitations your guests open with a gesture. Personal links, RSVP tracking and WhatsApp sharing. From $39.99.">
 <meta property="og:title" content="Unveil Invitations">
 <meta property="og:description" content="Every invitation deserves an entrance. Animated wedding invitations, made in Lebanon.">
-<meta name="theme-color" content="#2a0d14">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 112'%3E%3Crect width='120' height='112' rx='22' fill='%232a0d14'/%3E%3Cg fill='none' stroke='%23f3e9e1' stroke-width='5' stroke-linecap='round'%3E%3Cpath d='M16 100V66a12 12 0 0 1 24 0v34M80 100V66a12 12 0 0 1 24 0v34M45 100V44a15 15 0 0 1 30 0v56M8 100h104'/%3E%3C/g%3E%3Cg fill='none' stroke='%23d8b67a' stroke-width='5' stroke-linecap='round'%3E%3Cpath d='M60 30C55 48 52 70 48.5 99M60 30c5 18 8 40 11.5 69'/%3E%3C/g%3E%3C/svg%3E">
+<meta name="theme-color" content="#f6efe4">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 112'%3E%3Crect width='120' height='112' rx='22' fill='%23f6efe4'/%3E%3Cg fill='none' stroke='%236e1423' stroke-width='5' stroke-linecap='round'%3E%3Cpath d='M16 100V66a12 12 0 0 1 24 0v34M80 100V66a12 12 0 0 1 24 0v34M45 100V44a15 15 0 0 1 30 0v56M8 100h104'/%3E%3C/g%3E%3Cg fill='none' stroke='%23b08a4a' stroke-width='5' stroke-linecap='round'%3E%3Cpath d='M60 30C55 48 52 70 48.5 99M60 30c5 18 8 40 11.5 69'/%3E%3C/g%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;1,6..96,400&family=Pinyon+Script&family=Jost:wght@300;400;500;600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Pinyon+Script&family=Jost:wght@300;400;500;600&display=swap">
 <style>
+/* Ivory paper and rouge: an editorial wedding-stationery look in Unveil's own colours. */
 :root {
-  --wine: #2a0d14; --velvet: #5a1624; --champagne: #d8b67a; --gold-text: #f1dcb4; --ivory: #f3e9e1;
-  --ink: #1a080c; --ink-soft: #6b4a50; --line: rgba(216,182,122,.28); --line-ink: rgba(90,22,36,.16);
-  --display: "Bodoni Moda", "Didot", Georgia, serif; --script: "Pinyon Script", "Snell Roundhand", cursive; --ui: "Jost", "Futura", system-ui, sans-serif;
-  color-scheme: dark;
+  --paper: #f6efe4; --paper-2: #efe5d5; --card: #fbf7f0;
+  --rouge: #6e1423; --rouge-2: #8f2233;
+  --ink: #2b1a17; --ink-soft: #6d5a52; --gold: #b08a4a; --line: rgba(110,20,35,.18);
+  --display: "Cormorant Garamond", "Garamond", Georgia, serif; --script: "Pinyon Script", "Snell Roundhand", cursive; --ui: "Jost", "Futura", system-ui, sans-serif;
+  color-scheme: light;
 }
 * { box-sizing: border-box; }
 html { scroll-behavior: smooth; }
-body { margin: 0; font-family: var(--ui); font-size: 16px; line-height: 1.6; color: var(--ivory); background: var(--wine); -webkit-font-smoothing: antialiased; }
+body { margin: 0; font-family: var(--ui); font-weight: 300; font-size: 16px; line-height: 1.65; color: var(--ink); -webkit-font-smoothing: antialiased;
+  background-color: var(--paper);
+  background-image: radial-gradient(rgba(110,80,50,.05) 1px, transparent 1.2px), radial-gradient(rgba(255,255,255,.55) 1px, transparent 1.2px);
+  background-size: 7px 7px, 11px 11px; background-position: 0 0, 3px 5px; }
 a { color: inherit; }
-:focus-visible { outline: 2px solid var(--champagne); outline-offset: 3px; }
-.mark .arch { fill: none; stroke: currentColor; stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }
-.mark .drape { fill: none; stroke: var(--champagne); stroke-width: 2.4; stroke-linecap: round; }
-.mark .base { stroke: currentColor; stroke-width: 2.4; stroke-linecap: round; }
-.word { font-family: var(--display); font-style: italic; white-space: nowrap; }
-.word span { color: var(--champagne); font-style: normal; }
+:focus-visible { outline: 2px solid var(--rouge); outline-offset: 3px; }
+.wrap { max-width: 1160px; margin: 0 auto; padding-left: max(20px, env(safe-area-inset-left, 0px)); padding-right: max(20px, env(safe-area-inset-right, 0px)); }
+.eyebrow { font-size: 11.5px; font-weight: 500; letter-spacing: .26em; text-transform: uppercase; color: var(--rouge); display: flex; align-items: center; gap: 10px; }
+.eyebrow::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--rouge); flex: none; }
+h2 { font-family: var(--display); font-weight: 400; font-size: clamp(38px, 5.4vw, 64px); line-height: 1.02; letter-spacing: -.01em; margin: 14px 0 16px; text-wrap: balance; color: var(--ink); max-width: 18ch; }
+h2 em { font-style: italic; color: var(--rouge); }
+h3 { font-family: var(--display); font-weight: 500; margin: 0; color: var(--ink); }
+.intro { max-width: 54ch; color: var(--ink-soft); margin: 0 0 40px; font-size: 17px; }
+.btn { font-family: var(--ui); font-size: 11.5px; font-weight: 500; letter-spacing: .2em; text-transform: uppercase; text-decoration: none; border-radius: 999px; padding: 14px 26px;
+  display: inline-flex; align-items: center; justify-content: center; gap: 10px; border: 1px solid var(--rouge); color: var(--rouge); background: transparent; white-space: nowrap; transition: background .2s, color .2s; }
+.btn:hover { background: var(--rouge); color: var(--paper); }
+.btn-solid { background: var(--rouge); color: var(--paper); }
+.btn-solid:hover { background: var(--rouge-2); border-color: var(--rouge-2); }
+.btn .arr { font-size: 14px; letter-spacing: 0; }
 
-.btn { font-family: var(--ui); font-size: 12px; font-weight: 500; letter-spacing: .16em; text-transform: uppercase; text-decoration: none; border-radius: 999px; padding: 12px 22px;
-  display: inline-flex; align-items: center; justify-content: center; border: 1px solid rgba(243,233,225,.45); color: var(--ivory); background: transparent; white-space: nowrap; }
-.btn-sm { padding: 8px 14px; font-size: 11px; letter-spacing: .12em; }
-.btn-gold { background: var(--champagne); border-color: var(--champagne); color: var(--wine); }
-.btn-wine { background: var(--wine); border-color: var(--wine); color: var(--ivory); }
+.strip { border-bottom: 1px solid var(--line); font-size: 10.5px; letter-spacing: .24em; text-transform: uppercase; color: var(--ink-soft); }
+.strip .wrap { display: flex; justify-content: space-between; gap: 12px; padding-block: 8px; }
+@media (max-width: 560px) { .strip .hide-sm { display: none; } }
+nav { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 20; background: rgba(246,239,228,.94); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); border-bottom: 1px solid var(--line); }
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 21; background: var(--paper); }
+.nav-in { display: flex; align-items: center; gap: 28px; padding-block: 14px; }
+.brand { display: grid; justify-items: start; text-decoration: none; line-height: 1; }
+.brand b { font-family: var(--display); font-weight: 500; font-size: 30px; letter-spacing: .32em; color: var(--rouge); }
+.brand small { font-size: 9px; letter-spacing: .34em; text-transform: uppercase; color: var(--ink-soft); margin-top: 6px; }
+.links { display: flex; gap: 26px; margin-left: auto; font-size: 12px; letter-spacing: .16em; text-transform: uppercase; }
+.links a { text-decoration: none; color: var(--ink); }
+.links a:hover { color: var(--rouge); }
+@media (max-width: 860px) { .links { display: none; } .nav-in > .btn { margin-left: auto; } }
+@media (max-width: 400px) { .nav-in > .btn { padding: 11px 16px; } .brand b { font-size: 25px; } }
 
-.wrap { max-width: 1120px; margin: 0 auto; padding-left: max(20px, env(safe-area-inset-left, 0px)); padding-right: max(20px, env(safe-area-inset-right, 0px)); }
-h2 { font-family: var(--display); font-style: italic; font-weight: 400; font-size: clamp(32px, 4.6vw, 50px); line-height: 1.08; margin: 10px 0 14px; text-wrap: balance; max-width: 20ch; }
-h3 { font-family: var(--display); font-style: italic; font-weight: 400; margin: 0; }
-.eyebrow { font-size: 12px; font-weight: 600; letter-spacing: .22em; text-transform: uppercase; color: var(--champagne); }
-.intro { max-width: 56ch; opacity: .85; margin: 0 0 36px; font-size: 17px; }
-.small { font-size: 14px; opacity: .75; margin: 22px 0 0; }
+.hero { padding-block: 72px 88px; }
+.hero-in { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, .9fr); gap: 56px; align-items: center; }
+@media (max-width: 880px) { .hero-in { grid-template-columns: minmax(0, 1fr); gap: 48px; } }
+.hero h1 { font-family: var(--display); font-weight: 400; font-size: clamp(54px, 8.4vw, 104px); line-height: .98; letter-spacing: -.015em; margin: 22px 0 26px; color: var(--ink); }
+.hero h1 em { display: block; font-style: italic; color: var(--rouge); }
+.lede { font-size: 18px; max-width: 46ch; color: var(--ink-soft); margin: 0; }
+.cta { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 34px; }
+.facts { display: flex; flex-wrap: wrap; gap: 10px 28px; margin-top: 40px; padding-top: 22px; border-top: 1px solid var(--line); font-size: 13px; color: var(--ink-soft); }
+.facts b { display: block; font-family: var(--display); font-size: 26px; font-weight: 500; color: var(--rouge); line-height: 1.1; }
 
-/* Nav */
-body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 21; background: var(--wine); }
-nav { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 20; background: rgba(42,13,20,.92); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border-bottom: 1px solid var(--line); }
-.nav-in { display: flex; align-items: center; gap: 24px; padding-block: 12px; }
-.brand { display: flex; align-items: center; gap: 10px; text-decoration: none; }
-.brand .mark { width: 30px; color: var(--ivory); }
-.brand .word { font-size: 24px; }
-.links { display: flex; gap: 22px; margin-left: auto; font-size: 14px; }
-.links a { text-decoration: none; opacity: .85; }
-.links a:hover { opacity: 1; color: var(--champagne); }
-@media (max-width: 760px) { .links { display: none; } .nav-in > .btn { margin-left: auto; } }
-
-/* Hero */
-.hero { background: radial-gradient(80% 90% at 75% 20%, var(--velvet) 0%, var(--wine) 65%); padding-block: 64px 80px; overflow: hidden; }
-.hero-in { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, .85fr); gap: 48px; align-items: center; }
-@media (max-width: 860px) { .hero-in { grid-template-columns: minmax(0, 1fr); gap: 44px; } }
-.hero h1 { font-family: var(--display); font-weight: 400; font-size: clamp(44px, 7vw, 82px); line-height: 1.02; margin: 16px 0 20px; text-wrap: balance; }
-.hero h1 em { color: var(--gold-text); }
-.lede { font-size: 18px; max-width: 50ch; opacity: .88; margin: 0; }
-.cta { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 30px; }
-
-.phone { justify-self: center; width: 280px; max-width: 100%; aspect-ratio: 9 / 18.5; border-radius: 40px; padding: 10px; background: #0d0c0e;
-  box-shadow: 0 40px 80px -30px rgba(0,0,0,.7), inset 0 0 0 2px #2a282c; transform: rotate(3deg); }
-.screen { position: relative; width: 100%; height: 100%; border-radius: 31px; overflow: hidden; background: radial-gradient(120% 70% at 50% 0%, var(--velvet), var(--wine) 70%); }
-.p-invite { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; gap: 8px; padding: 20px; }
-.p-fam { font-size: 9px; letter-spacing: .24em; text-transform: uppercase; opacity: .75; }
-.p-names { font-family: var(--script); font-size: 54px; line-height: 1; color: var(--gold-text); display: grid; }
-.p-names i { font-style: normal; font-size: 26px; opacity: .75; }
-.p-date { font-family: var(--display); font-size: 15px; letter-spacing: .28em; color: var(--champagne); margin-top: 10px; }
-.p-place { font-size: 9.5px; letter-spacing: .22em; text-transform: uppercase; opacity: .75; }
-.p-rsvp { margin-top: 22px; font-size: 10px; letter-spacing: .16em; text-transform: uppercase; background: var(--champagne); color: var(--wine); border-radius: 999px; padding: 8px 14px; font-weight: 600; }
-.p-veil { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px; text-align: center; padding: 24px; color: var(--wine);
-  background: repeating-linear-gradient(90deg, rgba(255,250,246,0) 0 8px, rgba(255,250,246,.18) 8px 10px, rgba(255,250,246,.03) 10px 20px), linear-gradient(180deg, rgba(246,236,230,.92), rgba(232,212,206,.8));
+.frame { justify-self: center; position: relative; padding: 26px; border: 1px solid var(--line); background: var(--card); box-shadow: 0 30px 60px -40px rgba(60,20,20,.5); margin: 0; }
+.frame::before { content: ""; position: absolute; inset: 8px; border: 1px solid rgba(176,138,74,.45); pointer-events: none; }
+.frame figcaption { text-align: center; font-size: 10.5px; letter-spacing: .26em; text-transform: uppercase; color: var(--ink-soft); margin-top: 16px; }
+.phone { width: 250px; max-width: 100%; aspect-ratio: 9 / 18.5; border-radius: 36px; padding: 9px; background: #1a0f0e; box-shadow: inset 0 0 0 2px #3a2a28; }
+.screen { position: relative; width: 100%; height: 100%; border-radius: 28px; overflow: hidden; background: radial-gradient(120% 70% at 50% 0%, #7a1a2a, #2a0a10 72%); color: #f6efe4; }
+.p-invite { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; gap: 7px; padding: 18px; }
+.p-fam { font-size: 8.5px; letter-spacing: .26em; text-transform: uppercase; opacity: .78; }
+.p-names { font-family: var(--script); font-size: 48px; line-height: 1; color: #f3dfb8; display: grid; }
+.p-names i { font-style: normal; font-size: 24px; opacity: .75; }
+.p-date { font-family: var(--display); font-size: 15px; letter-spacing: .3em; color: #e3c48c; margin-top: 8px; }
+.p-place { font-size: 9px; letter-spacing: .22em; text-transform: uppercase; opacity: .75; }
+.p-rsvp { margin-top: 18px; font-size: 9.5px; letter-spacing: .16em; text-transform: uppercase; background: #f3dfb8; color: #4a0e18; border-radius: 999px; padding: 8px 14px; font-weight: 600; }
+.p-veil { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px; text-align: center; padding: 22px; color: #4a0e18;
+  background: repeating-linear-gradient(90deg, rgba(255,250,246,0) 0 8px, rgba(255,250,246,.2) 8px 10px, rgba(255,250,246,.04) 10px 20px), linear-gradient(180deg, rgba(246,236,230,.94), rgba(232,212,206,.82));
   animation: lift 7s cubic-bezier(.55,.06,.25,1) infinite; transform-origin: 50% 0; }
-.p-veil .mark { width: 52px; color: var(--velvet); }
-.p-veil .mark .drape { stroke: #a8823f; }
-.p-veil span { font-family: var(--display); font-style: italic; font-size: 18px; line-height: 1.3; }
-.p-veil small { position: absolute; bottom: 28px; font-size: 8.5px; letter-spacing: .24em; text-transform: uppercase; font-weight: 600; }
+.p-veil .mark { width: 48px; color: #6e1423; }
+.p-veil span { font-family: var(--display); font-style: italic; font-size: 19px; line-height: 1.25; }
+.p-veil small { position: absolute; bottom: 26px; font-size: 8px; letter-spacing: .24em; text-transform: uppercase; font-weight: 600; }
 @keyframes lift { 0%, 30% { transform: none; opacity: 1; } 48%, 88% { transform: translateY(-110%) scaleY(1.08); opacity: 0; } 89% { transform: none; opacity: 0; } 100% { transform: none; opacity: 1; } }
 
-/* Bands */
-section { padding-block: 88px; scroll-margin-top: 64px; }
-.light { background: var(--ivory); color: var(--ink); color-scheme: light; }
-.light .eyebrow { color: var(--velvet); }
-.light .btn { color: var(--wine); border-color: rgba(90,22,36,.4); }
-.light .btn-gold { color: var(--wine); border-color: var(--champagne); }
-.light .btn-wine { color: var(--ivory); border-color: var(--wine); }
-.tight { padding-top: 0; }
+.occasions { border-block: 1px solid var(--line); background: var(--paper-2); padding-block: 16px; }
+.occasions .row { display: flex; gap: 14px 34px; justify-content: center; flex-wrap: wrap; font-family: var(--display); font-style: italic; font-size: 22px; color: var(--rouge); }
+.occasions .row span { display: inline-flex; align-items: center; gap: 34px; }
+.occasions .row span::after { content: "✦"; font-style: normal; font-size: 11px; color: var(--gold); }
+.occasions .row span:last-child::after { content: none; }
 
-.reveals { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; }
-@media (max-width: 960px) { .reveals { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
-.art.gold { background:
-    radial-gradient(circle at 20% 30%, #fff3d6 0 1.5px, transparent 2px) 0 0 / 23px 19px,
-    radial-gradient(circle at 70% 60%, #e8c47c 0 1.2px, transparent 1.8px) 0 0 / 17px 21px,
-    radial-gradient(circle at 40% 80%, #c99a3e 0 1px, transparent 1.6px) 0 0 / 11px 13px,
-    radial-gradient(circle at 60% 20%, #b9455a 0 1px, transparent 1.6px) 0 0 / 15px 9px,
-    linear-gradient(180deg, #8f0a1c, #3a0209); }
-@media (max-width: 700px) { .reveals { grid-template-columns: minmax(0, 1fr); } }
-.reveal { display: grid; gap: 10px; align-content: start; }
-.reveal h3 { font-size: 30px; color: var(--velvet); }
-.reveal p { margin: 0; max-width: 46ch; }
-.reveal a { color: var(--velvet); font-weight: 500; text-underline-offset: 4px; justify-self: start; }
-.art { height: 200px; border-radius: 6px; display: grid; place-items: center; overflow: hidden; position: relative; }
-.art.veil { color: var(--velvet); background: repeating-linear-gradient(90deg, rgba(255,250,246,0) 0 10px, rgba(255,250,246,.5) 10px 12px, rgba(255,250,246,.05) 12px 26px), linear-gradient(180deg, #eadbd4, #d9c3bb); }
-.art.veil .mark { width: 74px; }
-.art.veil .mark .drape { stroke: #a8823f; }
-.art.seal { background: linear-gradient(180deg, #efe4da, #e2d3c6); }
-.art.seal::before { content: ""; position: absolute; left: 0; right: 0; top: 0; height: 55%; background: linear-gradient(180deg, #e3d4c7, #d7c5b6); clip-path: polygon(0 0, 100% 0, 50% 100%); }
-.art.seal .wax { position: relative; width: 84px; height: 84px; display: grid; place-items: center; margin-top: 30px; font-family: var(--display); font-size: 24px; color: var(--gold-text);
-  border-radius: 46% 54% 50% 50% / 52% 48% 52% 48%; background: radial-gradient(circle at 35% 30%, #8a2a3c, var(--velvet) 55%, #3a0e18); box-shadow: 0 4px 10px rgba(0,0,0,.3); }
-.reveal a.art { justify-self: stretch; }
-a.art { text-decoration: none; cursor: pointer; transition: transform .25s ease, box-shadow .25s ease; }
-a.art:hover { transform: translateY(-3px); box-shadow: 0 14px 30px -18px rgba(42,13,20,.6); }
-.art .try { position: absolute; bottom: 12px; left: 50%; transform: translateX(-50%); font-size: 11px; font-weight: 600; letter-spacing: .16em; text-transform: uppercase;
-  background: var(--wine); color: var(--ivory); border-radius: 999px; padding: 6px 12px; white-space: nowrap; }
-.reveal .btn { justify-self: start; margin-top: 6px; color: var(--ivory); text-decoration: none; }
+section { padding-block: 96px; scroll-margin-top: 72px; }
+.band { background: var(--paper-2); border-block: 1px solid var(--line); }
 
-.inc { display: grid; grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); gap: 40px; border-top: 1px solid var(--line-ink); padding-top: 64px; }
-@media (max-width: 800px) { .inc { grid-template-columns: minmax(0, 1fr); gap: 8px; } }
-.checks { list-style: none; margin: 0; padding: 0; display: grid; gap: 12px; align-content: start; }
-.checks li { position: relative; padding-left: 30px; }
-.checks li::before { content: ""; position: absolute; left: 0; top: 5px; width: 16px; height: 9px; border-left: 2px solid var(--velvet); border-bottom: 2px solid var(--velvet); transform: rotate(-45deg); }
+.designs { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 28px; }
+@media (max-width: 960px) { .designs { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 600px) { .designs { grid-template-columns: minmax(0, 1fr); } }
+.design { display: grid; gap: 12px; align-content: start; }
+.d-art { position: relative; display: block; aspect-ratio: 4 / 5; overflow: hidden; text-decoration: none; border: 1px solid var(--line); background: var(--card); padding: 12px; transition: transform .3s ease, box-shadow .3s ease; }
+.d-art:hover { transform: translateY(-4px); box-shadow: 0 24px 40px -30px rgba(60,20,20,.6); }
+.d-art .in { position: relative; width: 100%; height: 100%; display: grid; place-items: center; overflow: hidden; }
+.d-art .tag { position: absolute; top: 22px; left: 22px; z-index: 2; font-size: 10px; letter-spacing: .2em; text-transform: uppercase; background: var(--paper); color: var(--rouge); padding: 5px 10px; border: 1px solid var(--line); }
+.d-art .try { position: absolute; bottom: 22px; left: 50%; transform: translateX(-50%); z-index: 2; font-size: 10.5px; letter-spacing: .2em; text-transform: uppercase; background: var(--rouge); color: var(--paper); padding: 8px 14px; border-radius: 999px; white-space: nowrap; }
+.in.veil { background: repeating-linear-gradient(90deg, rgba(255,250,246,0) 0 10px, rgba(255,250,246,.55) 10px 12px, rgba(255,250,246,.06) 12px 26px), linear-gradient(180deg, #ecdcd4, #d8c0b6); color: #6e1423; }
+.in.veil .mark { width: 84px; }
+.in.seal { background: linear-gradient(180deg, #efe4da, #e0d0c2); }
+.in.seal::before { content: ""; position: absolute; left: 0; right: 0; top: 0; height: 55%; background: linear-gradient(180deg, #e5d6c9, #d6c3b3); clip-path: polygon(0 0, 100% 0, 50% 100%); }
+.in.seal .wax { position: relative; width: 92px; height: 92px; display: grid; place-items: center; margin-top: 30px; font-family: var(--display); font-size: 26px; color: #f3dfb8;
+  border-radius: 46% 54% 50% 50% / 52% 48% 52% 48%; background: radial-gradient(circle at 35% 30%, #9a2a3c, #6e1423 55%, #3a0a14); box-shadow: 0 4px 10px rgba(0,0,0,.3); }
+.in.stage { background: repeating-linear-gradient(90deg, #5a0812 0 10px, #9a1424 10px 18px, #6a0a16 18px 28px); }
+.in.stage::after { content: ""; position: absolute; inset: 20% 24% 0; background: radial-gradient(70% 30% at 50% 88%, rgba(255,205,215,.55), transparent 70%), linear-gradient(180deg, #1c0004, #3a0610); }
+.in.stage .spot { position: absolute; inset: 0; z-index: 1; background: conic-gradient(from 180deg at 50% 0%, transparent 168deg, rgba(255,225,230,.4) 180deg, transparent 192deg); }
+.design h3 { font-size: 30px; }
+.design .meta { display: flex; justify-content: space-between; gap: 12px; font-size: 11px; letter-spacing: .18em; text-transform: uppercase; color: var(--ink-soft); }
+.design p { margin: 0; color: var(--ink-soft); }
+.design .go { font-size: 11.5px; letter-spacing: .2em; text-transform: uppercase; color: var(--rouge); text-decoration: none; font-weight: 500; justify-self: start; border-bottom: 1px solid var(--rouge); padding-bottom: 2px; }
 
-.steps { list-style: none; margin: 30px 0 0; padding: 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 24px; }
+.inc { display: grid; grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); gap: 56px; }
+@media (max-width: 860px) { .inc { grid-template-columns: minmax(0, 1fr); gap: 8px; } }
+.list { list-style: none; margin: 0; padding: 0; counter-reset: n; }
+.list li { counter-increment: n; display: grid; grid-template-columns: 44px minmax(0, 1fr); gap: 14px; padding-block: 16px; border-top: 1px solid var(--line); }
+.list li:last-child { border-bottom: 1px solid var(--line); }
+.list li::before { content: counter(n, decimal-leading-zero); font-family: var(--display); font-size: 22px; color: var(--gold); line-height: 1.3; }
+.list b { display: block; font-family: var(--display); font-size: 22px; font-weight: 500; line-height: 1.25; }
+.list span { color: var(--ink-soft); font-size: 15px; }
+
+.steps { list-style: none; margin: 8px 0 0; padding: 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 28px; }
 @media (max-width: 900px) { .steps { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 @media (max-width: 520px) { .steps { grid-template-columns: minmax(0, 1fr); } }
-.steps li { border-top: 1px solid var(--line); padding-top: 18px; display: grid; gap: 8px; align-content: start; }
-.steps .n { font-family: var(--display); font-size: 34px; line-height: 1; color: var(--champagne); }
-.steps h3 { font-size: 22px; }
-.steps p { margin: 0; opacity: .82; font-size: 15px; }
+.steps li { display: grid; gap: 8px; align-content: start; padding-top: 18px; border-top: 1px solid var(--rouge); }
+.steps .n { font-family: var(--display); font-style: italic; font-size: 40px; line-height: 1; color: var(--rouge); }
+.steps h3 { font-size: 24px; }
+.steps p { margin: 0; color: var(--ink-soft); font-size: 15px; }
 
-.packages { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; }
-@media (max-width: 960px) { .packages { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
-@media (max-width: 520px) { .packages { grid-template-columns: minmax(0, 1fr); } }
-.pk { background: #fbf6f1; border: 1px solid var(--line-ink); border-radius: 8px; padding: 26px 22px 22px; display: flex; flex-direction: column; gap: 6px; }
-.pk h3 { font-size: 28px; color: var(--velvet); }
-.pk .guests { font-size: 12px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--ink-soft); }
-.pk .price { font-family: var(--display); font-size: 48px; line-height: 1; margin: 18px 0 6px; color: var(--wine); font-variant-numeric: tabular-nums; }
-.pk .price sup { font-size: .45em; vertical-align: top; position: relative; top: .35em; margin-right: 2px; }
-.pk p { margin: 0 0 20px; font-size: 14.5px; color: var(--ink-soft); flex: 1; }
-.pk .btn { width: 100%; }
-.pk.top { background: var(--wine); border-color: var(--wine); color: var(--ivory); }
-.pk.top h3, .pk.top .price { color: var(--gold-text); }
-.pk.top .guests, .pk.top p { color: var(--champagne); }
+.packages { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 18px; }
+@media (max-width: 980px) { .packages { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 540px) { .packages { grid-template-columns: minmax(0, 1fr); } }
+.pk { position: relative; background: var(--card); border: 1px solid var(--line); padding: 30px 24px 24px; display: flex; flex-direction: column; gap: 6px; }
+.pk::before { content: ""; position: absolute; inset: 6px; border: 1px solid rgba(176,138,74,.35); pointer-events: none; }
+.pk h3 { font-size: 30px; font-style: italic; color: var(--rouge); }
+.pk .guests { font-size: 11px; font-weight: 500; letter-spacing: .2em; text-transform: uppercase; color: var(--ink-soft); }
+.pk .price { font-family: var(--display); font-size: 54px; font-weight: 500; line-height: 1; margin: 20px 0 8px; color: var(--ink); font-variant-numeric: lining-nums tabular-nums; }
+.pk .price sup { font-size: .42em; vertical-align: top; position: relative; top: .4em; margin-right: 2px; }
+.pk p { margin: 0 0 22px; font-size: 14.5px; color: var(--ink-soft); flex: 1; }
+.pk .btn { width: 100%; position: relative; z-index: 1; }
+.pk.top { background: var(--rouge); border-color: var(--rouge); color: var(--paper); }
+.pk.top::before { border-color: rgba(243,223,184,.45); }
+.pk.top h3, .pk.top .price { color: #f3dfb8; }
+.pk.top .guests, .pk.top p { color: rgba(246,239,228,.82); }
+.pk.top .btn { background: var(--paper); color: var(--rouge); border-color: var(--paper); }
+.note { font-size: 14px; color: var(--ink-soft); margin: 24px 0 0; }
 
-.faq-wrap { display: grid; grid-template-columns: minmax(0, .8fr) minmax(0, 1.2fr); gap: 40px; border-top: 1px solid var(--line-ink); padding-top: 64px; }
-@media (max-width: 800px) { .faq-wrap { grid-template-columns: minmax(0, 1fr); gap: 8px; } }
-.faq details { border-bottom: 1px solid var(--line-ink); padding-block: 16px; }
-.faq summary { cursor: pointer; font-family: var(--display); font-style: italic; font-size: 21px; list-style: none; display: flex; justify-content: space-between; gap: 16px; }
+.faq-wrap { display: grid; grid-template-columns: minmax(0, .8fr) minmax(0, 1.2fr); gap: 56px; }
+@media (max-width: 860px) { .faq-wrap { grid-template-columns: minmax(0, 1fr); gap: 8px; } }
+.faq details { border-top: 1px solid var(--line); padding-block: 18px; }
+.faq details:last-child { border-bottom: 1px solid var(--line); }
+.faq summary { cursor: pointer; font-family: var(--display); font-size: 23px; font-weight: 500; list-style: none; display: flex; justify-content: space-between; gap: 16px; }
 .faq summary::-webkit-details-marker { display: none; }
-.faq summary::after { content: "+"; font-family: var(--ui); font-style: normal; color: var(--velvet); }
+.faq summary::after { content: "+"; font-family: var(--ui); font-weight: 300; color: var(--rouge); font-size: 22px; line-height: 1; }
 .faq details[open] summary::after { content: "−"; }
 .faq p { margin: 10px 0 0; max-width: 60ch; color: var(--ink-soft); }
 
-.final { background: radial-gradient(80% 100% at 50% 0%, var(--velvet), var(--wine) 70%); text-align: center; }
-.final-in { display: grid; justify-items: center; gap: 4px; }
-.final .mark { width: 64px; color: var(--ivory); margin-bottom: 8px; }
-.final h2 { max-width: none; }
-.final p { margin: 0; opacity: .85; }
+.final { background: var(--rouge); color: var(--paper); text-align: center; }
+.final .eyebrow { color: #f3dfb8; justify-content: center; }
+.final .eyebrow::before { background: #f3dfb8; }
+.final h2 { color: var(--paper); margin-inline: auto; max-width: 16ch; }
+.final h2 em { color: #f3dfb8; }
+.final p { margin: 0 auto; max-width: 46ch; color: rgba(246,239,228,.85); }
 .final .cta { justify-content: center; }
+.final .btn { border-color: var(--paper); color: var(--paper); }
+.final .btn:hover { background: var(--paper); color: var(--rouge); }
+.final .btn-solid { background: var(--paper); color: var(--rouge); }
+.final .mark { width: 60px; color: #f3dfb8; margin: 0 auto 18px; display: block; }
 
-footer { border-top: 1px solid var(--line); padding-block: 26px; font-size: 14px; }
-.foot-in { display: flex; flex-wrap: wrap; gap: 12px 28px; align-items: center; }
+footer { padding-block: 34px; font-size: 13px; color: var(--ink-soft); }
+.foot-in { display: flex; flex-wrap: wrap; gap: 12px 30px; align-items: center; }
 .foot-in > :first-child { margin-right: auto; }
-footer a { color: var(--champagne); }
+footer a { color: var(--rouge); }
 
-@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } .p-veil { animation: none; opacity: 0; } }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } .p-veil { animation: none; opacity: 0; } .d-art { transition: none; } }
 </style>
 </head>
 <body>
 
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
   <symbol id="m" viewBox="0 0 120 112">
-    <path class="arch" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" d="M16 100 V66 A12 12 0 0 1 40 66 V100"/>
-    <path class="arch" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" d="M80 100 V66 A12 12 0 0 1 104 66 V100"/>
-    <path class="arch" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" d="M45 100 V44 A15 15 0 0 1 75 44 V100"/>
-    <path class="drape" fill="none" stroke="var(--champagne)" stroke-width="2.4" stroke-linecap="round" d="M60 30 C55 48, 52 70, 48.5 99"/>
-    <path class="drape" fill="none" stroke="var(--champagne)" stroke-width="2.4" stroke-linecap="round" d="M60 30 C65 48, 68 70, 71.5 99"/>
-    <path class="base" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" d="M8 100 H112"/>
+    <path fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" d="M16 100 V66 A12 12 0 0 1 40 66 V100"/>
+    <path fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" d="M80 100 V66 A12 12 0 0 1 104 66 V100"/>
+    <path fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" d="M45 100 V44 A15 15 0 0 1 75 44 V100"/>
+    <path fill="none" stroke="#b08a4a" stroke-width="2.4" stroke-linecap="round" d="M60 30 C55 48, 52 70, 48.5 99"/>
+    <path fill="none" stroke="#b08a4a" stroke-width="2.4" stroke-linecap="round" d="M60 30 C65 48, 68 70, 71.5 99"/>
+    <path stroke="currentColor" stroke-width="2.4" stroke-linecap="round" d="M8 100 H112"/>
   </symbol>
 </svg>
 
+<div class="strip"><div class="wrap"><span>Unveil · Animated invitations</span><span class="hide-sm">Made in Lebanon · Sent worldwide</span></div></div>
+
 <nav aria-label="Main">
   <div class="wrap nav-in">
-    <a href="#top" class="brand"><svg class="mark" viewBox="0 0 120 112" aria-hidden="true"><use href="#m"/></svg><span class="word">Unveil<span>.</span></span></a>
+    <a href="#top" class="brand"><b>UNVEIL</b><small>Invitation studio</small></a>
     <div class="links">
-      <a href="#reveals">Reveals</a>
+      <a href="#designs">Designs</a>
+      <a href="#included">What’s included</a>
       <a href="#how">How it works</a>
       <a href="#packages">Packages</a>
       <a href="#faq">FAQ</a>
     </div>
-    <a class="btn btn-gold btn-sm" href="#packages">See prices</a>
+    <a class="btn btn-solid" href="#packages">Order now</a>
   </div>
 </nav>
 
 <header class="hero" id="top">
   <div class="wrap hero-in">
     <div>
-      <div class="eyebrow">Animated invitations · Made in Lebanon</div>
-      <h1>Every invitation deserves an <em>entrance.</em></h1>
-      <p class="lede">Your guests lift a veil and your wedding unfolds on their phone: the date, the venue, the schedule, and a reply in one tap. Made for Lebanese weddings, sent on WhatsApp, opened anywhere in the world.</p>
+      <div class="eyebrow">Animated wedding invitations</div>
+      <h1>Every invitation deserves <em>an entrance.</em></h1>
+      <p class="lede">Your guests lift a veil, break a seal or watch the curtains part, and your wedding unfolds on their phone: the date, the venue, the evening, and a reply in one tap.</p>
       <div class="cta">
-        <a class="btn btn-gold" href="#reveals">Try the demos</a>
+        <a class="btn btn-solid" href="#designs">See the designs <span class="arr">↓</span></a>
         <a class="btn" href="#packages">From $39.99</a>
       </div>
-    </div>
-    <div class="phone" aria-hidden="true">
-      <div class="screen">
-        <div class="p-invite">
-          <span class="p-fam">Together with their families</span>
-          <span class="p-names">Lara<i>&amp;</i>Karim</span>
-          <span class="p-date">12 · 06 · 2027</span>
-          <span class="p-place">Byblos · Lebanon</span>
-          <span class="p-rsvp">Will you join us?</span>
-        </div>
-        <div class="p-veil">
-          <svg class="mark" viewBox="0 0 120 112"><use href="#m"/></svg>
-          <span>Lara &amp; Karim have something for you</span>
-          <small>Swipe up to lift the veil</small>
-        </div>
+      <div class="facts">
+        <div><b>3</b>signature openings</div>
+        <div><b>1 link</b>for every guest</div>
+        <div><b>Live</b>guest list &amp; RSVP</div>
       </div>
     </div>
+    <figure class="frame">
+      <div class="phone" aria-hidden="true">
+        <div class="screen">
+          <div class="p-invite">
+            <span class="p-fam">Together with their families</span>
+            <span class="p-names">Lara<i>&amp;</i>Karim</span>
+            <span class="p-date">12 · 06 · 2027</span>
+            <span class="p-place">Byblos · Lebanon</span>
+            <span class="p-rsvp">Will you join us?</span>
+          </div>
+          <div class="p-veil">
+            <svg class="mark" viewBox="0 0 120 112"><use href="#m"/></svg>
+            <span>Lara &amp; Karim have something for you</span>
+            <small>Swipe up to lift the veil</small>
+          </div>
+        </div>
+      </div>
+      <figcaption>The Veil · a guest’s first moment</figcaption>
+    </figure>
   </div>
 </header>
 
-<section class="light" id="reveals" aria-labelledby="h-reveals">
+<div class="occasions" aria-label="Occasions">
+  <div class="row"><span>Weddings</span><span>Engagements</span><span>Kateb kteb</span><span>Birthdays</span><span>Baptisms</span></div>
+</div>
+
+<section id="designs" aria-labelledby="h-designs">
   <div class="wrap">
-    <div class="eyebrow">The reveal</div>
-    <h2 id="h-reveals">It opens with a gesture they’ll remember</h2>
-    <p class="intro">Every Unveil invitation starts with a small ritual. Choose the one that feels like your wedding.</p>
-    <div class="reveals">
-      <article class="reveal">
-        <a class="art veil" href="demo.html" aria-label="Open The Veil demo"><svg class="mark" viewBox="0 0 120 112" aria-hidden="true"><use href="#m"/></svg><span class="try">Tap to try</span></a>
+    <div class="eyebrow">The openings</div>
+    <h2 id="h-designs">Choose how your invitation <em>opens.</em></h2>
+    <p class="intro">Each design begins with a small ritual on your guest’s phone, then reveals your invitation in the same style. Tap a design to try it.</p>
+    <div class="designs">
+      <article class="design">
+        <a class="d-art" href="demo.html" aria-label="Try The Veil"><span class="tag">Signature</span><span class="in veil"><svg class="mark" viewBox="0 0 120 112" aria-hidden="true"><use href="#m"/></svg></span><span class="try">Tap to try</span></a>
+        <div class="meta"><span>Wedding</span><span>All packages</span></div>
         <h3>The Veil</h3>
         <p>A sheer bridal veil covers the screen. Guests swipe it up, and your names come into focus as gold dust falls.</p>
-        <a class="btn btn-wine" href="demo.html">Try The Veil demo</a>
+        <a class="go" href="demo.html">Try the demo →</a>
       </article>
-      <article class="reveal">
-        <a class="art seal" href="demo.html?reveal=seal" aria-label="Open The Seal demo"><span class="wax">L·K</span><span class="try">Tap to try</span></a>
+      <article class="design">
+        <a class="d-art" href="demo.html?reveal=seal" aria-label="Try The Seal"><span class="tag">Classic</span><span class="in seal"><span class="wax">L·K</span></span><span class="try">Tap to try</span></a>
+        <div class="meta"><span>Wedding · Engagement</span><span>All packages</span></div>
         <h3>The Seal</h3>
         <p>A wax seal with your initials. Guests tap to break it, the envelope opens, and the invitation appears.</p>
-        <a class="btn btn-wine" href="demo.html?reveal=seal">Try The Seal demo</a>
+        <a class="go" href="demo.html?reveal=seal">Try the demo →</a>
       </article>
-      <article class="reveal">
-        <a class="art gold" href="demo-gold.html" aria-label="Open The Stage demo"><span class="try">Tap to try</span></a>
+      <article class="design">
+        <a class="d-art" href="demo-gold.html" aria-label="Try The Stage"><span class="tag">New</span><span class="in stage"><span class="spot"></span></span><span class="try">Tap to try</span></a>
+        <div class="meta"><span>Wedding</span><span>All packages</span></div>
         <h3>The Stage</h3>
-        <p>The invitation hides under red glitter. Guests blow on their phone, the glitter melts away, velvet curtains part, your names write themselves in, and a spotlight finds the two of you dancing.</p>
-        <a class="btn btn-wine" href="demo-gold.html">Try The Stage demo</a>
+        <p>Red glitter melts away with a breath, velvet curtains part, your names write themselves in and a spotlight finds the two of you.</p>
+        <a class="go" href="demo-gold.html">Try the demo →</a>
       </article>
     </div>
   </div>
 </section>
 
-<section class="light tight" aria-labelledby="h-inc">
+<section class="band" id="included" aria-labelledby="h-inc">
   <div class="wrap inc">
     <div>
       <div class="eyebrow">In every package</div>
-      <h2 id="h-inc">Everything about your day, in one link</h2>
+      <h2 id="h-inc">Everything about your day, <em>in one link.</em></h2>
       <p class="intro">Every package includes every feature. The only difference is how many guests you invite.</p>
     </div>
-    <ul class="checks">
-      <li>Your choice of reveal: The Veil, The Seal or The Stage</li>
-      <li>A personal link for every guest or family, greeting them by name</li>
-      <li>Countdown, schedule, venue map and add to calendar</li>
-      <li>Our story, dress code and gifts sections</li>
-      <li>Background music</li>
-      <li>RSVP that saves straight to your guest list</li>
-      <li>Your own dashboard: who opened, who’s coming, who to remind</li>
-      <li>Send each link on WhatsApp in one tap</li>
-      <li>Guest list download for your venue</li>
-    </ul>
+    <ol class="list">
+      <li><div><b>Your opening</b><span>The Veil, The Seal or The Stage.</span></div></li>
+      <li><div><b>A personal link for every family</b><span>Greets each guest by name and knows how many seats are saved for them.</span></div></li>
+      <li><div><b>Date, venue and the evening</b><span>Countdown, schedule, map and add to calendar.</span></div></li>
+      <li><div><b>Your story, dress code and gifts</b><span>Written with you, in your words.</span></div></li>
+      <li><div><b>Music</b><span>A soft soundtrack your guests can turn on.</span></div></li>
+      <li><div><b>RSVP and your guest dashboard</b><span>See who opened, who’s coming and who to remind, and send each link on WhatsApp in one tap.</span></div></li>
+      <li><div><b>A list for your venue</b><span>Download the final guest list for seating and catering.</span></div></li>
+    </ol>
   </div>
 </section>
 
 <section id="how" aria-labelledby="h-how">
   <div class="wrap">
     <div class="eyebrow">How it works</div>
-    <h2 id="h-how">From your first message to the last reply</h2>
+    <h2 id="h-how">From your first message <em>to the last reply.</em></h2>
     <ol class="steps">
-      <li><span class="n">1</span><h3>Choose your package</h3><p>Pick the size of your guest list and message us on Instagram.</p></li>
-      <li><span class="n">2</span><h3>Send us your details</h3><p>Names, date, venue, your story and your guest list. A spreadsheet is fine.</p></li>
-      <li><span class="n">3</span><h3>Approve your invitation</h3><p>We build it in your colours and send you a preview. Ask for changes until it feels like you.</p></li>
-      <li><span class="n">4</span><h3>Share and relax</h3><p>Send each guest their personal link on WhatsApp, then watch the replies arrive.</p></li>
+      <li><span class="n">i.</span><h3>Choose</h3><p>Pick your opening and the package that fits your guest list.</p></li>
+      <li><span class="n">ii.</span><h3>Tell us your day</h3><p>Names, date, venue, your story and your guest list. A spreadsheet is fine.</p></li>
+      <li><span class="n">iii.</span><h3>Approve</h3><p>We build it in your colours and send a preview. Ask for changes until it feels like you.</p></li>
+      <li><span class="n">iv.</span><h3>Share</h3><p>Send each guest their personal link on WhatsApp, then watch the replies arrive.</p></li>
     </ol>
   </div>
 </section>
 
-<section class="light" id="packages" aria-labelledby="h-pk">
+<section class="band" id="packages" aria-labelledby="h-pk">
   <div class="wrap">
     <div class="eyebrow">Packages</div>
-    <h2 id="h-pk">One price per event, sized to your guest list</h2>
-    <p class="intro">One payment per event. Prices in US dollars.</p>
+    <h2 id="h-pk">One price per event, <em>sized to your guest list.</em></h2>
+    <p class="intro">One payment per event, in US dollars. Every feature is included in every package.</p>
     <div class="packages">
       <article class="pk">
         <h3>Intimate</h3><div class="guests">Up to 50 guests</div>
         <div class="price"><sup>$</sup>39.99</div>
-        <p>Engagements, small weddings and family dinners</p>
-        <a class="btn btn-wine" href="https://instagram.com/unveil.invitations" target="_blank" rel="noopener noreferrer">Order now</a>
+        <p>Engagements, small weddings and family dinners.</p>
+        <a class="btn" href="https://instagram.com/unveil.invitations" target="_blank" rel="noopener noreferrer">Order now</a>
       </article>
       <article class="pk">
         <h3>Classic</h3><div class="guests">Up to 100 guests</div>
         <div class="price"><sup>$</sup>69.99</div>
-        <p>A close circle of family and friends</p>
-        <a class="btn btn-wine" href="https://instagram.com/unveil.invitations" target="_blank" rel="noopener noreferrer">Order now</a>
+        <p>A close circle of family and friends.</p>
+        <a class="btn" href="https://instagram.com/unveil.invitations" target="_blank" rel="noopener noreferrer">Order now</a>
       </article>
       <article class="pk">
         <h3>Grand</h3><div class="guests">Up to 150 guests</div>
         <div class="price"><sup>$</sup>74.99</div>
-        <p>The full family, both sides</p>
-        <a class="btn btn-wine" href="https://instagram.com/unveil.invitations" target="_blank" rel="noopener noreferrer">Order now</a>
+        <p>The full family, both sides.</p>
+        <a class="btn" href="https://instagram.com/unveil.invitations" target="_blank" rel="noopener noreferrer">Order now</a>
       </article>
       <article class="pk top">
         <h3>Unlimited</h3><div class="guests">Unlimited guests</div>
         <div class="price"><sup>$</sup>99</div>
-        <p>For the big Lebanese wedding: invite everyone</p>
-        <a class="btn btn-gold" href="https://instagram.com/unveil.invitations" target="_blank" rel="noopener noreferrer">Order now</a>
+        <p>For the big Lebanese wedding: invite everyone.</p>
+        <a class="btn" href="https://instagram.com/unveil.invitations" target="_blank" rel="noopener noreferrer">Order now</a>
       </article>
     </div>
-    <p class="small">All packages include every feature listed above.</p>
+    <p class="note">Orders are taken on Instagram for now. Tell us your date and guest count.</p>
   </div>
 </section>
 
-<section class="light tight" id="faq" aria-labelledby="h-faq">
+<section id="faq" aria-labelledby="h-faq">
   <div class="wrap faq-wrap">
     <div>
       <div class="eyebrow">Questions</div>
-      <h2 id="h-faq">Good to know</h2>
+      <h2 id="h-faq">Good <em>to know.</em></h2>
     </div>
     <div class="faq">
       <details><summary>How do guests receive it?</summary><p>As a link, usually on WhatsApp. Each family gets their own link that greets them by name and knows how many seats are saved for them.</p></details>
@@ -337,26 +366,27 @@ footer a { color: var(--champagne); }
       <details><summary>How do guests reply?</summary><p>Right inside the invitation, in a few seconds. Their answer goes straight to your guest list, and they can change it later.</p></details>
       <details><summary>Can we change details after it’s sent?</summary><p>Yes. If the time or venue changes, we update it and every guest sees the new details the next time they open their link.</p></details>
       <details><summary>What does a guest count include?</summary><p>Every person invited. A family of four counts as four guests.</p></details>
-      <details><summary>Is it only for weddings?</summary><p>No. Engagements, birthdays, baptisms and other events work the same way.</p></details>
+      <details><summary>Is it only for weddings?</summary><p>No. Engagements, kateb kteb, birthdays and baptisms work the same way.</p></details>
     </div>
   </div>
 </section>
 
 <section class="final" aria-labelledby="h-final">
-  <div class="wrap final-in">
+  <div class="wrap">
     <svg class="mark" viewBox="0 0 120 112" aria-hidden="true"><use href="#m"/></svg>
-    <h2 id="h-final">Reserve your date</h2>
+    <div class="eyebrow">Reserve your date</div>
+    <h2 id="h-final">Let’s give your day <em>its entrance.</em></h2>
     <p>Tell us your wedding date and guest count, and we’ll take it from there.</p>
     <div class="cta">
-      <a class="btn btn-gold" href="https://instagram.com/unveil.invitations" target="_blank" rel="noopener noreferrer">Order now</a>
-      <a class="btn" href="#reveals">Try the demos</a>
+      <a class="btn btn-solid" href="https://instagram.com/unveil.invitations" target="_blank" rel="noopener noreferrer">Order now</a>
+      <a class="btn" href="#designs">Try the demos</a>
     </div>
   </div>
 </section>
 
 <footer>
   <div class="wrap foot-in">
-    <span class="brand"><svg class="mark" viewBox="0 0 120 112" aria-hidden="true"><use href="#m"/></svg><span class="word">Unveil<span>.</span></span></span>
+    <span class="brand"><b style="font-size:22px">UNVEIL</b><small>Invitation studio</small></span>
     <span>Instagram <a href="https://instagram.com/unveil.invitations" target="_blank" rel="noopener noreferrer">@unveil.invitations</a></span>
     <span>Beirut, Lebanon</span>
   </div>
