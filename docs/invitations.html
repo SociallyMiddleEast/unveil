@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>The Invitation Library · Unveil</title>
+<meta name="description" content="Browse Unveil's library of animated digital invitations: The Veil, The Seal and The Stage. Try each opening as your guests will.">
+<meta name="theme-color" content="#3a0812">
+<link rel="icon" href="assets/seal-u.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=Pinyon+Script&family=Jost:wght@300;400;500&display=swap">
+<link rel="stylesheet" href="site.css">
+<style>
+.lib-hero { text-align: center; padding-block: 64px 30px; }
+.lib-hero .in { display: grid; justify-items: center; gap: 16px; }
+.lib-hero h1 { font-size: clamp(34px, 6vw, 64px); }
+.lib-hero .sub { font-family: var(--serif); font-style: italic; font-size: clamp(19px, 2.4vw, 24px); color: var(--cream-soft); margin: 0; max-width: 40ch; }
+.filters { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin: 10px 0 44px; }
+.filters button { font-family: var(--cinzel); font-size: 11px; letter-spacing: .22em; background: transparent; color: #e9d6b0; border: 1px solid var(--gold-soft); padding: 10px 16px; cursor: pointer; }
+.filters button[aria-pressed="true"] { background: var(--foil); color: #3a0710; border-color: transparent; }
+.design .occ { font-family: var(--cinzel); font-size: 10px; letter-spacing: .22em; color: var(--gold); }
+.soon { text-align: center; margin-top: 56px; display: grid; justify-items: center; gap: 14px; }
+.soon p { margin: 0; color: var(--cream-soft); font-family: var(--serif); font-size: 20px; max-width: 46ch; }
+</style>
+</head>
+<body>
+
+<nav aria-label="Main">
+  <div class="wrap nav-in">
+    <a class="logo foil" href="index.html">UNVEIL</a>
+    <div class="links">
+      <a href="index.html">HOME</a>
+      <a href="invitations.html" aria-current="page">INVITATIONS</a>
+      <a href="index.html#packages">PACKAGES</a>
+      <a href="index.html#couture">COUTURE</a>
+      <a href="index.html#faq">FAQ</a>
+      <a href="my-invitations.html">MY INVITATIONS</a>
+    </div>
+    <a class="btn btn-foil btn-sm" href="index.html#packages">ORDER NOW</a>
+  </div>
+</nav>
+
+<header class="lib-hero">
+  <div class="wrap in">
+    <img class="seal-img" src="assets/seal-u.png" width="600" height="608" alt="Unveil wax seal" style="width:120px">
+    <div class="eyebrow">THE COLLECTION</div>
+    <h1 class="foil">The Invitation Library</h1>
+    <p class="sub">Every Unveil invitation opens with its own ritual. Try each one exactly as your guests will see it.</p>
+  </div>
+</header>
+
+<section style="padding-top:20px" aria-label="Invitation designs">
+  <div class="wrap">
+    <div class="filters" role="group" aria-label="Filter by occasion">
+      <button type="button" data-f="all" aria-pressed="true">ALL</button>
+      <button type="button" data-f="wedding" aria-pressed="false">WEDDINGS</button>
+      <button type="button" data-f="engagement" aria-pressed="false">ENGAGEMENTS</button>
+      <button type="button" data-f="celebration" aria-pressed="false">CELEBRATIONS</button>
+    </div>
+    <div class="designs" id="lib">
+      <article class="design card floral" data-occ="wedding engagement celebration">
+        <a class="d-art" href="demo.html" aria-label="Try The Veil"><span class="tag">SIGNATURE</span><span class="in veil"><b>L &amp; K</b></span><span class="try">TAP TO TRY</span></a>
+        <span class="occ">WEDDINGS · ENGAGEMENTS · CELEBRATIONS</span>
+        <h3>The Veil</h3>
+        <p>A sheer bridal veil covers the screen. Guests swipe it up and your names appear in a fall of gold.</p>
+        <div class="row"><a class="btn btn-line btn-sm" href="demo.html">TRY IT</a><a class="btn btn-foil btn-sm" href="index.html#packages">CHOOSE</a></div>
+      </article>
+      <article class="design card floral" data-occ="wedding engagement">
+        <a class="d-art" href="demo.html?reveal=seal" aria-label="Try The Seal"><span class="tag">CLASSIC</span><span class="in seal"><span class="wax">L·K</span></span><span class="try">TAP TO TRY</span></a>
+        <span class="occ">WEDDINGS · ENGAGEMENTS</span>
+        <h3>The Seal</h3>
+        <p>A wax seal pressed with your initials. One tap breaks it, and the envelope opens.</p>
+        <div class="row"><a class="btn btn-line btn-sm" href="demo.html?reveal=seal">TRY IT</a><a class="btn btn-foil btn-sm" href="index.html#packages">CHOOSE</a></div>
+      </article>
+      <article class="design card floral" data-occ="wedding celebration">
+        <a class="d-art" href="demo-gold.html" aria-label="Try The Stage"><span class="tag">NEW</span><span class="in stage"><span class="spot"></span></span><span class="try">TAP TO TRY</span></a>
+        <span class="occ">WEDDINGS · CELEBRATIONS</span>
+        <h3>The Stage</h3>
+        <p>Glitter melts away with a breath, velvet curtains part, and a spotlight finds the two of you.</p>
+        <div class="row"><a class="btn btn-line btn-sm" href="demo-gold.html">TRY IT</a><a class="btn btn-foil btn-sm" href="index.html#packages">CHOOSE</a></div>
+      </article>
+    </div>
+    <div class="soon">
+      <div class="fleuron"><hr class="foil-line"><i class="foil">❦</i><hr class="foil-line"></div>
+      <p>New designs join the library every season. Dreaming of something no one else has?</p>
+      <a class="btn btn-line" href="index.html#couture">DISCOVER UNVEIL COUTURE</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap foot-in">
+    <span class="logo foil" style="font-size:18px">UNVEIL</span>
+    <span>Instagram <a href="https://instagram.com/unveil.invitations" target="_blank" rel="noopener noreferrer">@unveil.invitations</a></span>
+    <span><a href="my-invitations.html">My Invitations</a></span>
+  </div>
+</footer>
+
+<script>
+(function () {
+  var btns = document.querySelectorAll('.filters button');
+  var cards = document.querySelectorAll('#lib .design');
+  btns.forEach(function (b) {
+    b.addEventListener('click', function () {
+      btns.forEach(function (x) { x.setAttribute('aria-pressed', String(x === b)); });
+      var f = b.dataset.f;
+      cards.forEach(function (c) { c.hidden = f !== 'all' && c.dataset.occ.split(' ').indexOf(f) < 0; });
+    });
+  });
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>My Invitations · Unveil</title>
+<meta name="description" content="Open your Unveil invitation: follow its progress, create guest links and see every reply.">
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#3a0812">
+<link rel="icon" href="assets/seal-u.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=Pinyon+Script&family=Jost:wght@300;400;500&display=swap">
+<link rel="stylesheet" href="site.css">
+<style>
+.access { padding-block: 60px 90px; }
+.access .grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 40px; align-items: start; }
+@media (max-width: 860px) { .access .grid { grid-template-columns: minmax(0, 1fr); } }
+.signin { padding: 64px 40px 52px; text-align: center; display: grid; justify-items: center; gap: 16px; }
+.signin h1 { font-size: clamp(30px, 4.6vw, 46px); }
+.signin p { margin: 0; color: var(--cream-soft); font-family: var(--serif); font-size: 19px; max-width: 34ch; }
+.signin form { width: 100%; max-width: 340px; display: grid; gap: 12px; margin-top: 8px; }
+.signin label { font-family: var(--cinzel); font-size: 11px; letter-spacing: .24em; color: var(--gold); text-align: left; }
+.signin input { width: 100%; font: inherit; font-size: 17px; letter-spacing: .08em; color: var(--cream); background: rgba(20,2,6,.55); border: 1px solid var(--gold-soft); padding: 14px 16px; text-align: center; }
+.signin input:focus { outline: none; border-color: var(--gold); }
+.signin .msg { min-height: 1.4em; font-size: 14px; color: #f1dfb6; }
+.signin .small { font-size: 13px; color: var(--cream-soft); font-family: var(--ui); }
+.signin .small a { color: #f1dfb6; }
+.what { padding: 40px 34px; }
+.what h2 { text-align: left; margin: 10px 0 20px; font-size: clamp(26px, 3.4vw, 36px); }
+.what .eyebrow { text-align: left; }
+.what ol { list-style: none; margin: 0; padding: 0; display: grid; gap: 18px; counter-reset: s; }
+.what li { counter-increment: s; display: grid; grid-template-columns: 40px minmax(0, 1fr); gap: 12px; }
+.what li::before { content: counter(s, upper-roman); font-family: var(--cinzel); font-size: 18px; color: var(--gold); line-height: 1.5; }
+.what b { display: block; font-family: var(--serif); font-weight: 400; font-size: 21px; color: var(--cream); }
+.what span { color: var(--cream-soft); font-size: 14.5px; }
+</style>
+</head>
+<body>
+
+<nav aria-label="Main">
+  <div class="wrap nav-in">
+    <a class="logo foil" href="index.html">UNVEIL</a>
+    <div class="links">
+      <a href="index.html">HOME</a>
+      <a href="invitations.html">INVITATIONS</a>
+      <a href="index.html#packages">PACKAGES</a>
+      <a href="index.html#couture">COUTURE</a>
+      <a href="index.html#faq">FAQ</a>
+      <a href="my-invitations.html" aria-current="page">MY INVITATIONS</a>
+    </div>
+    <a class="btn btn-foil btn-sm" href="index.html#packages">ORDER NOW</a>
+  </div>
+</nav>
+
+<main class="access">
+  <div class="wrap grid">
+    <div class="signin card floral">
+      <img class="seal-img" src="assets/seal-u.png" width="600" height="608" alt="Unveil wax seal" style="width:110px">
+      <div class="eyebrow">MY INVITATIONS</div>
+      <h1 class="foil">Welcome back</h1>
+      <p>Enter the private code you received with your order to open your invitation.</p>
+      <form id="access" novalidate>
+        <label for="code">YOUR PRIVATE CODE</label>
+        <input id="code" name="code" type="text" autocomplete="one-time-code" autocapitalize="off" spellcheck="false" placeholder="e.g. Hk3x9QmP2wLs">
+        <button class="btn btn-foil" type="submit">OPEN MY INVITATION</button>
+        <div class="msg" id="msg" role="status"></div>
+      </form>
+      <p class="small">No code yet? Your code arrives as soon as your order is confirmed. <a href="https://instagram.com/unveil.invitations" target="_blank" rel="noopener noreferrer">Message us on Instagram</a></p>
+    </div>
+
+    <div class="what card">
+      <div class="eyebrow">YOUR PRIVATE PAGE</div>
+      <h2 class="foil">Everything for your invitation, in one place</h2>
+      <ol>
+        <li><div><b>Follow your invitation</b><span>See its progress, from your details to your preview and final approval.</span></div></li>
+        <li><div><b>Create your guest links</b><span>Add your guests and get a personal link for each family, greeting them by name.</span></div></li>
+        <li><div><b>Send on WhatsApp</b><span>Send every link in one tap, and remind anyone who hasn’t replied.</span></div></li>
+        <li><div><b>Watch the replies arrive</b><span>Who opened it, who is coming, how many seats, and their notes to you.</span></div></li>
+        <li><div><b>Ready for your venue</b><span>Download the final guest list for seating and catering.</span></div></li>
+      </ol>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <div class="wrap foot-in">
+    <span class="logo foil" style="font-size:18px">UNVEIL</span>
+    <span>Instagram <a href="https://instagram.com/unveil.invitations" target="_blank" rel="noopener noreferrer">@unveil.invitations</a></span>
+    <span><a href="invitations.html">The Invitation Library</a></span>
+  </div>
+</footer>
+
+<script>
+/* Address of the Unveil customer app. Set this once the app is online, e.g. "https://app.unveil.com". */
+var APP_URL = "";
+(function () {
+  var form = document.getElementById('access'), msg = document.getElementById('msg'), input = document.getElementById('code');
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    var code = input.value.trim();
+    if (!/^[A-Za-z0-9]{6,40}$/.test(code)) { msg.textContent = 'Please check your code: it’s the letters and numbers we sent you.'; input.focus(); return; }
+    if (!APP_URL) { msg.textContent = 'Private pages are opening soon. We’ll message you as soon as yours is ready.'; return; }
+    location.href = APP_URL.replace(/\/$/, '') + '/c/' + encodeURIComponent(code);
+  });
+})();
+</script>
+</body>
+</html>
