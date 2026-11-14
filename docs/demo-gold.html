@@ -43,6 +43,9 @@ body { touch-action: none; user-select: none; -webkit-user-select: none; }
 .couple { position: absolute; left: 50%; bottom: 9%; width: min(72vw, 340px); transform: translateX(-50%); opacity: 0; transition: opacity 2s ease 2.2s; filter: drop-shadow(0 0 18px rgba(255,170,185,.45)); }
 .lit .couple { opacity: 1; }
 .couple svg { width: 100%; height: auto; display: block; }
+.couple-video { position: absolute; left: 50%; bottom: 6%; height: 52%; max-width: 100%; transform: translateX(-50%); object-fit: contain;
+  mix-blend-mode: screen; opacity: 0; transition: opacity 2s ease 2.2s; filter: saturate(1.05) contrast(1.05) drop-shadow(0 0 22px rgba(255,170,185,.35)); }
+.lit .couple-video { opacity: 1; }
 /* The dance: the couple turn around each other, sway, rise and fall, and the dress swirls. */
 .spin { transform-box: fill-box; transform-origin: 50% 50%; animation: spin 7s cubic-bezier(.6,0,.4,1) infinite; }
 @keyframes spin { 0%, 30% { transform: scaleX(1); } 50%, 80% { transform: scaleX(-1); } 100% { transform: scaleX(1); } }
@@ -112,7 +115,12 @@ canvas#glitter.gone { opacity: 0; }
   <div class="beams"><div class="beam b1"></div><div class="beam b2"></div><div class="beam b3"></div></div>
   <div class="mist"></div>
   <div class="platform"></div>
-  <div class="couple" aria-hidden="true">
+  <!-- Real dancing couple: put a clip of a couple filmed on a plain black background at docs/assets/couple.mp4.
+       The black disappears into the stage (screen blend). If the file is missing, the drawn couple below is used. -->
+  <video class="couple-video" id="coupleVideo" muted playsinline loop preload="auto" aria-hidden="true" hidden>
+    <source src="assets/couple.mp4" type="video/mp4">
+  </video>
+  <div class="couple" id="coupleArt" aria-hidden="true">
     <svg viewBox="0 0 300 330">
       <defs>
         <linearGradient id="dress" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff8f6"/><stop offset=".55" stop-color="#ffd9de"/><stop offset="1" stop-color="#ff9fae"/></linearGradient>
@@ -329,6 +337,13 @@ canvas#glitter.gone { opacity: 0; }
   addEventListener('pointerup', () => { down = false; });
   addEventListener('keydown', e => { if (!cleared && (e.key === 'Enter' || e.key === ' ')) reveal(); });
 
+  /* ===== Real couple video, when assets/couple.mp4 exists ===== */
+  const cv = $('coupleVideo');
+  let hasVideo = false;
+  cv.addEventListener('loadeddata', () => { hasVideo = true; cv.hidden = false; $('coupleArt').hidden = true; });
+  cv.querySelector('source').addEventListener('error', () => { hasVideo = false; });
+  cv.load();
+
   /* ===== The reveal sequence ===== */
   const timers = [];
   const at = (ms, fn) => timers.push(setTimeout(fn, reduce ? Math.min(ms, 400) : ms));
@@ -340,7 +355,7 @@ canvas#glitter.gone { opacity: 0; }
     at(500, () => { gl.classList.add('gone'); $('cover').classList.add('gone'); });
     if (navigator.vibrate) try { navigator.vibrate(25); } catch (e) {}
     at(900, () => document.body.classList.add('opening'));
-    at(1300, () => { $('stage').classList.add('lit'); startDust(); });
+    at(1300, () => { $('stage').classList.add('lit'); startDust(); if (hasVideo) { cv.currentTime = 0; cv.play().catch(() => {}); } });
     at(1500, () => $('wFam').classList.add('show'));
     at(2000, () => $('wN1').classList.add('write'));
     at(3300, () => $('wAmp').classList.add('show'));
