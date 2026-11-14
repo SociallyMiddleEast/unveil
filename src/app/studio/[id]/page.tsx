@@ -2,15 +2,15 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { requireStudio } from "@/lib/auth";
-import { getWeddingById, guestRows } from "@/lib/db";
+import { getWeddingById, guestRows, STAGES, STAGE_LABEL } from "@/lib/db";
 import { baseUrl, inviteUrl } from "@/lib/links";
-import { formatDateLong, utcIsoToLocalInput } from "@/lib/time";
+import { formatDateLong, formatStamp, utcIsoToLocalInput } from "@/lib/time";
 import { StudioBar } from "@/components/StudioBar";
 import { CopyButton } from "@/components/CopyButton";
 import { FilterBar, GuestTable, OpenLinkReplies, Stats, filterRows, type Filter } from "@/components/GuestTable";
 import { WeddingForm } from "../WeddingForm";
 import { GuestImport } from "../GuestImport";
-import { removeGuest, removeWedding } from "../actions";
+import { changeStage, removeGuest, removeWedding } from "../actions";
 import "../studio.css";
 
 export const metadata: Metadata = { title: "Wedding", robots: { index: false } };
@@ -23,11 +23,11 @@ export default async function WeddingStudio({ params, searchParams }: {
 }) {
   await requireStudio();
   const { id } = await params;
-  const w = getWeddingById(id);
+  const w = await getWeddingById(id);
   if (!w) notFound();
   const show = (FILTERS.includes((await searchParams).show as Filter) ? (await searchParams).show : "all") as Filter;
   const base = await baseUrl();
-  const { rows, summary } = guestRows(w.id);
+  const { rows, summary } = await guestRows(w.id);
   const counts = Object.fromEntries(FILTERS.map(f => [f, filterRows(rows, f).length])) as Record<Filter, number>;
   const publicUrl = inviteUrl(base, w);
   const coupleUrl = `${base}/c/${w.coupleToken}`;
@@ -42,6 +42,25 @@ export default async function WeddingStudio({ params, searchParams }: {
         </div>
 
         <Stats s={summary} />
+
+        <section className="st-card" style={{ display: "grid", gap: 12 }}>
+          <h2>Order progress</h2>
+          <p className="hint" style={{ margin: 0 }}>The couple sees this on their private page. Set it to “Preview ready” when you want them to approve.</p>
+          <form action={changeStage} className="row">
+            <input type="hidden" name="weddingId" value={w.id} />
+            <select key={w.stage} name="stage" defaultValue={w.stage} aria-label="Order stage" style={{ maxWidth: 260 }}>
+              {STAGES.map(st => <option key={st} value={st}>{STAGE_LABEL[st]}</option>)}
+            </select>
+            <button className="btn btn-sm btn-wine" type="submit">Update</button>
+          </form>
+          {w.approvedAt && <p className="msg-ok" style={{ margin: 0 }}>Approved by the couple on {formatStamp(w.approvedAt, w.timeZone)}.</p>}
+          {w.changeRequest && (
+            <div style={{ background: "#fff", border: "1px solid var(--line-ink)", borderRadius: 6, padding: "12px 14px" }}>
+              <span className="st-label">Changes requested {w.changeRequestAt ? `· ${formatStamp(w.changeRequestAt, w.timeZone)}` : ""}</span>
+              <p style={{ margin: "6px 0 0", whiteSpace: "pre-wrap" }}>{w.changeRequest}</p>
+            </div>
+          )}
+        </section>
 
         <section className="st-card">
           <h2>Links</h2>

@@ -11,9 +11,9 @@ const cell = (v: unknown) => {
 
 export async function GET(_req: Request, { params }: { params: Promise<{ token: string }> }) {
   const { token } = await params;
-  const w = getWeddingByCoupleToken(token);
+  const w = await getWeddingByCoupleToken(token);
   if (!w) return new Response("Not found", { status: 404 });
-  const { rows, summary } = guestRows(w.id);
+  const { rows, summary } = await guestRows(w.id);
   const lines = [["Guest", "Side", "Phone", "Seats invited", "Answer", "Coming", "Note", "Opened", "Replied"]];
   for (const r of rows) {
     lines.push([r.name, r.side, r.phone, String(r.seats),

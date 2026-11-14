@@ -12,7 +12,8 @@ export const dynamic = "force-dynamic";
 
 export default async function StudioHome() {
   await requireStudio();
-  const weddings = listWeddings();
+  const weddings = await listWeddings();
+  const summaries = await Promise.all(weddings.map(w => guestRows(w.id).then(r => r.summary)));
   return (
     <div className="st">
       <StudioBar tag="Studio">
@@ -31,8 +32,8 @@ export default async function StudioHome() {
         </div>
         {weddings.length > 0 && (
           <div className="st-list">
-            {weddings.map(w => {
-              const { summary } = guestRows(w.id);
+            {weddings.map((w, i) => {
+              const summary = summaries[i];
               return (
                 <Link key={w.id} href={`/studio/${w.id}`} className="st-card st-wed">
                   <span className="n">{w.partner1} &amp; {w.partner2}</span>

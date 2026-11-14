@@ -10,7 +10,7 @@ export const dynamic = "force-dynamic";
 
 export async function generateMetadata({ params }: { params: Promise<Params> }): Promise<Metadata> {
   const { slug } = await params;
-  const w = getWeddingBySlug(slug);
+  const w = await getWeddingBySlug(slug);
   if (!w) return { title: "Invitation" };
   const title = `${w.partner1} & ${w.partner2}`;
   return {
@@ -23,12 +23,12 @@ export async function generateMetadata({ params }: { params: Promise<Params> }):
 
 export default async function InvitationPage({ params }: { params: Promise<Params> }) {
   const { slug, code } = await params;
-  const w = getWeddingBySlug(slug);
+  const w = await getWeddingBySlug(slug);
   if (!w) notFound();
   const guestCode = code?.[0] ?? "";
-  const guest = guestCode ? getGuestByCode(w.id, guestCode) : null;
+  const guest = guestCode ? await getGuestByCode(w.id, guestCode) : null;
   if (guestCode && !guest) notFound();
-  const rsvp = guest ? getRsvpForGuest(guest.id) : null;
+  const rsvp = guest ? await getRsvpForGuest(guest.id) : null;
 
   const props: InvitationProps = {
     slug: w.slug,
