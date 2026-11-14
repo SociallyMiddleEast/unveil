@@ -183,6 +183,21 @@ footer { padding-block: 34px; font-size: 13px; color: var(--ink-soft); }
 footer a { color: var(--rouge); }
 
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } .p-veil { animation: none; opacity: 0; } .d-art { transition: none; } }
+
+/* ---------- Continuous engraved frames (one line around each card, drawn to its exact size) ---------- */
+.framed { position: relative; }
+.framed > .fr { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 1; overflow: visible; }
+.framed > .fr path { fill: none; vector-effect: non-scaling-stroke; }
+.pk.framed::before, .frame.framed::before { content: none; }
+.pk.framed { border-color: transparent; padding: 40px 30px 30px; }
+.pk.top.framed .fr .a { stroke: rgba(243,223,184,.85); }
+.pk.top.framed .fr .b { stroke: rgba(243,223,184,.45); }
+.pk.top.framed .fr .o { fill: rgba(243,223,184,.9); }
+.d-art.framed { border-color: transparent; padding: 18px; }
+.d-art.framed .tag { top: 30px; left: 30px; }
+.d-art.framed .try { bottom: 30px; }
+.frame.framed { border-color: transparent; padding: 34px; }
+.pk > *:not(.fr), .frame > *:not(.fr) { position: relative; z-index: 2; }
 </style>
 </head>
 <body>
@@ -230,7 +245,7 @@ footer a { color: var(--rouge); }
         <div><b>Live</b>guest list &amp; RSVP</div>
       </div>
     </div>
-    <figure class="frame">
+    <figure class="frame framed">
       <div class="phone" aria-hidden="true">
         <div class="screen">
           <div class="p-invite">
@@ -263,21 +278,21 @@ footer a { color: var(--rouge); }
     <p class="intro">Each design begins with a small ritual on your guest’s phone, then reveals your invitation in the same style. Tap a design to try it.</p>
     <div class="designs">
       <article class="design">
-        <a class="d-art" href="demo.html" aria-label="Try The Veil"><span class="tag">Signature</span><span class="in veil"><svg class="mark" viewBox="0 0 120 112" aria-hidden="true"><use href="#m"/></svg></span><span class="try">Tap to try</span></a>
+        <a class="d-art framed" href="demo.html" aria-label="Try The Veil"><span class="tag">Signature</span><span class="in veil"><svg class="mark" viewBox="0 0 120 112" aria-hidden="true"><use href="#m"/></svg></span><span class="try">Tap to try</span></a>
         <div class="meta"><span>Wedding</span><span>All packages</span></div>
         <h3>The Veil</h3>
         <p>A sheer bridal veil covers the screen. Guests swipe it up, and your names come into focus as gold dust falls.</p>
         <a class="go" href="demo.html">Try the demo →</a>
       </article>
       <article class="design">
-        <a class="d-art" href="demo.html?reveal=seal" aria-label="Try The Seal"><span class="tag">Classic</span><span class="in seal"><span class="wax">L·K</span></span><span class="try">Tap to try</span></a>
+        <a class="d-art framed" href="demo.html?reveal=seal" aria-label="Try The Seal"><span class="tag">Classic</span><span class="in seal"><span class="wax">L·K</span></span><span class="try">Tap to try</span></a>
         <div class="meta"><span>Wedding · Engagement</span><span>All packages</span></div>
         <h3>The Seal</h3>
         <p>A wax seal with your initials. Guests tap to break it, the envelope opens, and the invitation appears.</p>
         <a class="go" href="demo.html?reveal=seal">Try the demo →</a>
       </article>
       <article class="design">
-        <a class="d-art" href="demo-gold.html" aria-label="Try The Stage"><span class="tag">New</span><span class="in stage"><span class="spot"></span></span><span class="try">Tap to try</span></a>
+        <a class="d-art framed" href="demo-gold.html" aria-label="Try The Stage"><span class="tag">New</span><span class="in stage"><span class="spot"></span></span><span class="try">Tap to try</span></a>
         <div class="meta"><span>Wedding</span><span>All packages</span></div>
         <h3>The Stage</h3>
         <p>Red glitter melts away with a breath, velvet curtains part, your names write themselves in and a spotlight finds the two of you.</p>
@@ -325,25 +340,25 @@ footer a { color: var(--rouge); }
     <h2 id="h-pk">One price per event, <em>sized to your guest list.</em></h2>
     <p class="intro">One payment per event, in US dollars. Every feature is included in every package.</p>
     <div class="packages">
-      <article class="pk">
+      <article class="pk framed">
         <h3>Intimate</h3><div class="guests">Up to 50 guests</div>
         <div class="price"><sup>$</sup>39.99</div>
         <p>Engagements, small weddings and family dinners.</p>
         <a class="btn" href="https://instagram.com/unveil.invitations" target="_blank" rel="noopener noreferrer">Order now</a>
       </article>
-      <article class="pk">
+      <article class="pk framed">
         <h3>Classic</h3><div class="guests">Up to 100 guests</div>
         <div class="price"><sup>$</sup>69.99</div>
         <p>A close circle of family and friends.</p>
         <a class="btn" href="https://instagram.com/unveil.invitations" target="_blank" rel="noopener noreferrer">Order now</a>
       </article>
-      <article class="pk">
+      <article class="pk framed">
         <h3>Grand</h3><div class="guests">Up to 150 guests</div>
         <div class="price"><sup>$</sup>74.99</div>
         <p>The full family, both sides.</p>
         <a class="btn" href="https://instagram.com/unveil.invitations" target="_blank" rel="noopener noreferrer">Order now</a>
       </article>
-      <article class="pk top">
+      <article class="pk top framed">
         <h3>Unlimited</h3><div class="guests">Unlimited guests</div>
         <div class="price"><sup>$</sup>99</div>
         <p>For the big Lebanese wedding: invite everyone.</p>
@@ -392,5 +407,41 @@ footer a { color: var(--rouge); }
   </div>
 </footer>
 
+
+<script>
+/* Draws one continuous double border with curved inset corners around each .framed card. */
+(function () {
+  var NS = 'http://www.w3.org/2000/svg';
+  function frame(w, h, i, r) {
+    // a rectangle whose four corners curve inwards, drawn as a single unbroken line
+    return 'M' + (i + r) + ' ' + i + ' H' + (w - i - r) +
+      ' A' + r + ' ' + r + ' 0 0 0 ' + (w - i) + ' ' + (i + r) +
+      ' V' + (h - i - r) +
+      ' A' + r + ' ' + r + ' 0 0 0 ' + (w - i - r) + ' ' + (h - i) +
+      ' H' + (i + r) +
+      ' A' + r + ' ' + r + ' 0 0 0 ' + i + ' ' + (h - i - r) +
+      ' V' + (i + r) +
+      ' A' + r + ' ' + r + ' 0 0 0 ' + (i + r) + ' ' + i + ' Z';
+  }
+  function draw(el) {
+    var w = el.clientWidth, h = el.clientHeight;
+    if (!w || !h) return;
+    var svg = el.querySelector(':scope > .fr');
+    if (!svg) { svg = document.createElementNS(NS, 'svg'); svg.setAttribute('class', 'fr'); svg.setAttribute('aria-hidden', 'true'); el.prepend(svg); }
+    svg.setAttribute('viewBox', '0 0 ' + w + ' ' + h);
+    var g = '#b08a4a', cx = w / 2;
+    svg.innerHTML =
+      '<path class="a" d="' + frame(w, h, 8, 16) + '" stroke="' + g + '" stroke-width="1.2"/>' +
+      '<path class="b" d="' + frame(w, h, 14, 13) + '" stroke="' + g + '" stroke-opacity=".55" stroke-width=".8"/>' +
+      // small diamond ornaments joined to the line at the top and bottom centre
+      '<path class="o" d="M' + cx + ' 3 L' + (cx + 5) + ' 8 L' + cx + ' 13 L' + (cx - 5) + ' 8 Z" fill="' + g + '"/>' +
+      '<path class="o" d="M' + cx + ' ' + (h - 3) + ' L' + (cx + 5) + ' ' + (h - 8) + ' L' + cx + ' ' + (h - 13) + ' L' + (cx - 5) + ' ' + (h - 8) + ' Z" fill="' + g + '"/>';
+  }
+  var els = document.querySelectorAll('.framed');
+  els.forEach(draw);
+  if ('ResizeObserver' in window) { var ro = new ResizeObserver(function (es) { es.forEach(function (e) { draw(e.target); }); }); els.forEach(function (el) { ro.observe(el); }); }
+  else addEventListener('resize', function () { els.forEach(draw); });
+})();
+</script>
 </body>
 </html>
