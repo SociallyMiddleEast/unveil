@@ -22,6 +22,9 @@
 .design .occ { font-family: var(--cinzel); font-size: 10px; letter-spacing: .22em; color: var(--gold); }
 .soon { text-align: center; margin-top: 56px; display: grid; justify-items: center; gap: 14px; }
 .soon p { margin: 0; color: var(--cream-soft); font-family: var(--serif); font-size: 20px; max-width: 46ch; }
+.in.vc { background: radial-gradient(80% 60% at 50% 40%, #6a1424, #3a0812 75%); }
+.in.vc::before { content: ""; position: absolute; left: 0; right: 0; top: 0; height: 52%; background: linear-gradient(180deg, #5a1020, #4a0b17); clip-path: polygon(0 0, 100% 0, 50% 100%); filter: drop-shadow(0 8px 12px rgba(0,0,0,.4)); }
+.in.vc img { position: relative; width: 46%; height: auto; margin-top: 18%; filter: drop-shadow(0 10px 14px rgba(0,0,0,.5)); }
 </style>
 </head>
 <body>
@@ -59,6 +62,13 @@
       <button type="button" data-f="celebration" aria-pressed="false">CELEBRATIONS</button>
     </div>
     <div class="designs" id="lib">
+      <article class="design card floral" data-occ="wedding engagement celebration">
+        <a class="d-art" href="velvet-court.html" aria-label="Open The Velvet Court"><span class="tag">TEMPLATE I</span><span class="in vc"><img src="assets/seal-u.png" alt="" width="600" height="608"></span><span class="try">OPEN THE INVITATION</span></a>
+        <span class="occ">WEDDINGS · ENGAGEMENTS · CELEBRATIONS</span>
+        <h3>The Velvet Court</h3>
+        <p>Press and hold the wax seal to open the envelope. Then your names in an embossed floral frame, your evening, venue, dress code and RSVP.</p>
+        <div class="row"><a class="btn btn-line btn-sm" href="velvet-court.html">OPEN IT</a><a class="btn btn-foil btn-sm" href="index.html#packages">CHOOSE</a></div>
+      </article>
       <article class="design card floral" data-occ="wedding engagement celebration">
         <a class="d-art" href="demo.html" aria-label="Try The Veil"><span class="tag">SIGNATURE</span><span class="in veil"><b>L &amp; K</b></span><span class="try">TAP TO TRY</span></a>
         <span class="occ">WEDDINGS · ENGAGEMENTS · CELEBRATIONS</span>
