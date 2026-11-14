@@ -92,16 +92,14 @@
 </footer>
 
 <script>
-/* Address of the Unveil customer app. Set this once the app is online, e.g. "https://app.unveil.com". */
-var APP_URL = "";
+/* Opens the couple's private page (couple.html), which reads their invitation from the Google Sheet. */
 (function () {
   var form = document.getElementById('access'), msg = document.getElementById('msg'), input = document.getElementById('code');
   form.addEventListener('submit', function (e) {
     e.preventDefault();
     var code = input.value.trim();
     if (!/^[A-Za-z0-9]{6,40}$/.test(code)) { msg.textContent = 'Please check your code: it’s the letters and numbers we sent you.'; input.focus(); return; }
-    if (!APP_URL) { msg.textContent = 'Private pages are opening soon. We’ll message you as soon as yours is ready.'; return; }
-    location.href = APP_URL.replace(/\/$/, '') + '/c/' + encodeURIComponent(code);
+    location.href = 'couple.html?t=' + encodeURIComponent(code);
   });
 })();
 </script>

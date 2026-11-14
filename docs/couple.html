@@ -1,0 +1,201 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>My invitation · Unveil</title>
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#2a050c">
+<link rel="icon" href="assets/seal-u.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=Pinyon+Script&family=Jost:wght@300;400;500&display=swap">
+<link rel="stylesheet" href="site.css">
+<script src="config.js"></script>
+<style>
+/* The couple's private page: progress, approval, guests and replies, all from the Google Sheet. */
+.cp-main { padding-block: 34px 80px; display: grid; gap: 24px; }
+.cp-hero { text-align: center; display: grid; justify-items: center; gap: 8px; }
+.cp-hero h1 { font-size: clamp(30px, 5vw, 48px); }
+.cp-hero p { margin: 0; font-family: var(--serif); font-style: italic; font-size: 19px; color: var(--cream-soft); }
+.cp-card { padding: 30px 28px; min-width: 0; }
+@media (max-width: 520px) { .cp-card { padding: 26px 18px; } }
+.cp-card h2 { font-size: 22px; letter-spacing: .08em; text-align: left; margin: 0 0 18px; max-width: none; }
+.cp-hint { color: var(--cream-soft); margin: 0 0 16px; }
+.cp-note { margin: 18px 0 0; font-family: var(--serif); font-size: 19px; color: var(--cream-soft); }
+.cp-note.ok { color: #cfe7c3; }
+.cp-steps { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 8px; }
+@media (max-width: 640px) { .cp-steps { grid-template-columns: minmax(0, 1fr); gap: 10px; } }
+.cp-steps li { display: grid; justify-items: center; gap: 8px; text-align: center; opacity: .55; }
+@media (max-width: 640px) { .cp-steps li { grid-template-columns: 34px minmax(0, 1fr); justify-items: start; align-items: center; text-align: left; } }
+.cp-steps .dot { width: 34px; height: 34px; border-radius: 50%; display: grid; place-items: center; border: 1px solid var(--gold-soft); font-family: var(--cinzel); font-size: 13px; color: var(--gold); }
+.cp-steps .lbl { font-size: 13px; line-height: 1.35; }
+.cp-steps li.done, .cp-steps li.now { opacity: 1; }
+.cp-steps li.done .dot { background: rgba(201,166,93,.18); border-color: var(--gold); }
+.cp-steps li.now .dot { background: var(--foil); color: #3a0710; border-color: transparent; }
+.cp-steps li.now .lbl { color: #f6e4ac; }
+.cp-approve { margin-top: 22px; padding-top: 10px; border-top: 1px solid var(--gold-soft); }
+.cp-approve h3 { font-size: 24px; margin: 8px 0; }
+.cp-approve p { color: var(--cream-soft); margin: 0 0 16px; }
+.cp-row { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+.cp-form { display: grid; gap: 8px; margin: 18px 0 6px; }
+.cp-form label { font-family: var(--cinzel); font-size: 11px; letter-spacing: .2em; color: var(--gold); }
+.cp-form textarea { width: 100%; font: inherit; font-size: 15px; color: var(--cream); background: rgba(20,2,6,.55); border: 1px solid var(--gold-soft); padding: 12px 14px; resize: vertical; }
+.cp-form textarea::placeholder { color: rgba(243,230,207,.4); }
+.cp-form small { color: var(--cream-soft); font-size: 12.5px; }
+.cp-err { color: #f2a7ae; font-size: 14px; }
+.cp-ok { color: #cfe7c3; font-size: 14px; }
+.cp-stats { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 10px; }
+@media (max-width: 760px) { .cp-stats { grid-template-columns: repeat(2, minmax(0, 1fr)); } .cp-stats .hi { grid-column: 1 / -1; } }
+.cp-stats div { border: 1px solid var(--gold-soft); background: rgba(30,4,9,.45); padding: 16px; text-align: center; }
+.cp-stats b { display: block; font-family: var(--cinzel); font-weight: 500; font-size: 30px; line-height: 1.1; color: #f1dfb6; font-variant-numeric: tabular-nums; }
+.cp-stats span { font-size: 10.5px; letter-spacing: .16em; text-transform: uppercase; color: var(--cream-soft); }
+.cp-stats .hi { background: rgba(201,166,93,.12); border-color: var(--gold); }
+.cp-filter { display: flex; flex-wrap: wrap; gap: 8px; margin: 22px 0 14px; }
+.cp-filter button { font: inherit; font-size: 12.5px; border: 1px solid var(--gold-soft); padding: 6px 12px; color: var(--cream-soft); background: none; cursor: pointer; }
+.cp-filter button[aria-pressed="true"] { background: var(--foil); color: #3a0710; border-color: transparent; }
+.cp-tablewrap { overflow-x: auto; border: 1px solid var(--gold-soft); }
+.cp-tablewrap table { border-collapse: collapse; width: 100%; font-size: 14px; }
+.cp-tablewrap th { text-align: left; font-family: var(--cinzel); font-size: 10.5px; font-weight: 500; letter-spacing: .16em; color: var(--gold); padding: 11px 12px; border-bottom: 1px solid var(--gold-soft); background: rgba(20,2,6,.5); white-space: nowrap; }
+.cp-tablewrap td { padding: 11px 12px; border-bottom: 1px solid rgba(201,166,93,.16); vertical-align: top; }
+.cp-tablewrap tr:last-child td { border-bottom: 0; }
+.cp-tablewrap td.num { text-align: right; }
+.cp-sub { font-size: 12px; color: var(--cream-soft); margin-top: 2px; }
+.cp-quote { font-family: var(--serif); font-style: italic; color: var(--cream-soft); max-width: 30ch; }
+.cp-actions { display: flex; gap: 6px; flex-wrap: wrap; }
+.cp-pill { display: inline-block; font-size: 11.5px; padding: 3px 10px; border-radius: 999px; white-space: nowrap; }
+.cp-pill.ok { background: rgba(120,190,120,.16); color: #cfe7c3; }
+.cp-pill.no { background: rgba(240,140,150,.14); color: #f2b3ba; }
+.cp-pill.wait { background: rgba(230,190,110,.14); color: #f0d38a; }
+.cp-pill.seen { background: rgba(243,230,207,.08); color: var(--cream-soft); }
+.btn-ghost { border: 1px solid rgba(201,166,93,.25); color: var(--cream-soft); background: none; }
+.btn:disabled { opacity: .55; cursor: default; }
+.cp-state { text-align: center; padding: 80px 20px; display: grid; justify-items: center; gap: 14px; }
+.cp-state p { margin: 0; font-family: var(--serif); font-size: 20px; color: var(--cream-soft); max-width: 34ch; }
+.cp-private { text-align: center; font-size: 13px; color: var(--cream-soft); margin: 0; }
+</style>
+</head>
+<body>
+
+<nav aria-label="Main">
+  <div class="wrap nav-in">
+    <a class="logo foil" href="index.html">UNVEIL</a>
+    <div class="links">
+      <a href="index.html">HOME</a>
+      <a href="invitations.html">INVITATIONS</a>
+      <a href="my-invitations.html" aria-current="page">MY INVITATIONS</a>
+    </div>
+    <a class="btn btn-line btn-sm" id="viewInv" href="#" target="_blank" rel="noopener noreferrer" hidden>VIEW INVITATION</a>
+  </div>
+</nav>
+
+<main class="wrap cp-main" id="app">
+  <div class="cp-state" id="state"><img class="seal-img" src="assets/seal-u.png" alt="" width="600" height="608" style="width:110px"><p id="stateMsg">Opening your private page…</p></div>
+</main>
+
+<script>
+(function () {
+  var API = window.UNVEIL_API, T = (new URLSearchParams(location.search).get('t') || '').trim(), $ = function (id) { return document.getElementById(id); };
+  var STAGES = [['details', 'Details received'], ['designing', 'Being designed'], ['preview', 'Preview ready for you'], ['approved', 'Approved by you'], ['live', 'Ready to send']];
+  var data = null, filter = 'all';
+  function esc(s) { var d = document.createElement('div'); d.textContent = s == null ? '' : String(s); return d.innerHTML; }
+  function stamp(iso) { if (!iso) return ''; var d = new Date(iso); if (isNaN(d)) return ''; return new Intl.DateTimeFormat('en-GB', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit', hourCycle: 'h23', timeZone: data.wedding.timeZone }).format(d); }
+  function state(msg) { $('app').innerHTML = '<div class="cp-state"><img class="seal-img" src="assets/seal-u.png" alt="" width="600" height="608" style="width:110px"><p></p><a class="btn btn-line" href="my-invitations.html">TRY ANOTHER CODE</a></div>'; $('app').querySelector('p').textContent = msg; }
+  function get() { return fetch(API + '?a=couple&t=' + encodeURIComponent(T)).then(function (r) { return r.json(); }); }
+  function post(o) { o.t = T; return fetch(API, { method: 'POST', body: JSON.stringify(o) }).then(function (r) { return r.json(); }); }
+  function waNum(p) { var d = String(p || '').replace(/\D/g, ''); if (!d) return ''; if (d.indexOf('00') === 0) d = d.slice(2); if (d.indexOf('961') === 0) return d; if (d[0] === '0') d = d.slice(1); return d.length >= 7 && d.length <= 8 ? '961' + d : d; }
+  function copy(text, btn) { var done = function (m) { var o = btn.textContent; btn.textContent = m; setTimeout(function () { btn.textContent = o; }, 1600); };
+    if (navigator.clipboard) navigator.clipboard.writeText(text).then(function () { done('COPIED'); }, function () { prompt('Copy this:', text); }); else prompt('Copy this:', text); }
+
+  if (!API) return state('Private pages are opening soon. We’ll message you as soon as yours is ready.');
+  if (!/^[A-Za-z0-9]{6,40}$/.test(T)) return state('This private link is incomplete. Please check the code we sent you.');
+  load();
+  function load() { return get().then(function (d) { if (d.error) return state('We couldn’t find this private page. Please check your code.'); data = d; render(); }).catch(function () { state('We couldn’t load your page. Please check your connection and try again.'); }); }
+
+  function render() {
+    var w = data.wedding, idx = Math.max(0, STAGES.map(function (s) { return s[0]; }).indexOf(w.stage)), ready = w.stage === 'approved' || w.stage === 'live';
+    var dt = new Date(w.start), long = new Intl.DateTimeFormat('en-GB', { timeZone: w.timeZone, weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' }).format(dt);
+    var gs = data.guests, all = gs.map(function (g) { return g.reply; }).filter(Boolean).concat(data.shared);
+    var s = { attending: all.filter(function (r) { return r.attending; }).reduce(function (n, r) { return n + r.seats; }, 0), replied: gs.filter(function (g) { return g.reply; }).length,
+      opened: gs.filter(function (g) { return g.openedAt; }).length, declined: all.filter(function (r) { return !r.attending; }).length, waiting: gs.filter(function (g) { return !g.reply; }).length };
+    var shown = gs.filter(function (g) { return filter === 'all' || (filter === 'attending' && g.reply && g.reply.attending) || (filter === 'declined' && g.reply && !g.reply.attending) || (filter === 'waiting' && !g.reply) || (filter === 'unopened' && !g.openedAt); });
+    var view = $('viewInv'); view.href = w.sharedLink; view.hidden = false;
+    var couple = w.partner1 + ' & ' + w.partner2;
+
+    var h = '';
+    h += '<section class="cp-hero"><img class="seal-img" src="assets/seal-u.png" alt="" width="600" height="608" style="width:110px"><h1 class="foil">' + esc(couple) + '</h1><p>' + esc(long + ' · ' + w.venueName + (w.replyBy ? ' · replies due ' + w.replyBy : '')) + '</p></section>';
+    h += '<section class="card cp-card" aria-labelledby="h-progress"><h2 id="h-progress" class="foil">Your invitation’s progress</h2><ol class="cp-steps">';
+    STAGES.forEach(function (st, i) { h += '<li class="' + (i < idx ? 'done' : i === idx ? 'now' : '') + '"><span class="dot">' + (i < idx ? '✓' : i + 1) + '</span><span class="lbl">' + st[1] + '</span></li>'; });
+    h += '</ol>';
+    if (w.stage === 'preview') {
+      h += '<div class="cp-approve"><h3>Your preview is ready</h3><p>Open your invitation and check every detail. When you’re happy, approve it and your guest links are ready to send.</p>' +
+        '<div class="cp-row"><a class="btn btn-line" href="' + esc(w.sharedLink) + '" target="_blank" rel="noopener noreferrer">OPEN MY PREVIEW</a><button class="btn btn-foil" type="button" id="approve">APPROVE MY INVITATION</button></div>' +
+        '<form class="cp-form" id="changes"><label for="chg">OR TELL YOUR DESIGNER WHAT TO CHANGE</label><textarea id="chg" rows="3" placeholder="e.g. Please change the dinner time to 21:00."></textarea>' +
+        '<div class="cp-row"><button class="btn btn-line" type="submit">REQUEST CHANGES</button><span id="chgMsg" role="status"></span></div></form></div>';
+    } else if (!ready) {
+      h += '<p class="cp-note">' + (w.changeRequest ? 'Your designer is working on your changes' + (w.changeRequestAt ? ' (sent ' + esc(stamp(w.changeRequestAt)) + ')' : '') + '. You’ll be able to approve the new preview here.' : 'Your designer is preparing your invitation. You’ll be able to approve your preview here.') + '</p>';
+    } else {
+      h += '<p class="cp-note ok">' + (w.approvedAt ? 'You approved your invitation on ' + esc(stamp(w.approvedAt)) + '. ' : '') + 'Your guest links are ready to send.</p>';
+    }
+    h += '</section>';
+    h += '<section class="cp-stats" aria-label="Replies at a glance"><div class="hi"><b>' + s.attending + '</b><span>People attending</span></div><div><b>' + s.replied + ' / ' + gs.length + '</b><span>Invitations replied</span></div><div><b>' + s.opened + '</b><span>Opened</span></div><div><b>' + s.declined + '</b><span>Declined</span></div><div><b>' + s.waiting + '</b><span>Still waiting</span></div></section>';
+    h += '<section class="card cp-card" aria-labelledby="h-guests"><h2 id="h-guests" class="foil">Your guests</h2><p class="cp-hint">Each guest gets a personal link that greets them by name and keeps their seats. ' + (ready ? 'Send it on WhatsApp in one tap.' : 'You can add guests now and send the links once you’ve approved your invitation.') + '</p>';
+    h += '<form class="cp-form" id="add"><label for="list">ADD YOUR GUESTS, ONE INVITATION PER LINE</label><textarea id="list" rows="5" placeholder="Nadine and Tony Haddad, 2, 03 123 456, Bride\'s family&#10;Uncle Georges, 4, 71 222 333, Groom\'s family&#10;Rami Khoury, 1"></textarea><small>Name, number of seats, phone, side. Paste from a spreadsheet if you like. Only the name is required.</small><div class="cp-row"><button class="btn btn-foil" type="submit">ADD GUESTS &amp; CREATE LINKS</button><span id="addMsg" role="status"></span></div></form>';
+    h += '<div class="cp-filter" role="group" aria-label="Filter guests">';
+    [['all', 'All'], ['attending', 'Attending'], ['declined', 'Declined'], ['waiting', 'Waiting'], ['unopened', 'Not opened']].forEach(function (f) {
+      var n = f[0] === 'all' ? gs.length : gs.filter(function (g) { return (f[0] === 'attending' && g.reply && g.reply.attending) || (f[0] === 'declined' && g.reply && !g.reply.attending) || (f[0] === 'waiting' && !g.reply) || (f[0] === 'unopened' && !g.openedAt); }).length;
+      h += '<button type="button" data-f="' + f[0] + '" aria-pressed="' + (filter === f[0]) + '">' + f[1] + ' · ' + n + '</button>'; });
+    h += '</div>';
+    if (!shown.length) h += '<p class="cp-hint">No guests here yet.</p>';
+    else {
+      h += '<div class="cp-tablewrap"><table><thead><tr><th>Guest</th><th>Side</th><th>Seats</th><th>Reply</th><th>Note</th><th>Their link</th></tr></thead><tbody>';
+      shown.forEach(function (g) {
+        var r = g.reply, st = r ? (r.attending ? '<span class="cp-pill ok">Attending · ' + r.seats + '</span>' : '<span class="cp-pill no">Declined</span>') : g.openedAt ? '<span class="cp-pill seen">Opened, no reply</span>' : '<span class="cp-pill wait">Not opened</span>';
+        var msg = (g.openedAt || r ? 'Dear ' + g.name + ', a gentle reminder from ' + w.partner1 + ' and ' + w.partner2 + ': we’d love to know if you can join us 🤍\n' : 'Dear ' + g.name + ',\n' + w.partner1 + ' and ' + w.partner2 + ' have something for you. Open it somewhere quiet 🤍\n') + g.link;
+        var wa = waNum(g.phone);
+        h += '<tr><td><b style="font-weight:400">' + esc(g.name) + '</b>' + (g.phone ? '<div class="cp-sub">' + esc(g.phone) + '</div>' : '') + '</td><td>' + esc(g.side) + '</td><td class="num">' + g.seats + '</td>' +
+          '<td>' + st + (r && r.meal ? '<div class="cp-sub">Meal: ' + esc(r.meal) + '</div>' : '') + (r ? '<div class="cp-sub">' + esc(stamp(r.updatedAt)) + '</div>' : '') + '</td>' +
+          '<td>' + (r && r.note ? '<div class="cp-quote">“' + esc(r.note) + '”</div>' : '') + '</td><td><div class="cp-actions">' +
+          (ready && !r ? (wa ? '<a class="btn btn-foil btn-sm" target="_blank" rel="noopener noreferrer" href="https://wa.me/' + wa + '?text=' + encodeURIComponent(msg) + '">' + (g.openedAt ? 'REMIND' : 'WHATSAPP') + '</a>' : '<button class="btn btn-line btn-sm" type="button" data-copy="' + esc(msg) + '">COPY MESSAGE</button>') : '') +
+          '<button class="btn btn-line btn-sm" type="button" data-copy="' + esc(g.link) + '">COPY LINK</button><button class="btn btn-ghost btn-sm" type="button" data-remove="' + esc(g.code) + '" aria-label="Remove ' + esc(g.name) + '">REMOVE</button></div></td></tr>';
+      });
+      h += '</tbody></table></div>';
+    }
+    if (data.shared.length) {
+      h += '<h3 style="font-size:24px;margin:22px 0 10px">Replies through your shared link</h3><div class="cp-tablewrap"><table><thead><tr><th>Name</th><th>Reply</th><th>Note</th><th>When</th></tr></thead><tbody>';
+      data.shared.forEach(function (r) { h += '<tr><td>' + esc(r.name) + '</td><td>' + (r.attending ? '<span class="cp-pill ok">Attending · ' + r.seats + '</span>' : '<span class="cp-pill no">Declined</span>') + (r.meal ? '<div class="cp-sub">Meal: ' + esc(r.meal) + '</div>' : '') + '</td><td>' + (r.note ? '<div class="cp-quote">“' + esc(r.note) + '”</div>' : '') + '</td><td>' + esc(stamp(r.updatedAt)) + '</td></tr>'; });
+      h += '</tbody></table></div>';
+    }
+    h += '<div class="cp-row" style="margin-top:18px"><button class="btn btn-line" type="button" id="csv">DOWNLOAD FOR THE VENUE</button><button class="btn btn-line" type="button" data-copy="' + esc(w.sharedLink) + '">COPY SHARED LINK FOR GROUPS</button><button class="btn btn-ghost" type="button" id="refresh">REFRESH</button></div></section>';
+    h += '<p class="cp-private">Keep this page private: anyone with its link can see your guest list.</p>';
+    $('app').innerHTML = h;
+    bind(couple);
+  }
+
+  function bind(couple) {
+    document.querySelectorAll('[data-f]').forEach(function (b) { b.addEventListener('click', function () { filter = b.dataset.f; render(); }); });
+    document.querySelectorAll('[data-copy]').forEach(function (b) { b.addEventListener('click', function () { copy(b.dataset.copy, b); }); });
+    document.querySelectorAll('[data-remove]').forEach(function (b) { b.addEventListener('click', function () { b.disabled = true; post({ a: 'removeGuest', code: b.dataset.remove }).then(load); }); });
+    $('refresh').addEventListener('click', function () { load(); });
+    var ap = $('approve'); if (ap) ap.addEventListener('click', function () { ap.disabled = true; post({ a: 'approve' }).then(function (r) { if (r.error) { ap.disabled = false; alert(r.error); } else load(); }); });
+    var ch = $('changes'); if (ch) ch.addEventListener('submit', function (e) { e.preventDefault(); var t = $('chg').value.trim(), m = $('chgMsg');
+      if (!t) { m.className = 'cp-err'; m.textContent = 'Tell us what you’d like to change.'; return; }
+      post({ a: 'changes', text: t }).then(function (r) { if (r.error) { m.className = 'cp-err'; m.textContent = r.error; } else load(); }); });
+    $('add').addEventListener('submit', function (e) { e.preventDefault(); var list = $('list').value, m = $('addMsg'), btn = e.target.querySelector('button');
+      if (!list.trim()) { m.className = 'cp-err'; m.textContent = 'Add at least one guest: one name per line.'; return; }
+      btn.disabled = true; m.className = ''; m.textContent = 'Adding…';
+      post({ a: 'addGuests', list: list }).then(function (r) { btn.disabled = false; if (r.error) { m.className = 'cp-err'; m.textContent = r.error; return; } load().then(function () { var mm = $('addMsg'); if (mm) { mm.className = 'cp-ok'; mm.textContent = 'Added ' + r.added + (r.added === 1 ? ' guest' : ' guests') + ', each with their own link.'; } }); })
+        .catch(function () { btn.disabled = false; m.className = 'cp-err'; m.textContent = 'That didn’t go through. Please try again.'; }); });
+    $('csv').addEventListener('click', function () {
+      var cell = function (v) { var s = String(v == null ? '' : v); if (/^[=+\-@]/.test(s)) s = "'" + s; return '"' + s.replace(/"/g, '""') + '"'; };
+      var rows = [['Guest', 'Side', 'Phone', 'Seats invited', 'Answer', 'Coming', 'Meal', 'Note', 'Opened', 'Replied']];
+      data.guests.forEach(function (g) { var r = g.reply; rows.push([g.name, g.side, g.phone, g.seats, r ? (r.attending ? 'Attending' : 'Declined') : 'No reply', r ? r.seats : '', r ? r.meal : '', r ? r.note : '', g.openedAt ? 'Yes' : 'No', r ? r.updatedAt : '']); });
+      data.shared.forEach(function (r) { rows.push([r.name, 'Shared link', '', '', r.attending ? 'Attending' : 'Declined', r.seats, r.meal, r.note, '', r.updatedAt]); });
+      var blob = new Blob(['﻿' + rows.map(function (r) { return r.map(cell).join(','); }).join('\r\n')], { type: 'text/csv' });
+      var a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = couple.replace(/[^\w]+/g, '-') + '-guests.csv'; document.body.appendChild(a); a.click(); a.remove();
+    });
+  }
+})();
+</script>
+</body>
+</html>
