@@ -197,14 +197,22 @@ h2 { font-family: var(--serif); font-weight: 400; font-size: 34px; letter-spacin
 .looks p { margin: 8px 0 0; font-style: italic; font-size: 19px; line-height: 1.45; }
 
 /* ---------- Notes (swipe) ---------- */
-.notes { display: grid; grid-auto-flow: column; grid-auto-columns: 86%; gap: 14px; overflow-x: auto; scroll-snap-type: x mandatory; padding: 4px 7% 8px; margin: 0 -24px; scrollbar-width: none; }
+.notes { display: grid; grid-auto-flow: column; grid-auto-columns: 80%; gap: 14px; overflow-x: auto; scroll-snap-type: x mandatory; padding: 4px 10% 8px; margin: 0 -24px; scrollbar-width: none; }
 .notes::-webkit-scrollbar { display: none; }
 .note { scroll-snap-align: center; position: relative; padding: 40px 26px 30px; background: #fbf4e6; color: var(--ink); box-shadow: 0 16px 34px rgba(60,20,20,.18); text-align: center; min-height: 220px; display: flex; flex-direction: column; justify-content: center; }
 .note::before { content: ""; position: absolute; inset: 9px; border: 1px solid rgba(168,129,60,.45); }
 .note h3 { font: 500 13px/1.5 var(--sans); letter-spacing: .26em; text-transform: uppercase; color: var(--wine); margin: 0 0 12px; }
 .note p { margin: 0; font-size: 18px; line-height: 1.55; }
 .note small { display: block; margin-top: 16px; font: 500 10px/1 var(--sans); letter-spacing: .2em; color: var(--gold-d); }
-.dots { display: flex; justify-content: center; gap: 8px; margin-top: 18px; }
+.notes { cursor: grab; scroll-behavior: smooth; }
+.notes.drag { cursor: grabbing; scroll-snap-type: none; scroll-behavior: auto; }
+.note { transition: transform .5s ease, opacity .5s ease; transform: scale(.9); opacity: .55; user-select: none; -webkit-user-select: none; }
+.note.on { transform: none; opacity: 1; }
+.nav { display: flex; align-items: center; justify-content: center; gap: 18px; margin-top: 18px; }
+.nav button { width: 40px; height: 40px; border-radius: 50%; border: 1px solid rgba(168,129,60,.6); background: transparent; color: var(--wine); font-size: 18px; cursor: pointer; display: grid; place-items: center; }
+.nav button:disabled { opacity: .3; cursor: default; }
+.dots { display: flex; justify-content: center; gap: 8px; }
+.dots i { cursor: pointer; }
 .dots i { width: 6px; height: 6px; border-radius: 50%; background: var(--gold-d); opacity: .3; transition: opacity .3s, transform .3s; }
 .dots i.on { opacity: 1; transform: scale(1.3); }
 
@@ -370,9 +378,9 @@ textarea { min-height: 80px; resize: vertical; }
     <div class="col">
       <div class="orn"><i></i></div>
       <h2>Good to know</h2>
-      <p class="sub">Swipe through a few gentle notes</p>
-      <div class="notes" id="notes"></div>
-      <div class="dots" id="dots"></div>
+      <p class="sub">A few gentle notes</p>
+      <div class="notes" id="notes" aria-roledescription="carousel"></div>
+      <div class="nav" id="nav"><button type="button" id="prevN" aria-label="Previous note">‹</button><div class="dots" id="dots"></div><button type="button" id="nextN" aria-label="Next note">›</button></div>
     </div>
   </section>
 
@@ -534,9 +542,8 @@ textarea { min-height: 80px; resize: vertical; }
         a.appendChild(h); a.appendChild(pp); a.appendChild(sm); $('notes').appendChild(a);
         $('dots').appendChild(document.createElement('i'));
       });
-      var nt = $('notes'), dots = $('dots').children; dots[0].className = 'on';
-      nt.addEventListener('scroll', function () { var idx = Math.round(nt.scrollLeft / (nt.children[0].offsetWidth + 14)); [].forEach.call(dots, function (x, j) { x.className = j === idx ? 'on' : ''; }); }, { passive: true });
-      if (w.notes.length < 2) $('dots').hidden = true;
+      carousel($('notes'), $('dots'), $('prevN'), $('nextN'));
+      if (w.notes.length < 2) $('nav').hidden = true;
     } else $('notesSec').hidden = true;
 
     /* Farewell */
@@ -554,6 +561,30 @@ textarea { min-height: 80px; resize: vertical; }
       s.style.fontSize = ''; var room = s.parentNode.clientWidth * (s.closest('.hall-names') ? 1.05 : .92); if (!room) return;
       for (var i = 0; i < 30 && s.scrollWidth > room; i++) s.style.fontSize = (parseFloat(getComputedStyle(s).fontSize) * .93) + 'px';
     });
+  }
+
+  /* ---------- Notes carousel: swipe, drag with a mouse, arrows, dots, and gentle auto-play ---------- */
+  function carousel(nt, dotsEl, prev, next) {
+    var cards = nt.children, dots = dotsEl.children, idx = 0, last = Date.now(), visible = false;
+    function cur() { var c = nt.scrollLeft + nt.clientWidth / 2, best = 0, bd = 1e9; [].forEach.call(cards, function (el, i) { var d = Math.abs(el.offsetLeft + el.offsetWidth / 2 - c); if (d < bd) { bd = d; best = i; } }); return best; }
+    function paint() { idx = cur(); [].forEach.call(cards, function (el, i) { el.classList.toggle('on', i === idx); }); [].forEach.call(dots, function (d, i) { d.className = i === idx ? 'on' : ''; }); prev.disabled = idx === 0; next.disabled = idx === cards.length - 1; }
+    function go(i) { i = (i + cards.length) % cards.length; var el = cards[i]; nt.scrollTo({ left: el.offsetLeft - (nt.clientWidth - el.offsetWidth) / 2, behavior: reduce ? 'auto' : 'smooth' }); }
+    function touched() { last = Date.now(); }
+    nt.addEventListener('scroll', function () { requestAnimationFrame(paint); }, { passive: true });
+    prev.addEventListener('click', function () { touched(); go(idx - 1); });
+    next.addEventListener('click', function () { touched(); go(idx + 1); });
+    [].forEach.call(dots, function (d, i) { d.addEventListener('click', function () { touched(); go(i); }); });
+    ['touchstart', 'wheel'].forEach(function (t) { nt.addEventListener(t, touched, { passive: true }); });
+    /* drag with a mouse */
+    var down = false, sx = 0, sl = 0, moved = false;
+    nt.addEventListener('pointerdown', function (e) { if (e.pointerType !== 'mouse') return; down = true; moved = false; sx = e.clientX; sl = nt.scrollLeft; nt.classList.add('drag'); touched(); });
+    addEventListener('pointermove', function (e) { if (!down) return; var dx = e.clientX - sx; if (Math.abs(dx) > 4) moved = true; nt.scrollLeft = sl - dx; });
+    addEventListener('pointerup', function () { if (!down) return; down = false; nt.classList.remove('drag'); go(cur()); });
+    nt.addEventListener('click', function (e) { if (moved) { e.preventDefault(); e.stopPropagation(); } }, true);
+    /* auto-play while the section is on screen and nobody is touching it */
+    new IntersectionObserver(function (es) { visible = es[0].isIntersecting; }, { threshold: .5 }).observe(nt);
+    if (!reduce) setInterval(function () { if (visible && !down && Date.now() - last > 5000 && cards.length > 1) go(idx + 1); }, 4200);
+    paint();
   }
 
   /* ---------- Brush to reveal ---------- */
